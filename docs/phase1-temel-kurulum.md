@@ -8,13 +8,13 @@
 
 ## 📋 Genel Bakış
 
-Bu dokümantasyon, Flavor Starter WordPress temasının ilk aşamasını (Phase 1) kapsamaktadır. Bu aşamada temanın temel altyapısı, klasör yapısı, custom taxonomies ve admin panel sadeleştirme özellikleri oluşturulmuştur.
+Bu dokümantasyon, HumanitarianBlog WordPress temasının ilk aşamasını (Phase 1) kapsamaktadır. Bu aşamada temanın temel altyapısı, klasör yapısı, custom taxonomies ve admin panel sadeleştirme özellikleri oluşturulmuştur.
 
 ---
 
 ## 🎯 Phase 1 Hedefleri
 
-- [x] Theme klasör yapısını oluştur (flavor-starter/)
+- [x] Theme klasör yapısını oluştur (humanitarianblog/)
 - [x] style.css dosyasını theme header bilgileriyle oluştur
 - [x] functions.php'yi ayarla (theme supports, menus, image sizes)
 - [x] Custom taxonomy'leri register et (article_type, region)
@@ -26,7 +26,7 @@ Bu dokümantasyon, Flavor Starter WordPress temasının ilk aşamasını (Phase 
 ## 📁 Oluşturulan Klasör Yapısı
 
 ```
-wp-content/themes/flavor-starter/
+wp-content/themes/humanitarianblog/
 ├── style.css                          ✅ Theme ana dosyası (WordPress gereksinimi)
 ├── functions.php                      ✅ Theme fonksiyonları ve ayarları
 ├── index.php                          ✅ Ana template (WordPress gereksinimi)
@@ -61,13 +61,13 @@ wp-content/themes/flavor-starter/
 
 ### 1. style.css (Tema Header Dosyası)
 
-**Konum:** `wp-content/themes/flavor-starter/style.css`
+**Konum:** `wp-content/themes/humanitarianblog/style.css`
 
 **Amaç:** WordPress'e temayı tanıtır ve temel bilgileri sağlar.
 
 **İçerik:**
 ```css
-Theme Name: Flavor Starter - Humanitarian Blog
+Theme Name: HumanitarianBlog - Humanitarian Blog
 Theme URI: https://humanitarianblog.org
 Author: HumanitarianBlog Team
 Description: Premium WordPress theme optimized for humanitarian journalism in conflict zones.
@@ -78,7 +78,7 @@ Requires at least: 6.0
 Tested up to: 6.4
 Requires PHP: 7.4
 License: GNU General Public License v2 or later
-Text Domain: flavor-starter
+Text Domain: humanitarianblog
 Domain Path: /languages
 Tags: news, journalism, rtl-language-support, translation-ready, custom-menu,
       featured-images, threaded-comments, accessibility-ready
@@ -95,7 +95,7 @@ Tags: news, journalism, rtl-language-support, translation-ready, custom-menu,
 
 ### 2. functions.php (Ana Fonksiyon Dosyası)
 
-**Konum:** `wp-content/themes/flavor-starter/functions.php`
+**Konum:** `wp-content/themes/humanitarianblog/functions.php`
 
 **Amaç:** Temanın tüm özelliklerini, hook'larını ve fonksiyonlarını yönetir.
 
@@ -141,12 +141,12 @@ FLAVOR_THEME_URI      → get_template_directory_uri()
 #### Enqueued Scripts & Styles:
 ```php
 // Styles
-'flavor-starter-style'  → /assets/css/style.css
-'flavor-starter-rtl'    → /assets/css/rtl.css (sadece RTL dillerinde)
-'flavor-starter-print'  → /assets/css/print.css (print media)
+'humanitarianblog-style'  → /assets/css/style.css
+'humanitarianblog-rtl'    → /assets/css/rtl.css (sadece RTL dillerinde)
+'humanitarianblog-print'  → /assets/css/print.css (print media)
 
 // Scripts
-'flavor-starter-main'   → /assets/js/main.js (footer'da yüklenir)
+'humanitarianblog-main'   → /assets/js/main.js (footer'da yüklenir)
 'comment-reply'         → WordPress comment script (sadece gerektiğinde)
 ```
 
@@ -166,7 +166,7 @@ flavorAjax.nonce    → wp_create_nonce('flavor_nonce')
 
 ### 3. inc/custom-taxonomies.php (Özel Taxonomy'ler)
 
-**Konum:** `wp-content/themes/flavor-starter/inc/custom-taxonomies.php`
+**Konum:** `wp-content/themes/humanitarianblog/inc/custom-taxonomies.php`
 
 **Amaç:** Makale kategorilendirme sistemini genişletir.
 
@@ -228,7 +228,7 @@ flavorAjax.nonce    → wp_create_nonce('flavor_nonce')
 
 ### 4. inc/admin-simplify.php (Admin Panel Sadeleştirme)
 
-**Konum:** `wp-content/themes/flavor-starter/inc/admin-simplify.php`
+**Konum:** `wp-content/themes/humanitarianblog/inc/admin-simplify.php`
 
 **Amaç:** Teknik bilgisi olmayan, yaşlı yazarlar için WordPress admin panelini sadeleştirir.
 
@@ -352,7 +352,7 @@ Admin bar'a "Writing Guide" linki eklenir (Author için).
 
 ### 5. wpml-config.xml (Çok Dil Yapılandırması)
 
-**Konum:** `wp-content/themes/flavor-starter/wpml-config.xml`
+**Konum:** `wp-content/themes/humanitarianblog/wpml-config.xml`
 
 **Amaç:** WPML plugin'ine hangi tema öğelerinin çevrilebileceğini söyler.
 
@@ -383,7 +383,7 @@ Admin bar'a "Writing Guide" linki eklenir (Author için).
 
 #### Admin Texts:
 ```xml
-<key name="theme_mods_flavor-starter">  // Customizer ayarları
+<key name="theme_mods_humanitarianblog">  // Customizer ayarları
 <key name="flavor_theme_options">       // Theme options
 ```
 
@@ -496,7 +496,7 @@ body {
 
 ### Test 1: Tema Aktivasyonu
 1. WordPress Admin → Appearance → Themes
-2. "Flavor Starter - Humanitarian Blog" temasını bul
+2. "HumanitarianBlog - Humanitarian Blog" temasını bul
 3. **Activate** butonuna tıkla
 4. ✅ **Beklenen:** Tema aktif hale gelir, hata vermez
 

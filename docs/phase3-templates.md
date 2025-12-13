@@ -161,7 +161,7 @@ function flavor_reading_time() {
 #### Search Header
 ```php
 printf(
-    esc_html__('Search Results for: %s', 'flavor-starter'),
+    esc_html__('Search Results for: %s', 'humanitarianblog'),
     '<span>' . get_search_query() . '</span>'
 );
 ```
@@ -303,10 +303,10 @@ Her custom query sonrası global $post sıfırlanır:
 ### 3. Translation Ready
 Tüm string'ler çevrilebilir:
 ```php
-__('Text', 'flavor-starter')       // Return
-_e('Text', 'flavor-starter')       // Echo
+__('Text', 'humanitarianblog')       // Return
+_e('Text', 'humanitarianblog')       // Echo
 _n('Singular', 'Plural', $n)       // Plural
-esc_html__('Text', 'flavor-starter') // Escaped
+esc_html__('Text', 'humanitarianblog') // Escaped
 ```
 
 ### 4. Accessibility

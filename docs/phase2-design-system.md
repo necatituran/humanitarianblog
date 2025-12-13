@@ -301,7 +301,7 @@ function flavor_starter_fonts_url() {
 function flavor_starter_enqueue_scripts() {
     // Google Fonts
     wp_enqueue_style(
-        'flavor-starter-fonts',
+        'humanitarianblog-fonts',
         flavor_starter_fonts_url(),
         array(),
         null
@@ -309,9 +309,9 @@ function flavor_starter_enqueue_scripts() {
 
     // Main stylesheet (depends on fonts)
     wp_enqueue_style(
-        'flavor-starter-style',
+        'humanitarianblog-style',
         FLAVOR_THEME_URI . '/assets/css/style.css',
-        array('flavor-starter-fonts'),
+        array('humanitarianblog-fonts'),
         FLAVOR_THEME_VERSION
     );
 
