@@ -243,9 +243,10 @@ function humanitarianblog_enqueue_scripts() {
     }
 
     // Localize script for AJAX
-    wp_localize_script('humanitarianblog-main', 'flavorAjax', array(
-        'ajaxurl' => admin_url('admin-ajax.php'),
-        'nonce'   => wp_create_nonce('flavor_nonce'),
+    wp_localize_script('humanitarianblog-main', 'humanitarianBlogAjax', array(
+        'ajax_url'      => admin_url('admin-ajax.php'),
+        'nonce'         => wp_create_nonce('humanitarian_nonce'),
+        'search_nonce'  => wp_create_nonce('search_nonce'),
     ));
 }
 add_action('wp_enqueue_scripts', 'humanitarianblog_enqueue_scripts');
