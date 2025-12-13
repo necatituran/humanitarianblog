@@ -31,11 +31,17 @@
                     ?>
                     <h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>"><?php bloginfo('name'); ?></a></h1>
                     <?php
+                    $description = get_bloginfo('description', 'display');
+                    if ($description || is_customize_preview()) :
+                        ?>
+                        <p class="site-description"><?php echo $description; ?></p>
+                    <?php endif; ?>
+                    <?php
                 }
                 ?>
             </div>
 
-            <nav id="site-navigation" class="main-navigation">
+            <nav id="site-navigation" class="main-navigation" aria-label="<?php esc_attr_e('Primary Menu', 'flavor-starter'); ?>">
                 <?php
                 wp_nav_menu(array(
                     'theme_location' => 'primary',
