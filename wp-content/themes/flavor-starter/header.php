@@ -41,7 +41,15 @@
                 ?>
             </div>
 
-            <nav id="site-navigation" class="main-navigation" aria-label="<?php esc_attr_e('Primary Menu', 'humanitarianblog'); ?>">
+            <button class="mobile-menu-toggle" aria-expanded="false" aria-label="<?php esc_attr_e('Menu', 'humanitarianblog'); ?>">
+                <span class="hamburger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </button>
+
+            <nav id="site-navigation" class="site-navigation main-navigation" aria-label="<?php esc_attr_e('Primary Menu', 'humanitarianblog'); ?>">
                 <?php
                 wp_nav_menu(array(
                     'theme_location' => 'primary',
