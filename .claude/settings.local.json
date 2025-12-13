@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir /s \"c:\\Users\\nhtur\\Local Sites\\humanitarian-blog\\app\\public\")",
+      "Bash(find:*)",
+      "Bash(cd c:UsersnhturLocal Siteshumanitarian-blog)",
+      "Bash(dir:*)",
+      "Bash(findstr:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfeat: Phase 1 - Theme Setup & Foundation Complete\n\n✨ New Features:\n- WordPress theme structure (flavor-starter)\n- Custom taxonomies: Article Types (6) & Regions (6)\n- Admin panel simplification for elderly writers\n- WPML multi-language configuration\n- RTL support preparation for Arabic\n- Theme supports: thumbnails, menus, custom logo, HTML5\n- Custom image sizes: hero-large, card-medium, card-small, author-thumb\n- Widget areas: sidebar + 4 footer areas\n\n📝 Documentation:\n- Comprehensive Phase 1 documentation (Turkish)\n- README.md with project overview\n- .gitignore configured (excludes REACT_HUMANITARIAN)\n\n🎨 Styling:\n- Admin panel custom CSS (branded colors)\n- RTL stylesheet placeholder\n- Print stylesheet placeholder\n- Main stylesheet placeholder (Phase 2)\n\n👥 User Experience:\n- Author role: simplified interface, submit for review\n- Editor role: full control, publish capability\n- Admin role: complete site management\n- 8-step writing guide for authors\n\n🔧 Technical:\n- WordPress 6.0+ compatible\n- PHP 7.4+ compatible\n- Translation-ready (text domain: flavor-starter)\n- Accessibility-ready\n- Security best practices (nonce, escaping, sanitization)\n\n📦 Files Added:\n- 17 new files\n- Modular structure (/inc, /assets, /template-parts, /lib, /languages)\n\n🚀 Next Phase: Design System (CSS variables, typography, responsive)\n\n🤖 Generated with Claude Code\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git remote add:*)",
+      "Bash(git branch:*)",
+      "Bash(git remote set-url:*)",
+      "Bash(git push:*)",
+      "Bash(git commit:*)",
+      "Bash(git checkout:*)",
+      "Bash(git merge:*)"
+    ]
+  }
+}
