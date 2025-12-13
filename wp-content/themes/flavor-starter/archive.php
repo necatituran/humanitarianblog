@@ -2,7 +2,7 @@
 /**
  * The template for displaying archive pages
  *
- * @package Flavor_Starter
+ * @package HumanitarianBlog
  * @since 1.0.0
  */
 
@@ -56,14 +56,14 @@ get_header();
             <?php
             the_posts_pagination(array(
                 'mid_size'  => 2,
-                'prev_text' => __('← Previous', 'flavor-starter'),
-                'next_text' => __('Next →', 'flavor-starter'),
+                'prev_text' => __('← Previous', 'humanitarianblog'),
+                'next_text' => __('Next →', 'humanitarianblog'),
             ));
             ?>
 
         <?php else : ?>
 
-            <p><?php _e('No posts found.', 'flavor-starter'); ?></p>
+            <p><?php _e('No posts found.', 'humanitarianblog'); ?></p>
 
         <?php endif; ?>
 

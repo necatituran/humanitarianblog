@@ -2,7 +2,7 @@
 /**
  * The template for displaying search results
  *
- * @package Flavor_Starter
+ * @package HumanitarianBlog
  * @since 1.0.0
  */
 
@@ -17,7 +17,7 @@ get_header();
             <h1 class="search-title">
                 <?php
                 printf(
-                    esc_html__('Search Results for: %s', 'flavor-starter'),
+                    esc_html__('Search Results for: %s', 'humanitarianblog'),
                     '<span>' . get_search_query() . '</span>'
                 );
                 ?>
@@ -26,7 +26,7 @@ get_header();
             global $wp_query;
             if ($wp_query->found_posts) {
                 printf(
-                    '<p class="search-count">' . _n('%s result found', '%s results found', $wp_query->found_posts, 'flavor-starter') . '</p>',
+                    '<p class="search-count">' . _n('%s result found', '%s results found', $wp_query->found_posts, 'humanitarianblog') . '</p>',
                     number_format_i18n($wp_query->found_posts)
                 );
             }
@@ -69,16 +69,16 @@ get_header();
             <?php
             the_posts_pagination(array(
                 'mid_size'  => 2,
-                'prev_text' => __('← Previous', 'flavor-starter'),
-                'next_text' => __('Next →', 'flavor-starter'),
+                'prev_text' => __('← Previous', 'humanitarianblog'),
+                'next_text' => __('Next →', 'humanitarianblog'),
             ));
             ?>
 
         <?php else : ?>
 
             <div class="no-results">
-                <h2><?php _e('Nothing Found', 'flavor-starter'); ?></h2>
-                <p><?php _e('Sorry, but nothing matched your search terms. Please try again with different keywords.', 'flavor-starter'); ?></p>
+                <h2><?php _e('Nothing Found', 'humanitarianblog'); ?></h2>
+                <p><?php _e('Sorry, but nothing matched your search terms. Please try again with different keywords.', 'humanitarianblog'); ?></p>
 
                 <?php get_search_form(); ?>
             </div>

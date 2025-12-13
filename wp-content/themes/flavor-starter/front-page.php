@@ -3,7 +3,7 @@
  * Template Name: Homepage
  * The front page template file
  *
- * @package Flavor_Starter
+ * @package HumanitarianBlog
  * @since 1.0.0
  */
 
@@ -67,8 +67,8 @@ get_header();
         <section class="current-coverage-section pt-12 pb-12">
             <div class="container">
                 <header class="section-header">
-                    <h2><?php _e('Current Coverage', 'flavor-starter'); ?></h2>
-                    <p><?php _e('Global Emergencies & Updates', 'flavor-starter'); ?></p>
+                    <h2><?php _e('Current Coverage', 'humanitarianblog'); ?></h2>
+                    <p><?php _e('Global Emergencies & Updates', 'humanitarianblog'); ?></p>
                 </header>
 
                 <div class="grid grid-cols-3">
@@ -116,7 +116,7 @@ get_header();
         <section class="opinions-section bg-light pt-12 pb-12">
             <div class="container">
                 <header class="section-header">
-                    <h2><?php _e('Opinions', 'flavor-starter'); ?></h2>
+                    <h2><?php _e('Opinions', 'humanitarianblog'); ?></h2>
                 </header>
 
                 <div class="opinions-grid">

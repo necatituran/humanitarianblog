@@ -2,7 +2,7 @@
 /**
  * The template for displaying author pages
  *
- * @package Flavor_Starter
+ * @package HumanitarianBlog
  * @since 1.0.0
  */
 
@@ -30,7 +30,7 @@ get_header();
                     <div class="author-meta">
                         <?php
                         $post_count = count_user_posts(get_the_author_meta('ID'));
-                        printf(_n('%s Article', '%s Articles', $post_count, 'flavor-starter'), number_format_i18n($post_count));
+                        printf(_n('%s Article', '%s Articles', $post_count, 'humanitarianblog'), number_format_i18n($post_count));
                         ?>
                     </div>
                 </div>
@@ -65,14 +65,14 @@ get_header();
             <?php
             the_posts_pagination(array(
                 'mid_size'  => 2,
-                'prev_text' => __('← Previous', 'flavor-starter'),
-                'next_text' => __('Next →', 'flavor-starter'),
+                'prev_text' => __('← Previous', 'humanitarianblog'),
+                'next_text' => __('Next →', 'humanitarianblog'),
             ));
             ?>
 
         <?php else : ?>
 
-            <p><?php _e('This author has not published any posts yet.', 'flavor-starter'); ?></p>
+            <p><?php _e('This author has not published any posts yet.', 'humanitarianblog'); ?></p>
 
         <?php endif; ?>
 

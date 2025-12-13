@@ -5,7 +5,7 @@
  * This is the most generic template file in a WordPress theme
  * and one of the two required files for a theme (the other being style.css).
  *
- * @package Flavor_Starter
+ * @package HumanitarianBlog
  * @since 1.0.0
  */
 
@@ -55,7 +55,7 @@ get_header();
     else :
         ?>
 
-        <p><?php _e('No posts found.', 'flavor-starter'); ?></p>
+        <p><?php _e('No posts found.', 'humanitarianblog'); ?></p>
 
     <?php endif; ?>
 

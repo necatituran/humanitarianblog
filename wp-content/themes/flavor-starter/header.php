@@ -2,7 +2,7 @@
 /**
  * The header template file
  *
- * @package Flavor_Starter
+ * @package HumanitarianBlog
  * @since 1.0.0
  */
 ?>
@@ -19,7 +19,7 @@
 <?php wp_body_open(); ?>
 
 <div id="page" class="site">
-    <a class="skip-link screen-reader-text" href="#primary"><?php _e('Skip to content', 'flavor-starter'); ?></a>
+    <a class="skip-link screen-reader-text" href="#primary"><?php _e('Skip to content', 'humanitarianblog'); ?></a>
 
     <header id="masthead" class="site-header">
         <div class="container">
@@ -41,7 +41,7 @@
                 ?>
             </div>
 
-            <nav id="site-navigation" class="main-navigation" aria-label="<?php esc_attr_e('Primary Menu', 'flavor-starter'); ?>">
+            <nav id="site-navigation" class="main-navigation" aria-label="<?php esc_attr_e('Primary Menu', 'humanitarianblog'); ?>">
                 <?php
                 wp_nav_menu(array(
                     'theme_location' => 'primary',

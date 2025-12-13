@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wpml-config>
     <!--
-        WPML Configuration File for Flavor Starter Theme
+        WPML Configuration File for HumanitarianBlog Theme
         This file tells WPML which theme elements should be translatable
     -->
 
     <!-- Theme text strings -->
     <admin-texts>
         <!-- Customizer settings -->
-        <key name="theme_mods_flavor-starter">
+        <key name="theme_mods_humanitarianblog">
             <key name="*" />
         </key>
 
         <!-- Theme options -->
-        <key name="flavor_theme_options">
+        <key name="humanitarianblog_theme_options">
             <key name="*" />
         </key>
     </admin-texts>

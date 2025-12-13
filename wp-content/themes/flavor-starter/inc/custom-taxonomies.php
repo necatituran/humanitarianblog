@@ -4,7 +4,7 @@
  *
  * Register custom taxonomies for the theme
  *
- * @package Flavor_Starter
+ * @package HumanitarianBlog
  * @since 1.0.0
  */
 
@@ -19,26 +19,26 @@ if (!defined('ABSPATH')) {
 function flavor_register_article_type_taxonomy() {
 
     $labels = array(
-        'name'                       => _x('Article Types', 'Taxonomy General Name', 'flavor-starter'),
-        'singular_name'              => _x('Article Type', 'Taxonomy Singular Name', 'flavor-starter'),
-        'menu_name'                  => __('Article Types', 'flavor-starter'),
-        'all_items'                  => __('All Article Types', 'flavor-starter'),
-        'parent_item'                => __('Parent Article Type', 'flavor-starter'),
-        'parent_item_colon'          => __('Parent Article Type:', 'flavor-starter'),
-        'new_item_name'              => __('New Article Type Name', 'flavor-starter'),
-        'add_new_item'               => __('Add New Article Type', 'flavor-starter'),
-        'edit_item'                  => __('Edit Article Type', 'flavor-starter'),
-        'update_item'                => __('Update Article Type', 'flavor-starter'),
-        'view_item'                  => __('View Article Type', 'flavor-starter'),
-        'separate_items_with_commas' => __('Separate article types with commas', 'flavor-starter'),
-        'add_or_remove_items'        => __('Add or remove article types', 'flavor-starter'),
-        'choose_from_most_used'      => __('Choose from the most used', 'flavor-starter'),
-        'popular_items'              => __('Popular Article Types', 'flavor-starter'),
-        'search_items'               => __('Search Article Types', 'flavor-starter'),
-        'not_found'                  => __('Not Found', 'flavor-starter'),
-        'no_terms'                   => __('No article types', 'flavor-starter'),
-        'items_list'                 => __('Article types list', 'flavor-starter'),
-        'items_list_navigation'      => __('Article types list navigation', 'flavor-starter'),
+        'name'                       => _x('Article Types', 'Taxonomy General Name', 'humanitarianblog'),
+        'singular_name'              => _x('Article Type', 'Taxonomy Singular Name', 'humanitarianblog'),
+        'menu_name'                  => __('Article Types', 'humanitarianblog'),
+        'all_items'                  => __('All Article Types', 'humanitarianblog'),
+        'parent_item'                => __('Parent Article Type', 'humanitarianblog'),
+        'parent_item_colon'          => __('Parent Article Type:', 'humanitarianblog'),
+        'new_item_name'              => __('New Article Type Name', 'humanitarianblog'),
+        'add_new_item'               => __('Add New Article Type', 'humanitarianblog'),
+        'edit_item'                  => __('Edit Article Type', 'humanitarianblog'),
+        'update_item'                => __('Update Article Type', 'humanitarianblog'),
+        'view_item'                  => __('View Article Type', 'humanitarianblog'),
+        'separate_items_with_commas' => __('Separate article types with commas', 'humanitarianblog'),
+        'add_or_remove_items'        => __('Add or remove article types', 'humanitarianblog'),
+        'choose_from_most_used'      => __('Choose from the most used', 'humanitarianblog'),
+        'popular_items'              => __('Popular Article Types', 'humanitarianblog'),
+        'search_items'               => __('Search Article Types', 'humanitarianblog'),
+        'not_found'                  => __('Not Found', 'humanitarianblog'),
+        'no_terms'                   => __('No article types', 'humanitarianblog'),
+        'items_list'                 => __('Article types list', 'humanitarianblog'),
+        'items_list_navigation'      => __('Article types list navigation', 'humanitarianblog'),
     );
 
     $args = array(
@@ -63,26 +63,26 @@ add_action('init', 'flavor_register_article_type_taxonomy', 0);
 function flavor_register_region_taxonomy() {
 
     $labels = array(
-        'name'                       => _x('Regions', 'Taxonomy General Name', 'flavor-starter'),
-        'singular_name'              => _x('Region', 'Taxonomy Singular Name', 'flavor-starter'),
-        'menu_name'                  => __('Regions', 'flavor-starter'),
-        'all_items'                  => __('All Regions', 'flavor-starter'),
-        'parent_item'                => __('Parent Region', 'flavor-starter'),
-        'parent_item_colon'          => __('Parent Region:', 'flavor-starter'),
-        'new_item_name'              => __('New Region Name', 'flavor-starter'),
-        'add_new_item'               => __('Add New Region', 'flavor-starter'),
-        'edit_item'                  => __('Edit Region', 'flavor-starter'),
-        'update_item'                => __('Update Region', 'flavor-starter'),
-        'view_item'                  => __('View Region', 'flavor-starter'),
-        'separate_items_with_commas' => __('Separate regions with commas', 'flavor-starter'),
-        'add_or_remove_items'        => __('Add or remove regions', 'flavor-starter'),
-        'choose_from_most_used'      => __('Choose from the most used', 'flavor-starter'),
-        'popular_items'              => __('Popular Regions', 'flavor-starter'),
-        'search_items'               => __('Search Regions', 'flavor-starter'),
-        'not_found'                  => __('Not Found', 'flavor-starter'),
-        'no_terms'                   => __('No regions', 'flavor-starter'),
-        'items_list'                 => __('Regions list', 'flavor-starter'),
-        'items_list_navigation'      => __('Regions list navigation', 'flavor-starter'),
+        'name'                       => _x('Regions', 'Taxonomy General Name', 'humanitarianblog'),
+        'singular_name'              => _x('Region', 'Taxonomy Singular Name', 'humanitarianblog'),
+        'menu_name'                  => __('Regions', 'humanitarianblog'),
+        'all_items'                  => __('All Regions', 'humanitarianblog'),
+        'parent_item'                => __('Parent Region', 'humanitarianblog'),
+        'parent_item_colon'          => __('Parent Region:', 'humanitarianblog'),
+        'new_item_name'              => __('New Region Name', 'humanitarianblog'),
+        'add_new_item'               => __('Add New Region', 'humanitarianblog'),
+        'edit_item'                  => __('Edit Region', 'humanitarianblog'),
+        'update_item'                => __('Update Region', 'humanitarianblog'),
+        'view_item'                  => __('View Region', 'humanitarianblog'),
+        'separate_items_with_commas' => __('Separate regions with commas', 'humanitarianblog'),
+        'add_or_remove_items'        => __('Add or remove regions', 'humanitarianblog'),
+        'choose_from_most_used'      => __('Choose from the most used', 'humanitarianblog'),
+        'popular_items'              => __('Popular Regions', 'humanitarianblog'),
+        'search_items'               => __('Search Regions', 'humanitarianblog'),
+        'not_found'                  => __('Not Found', 'humanitarianblog'),
+        'no_terms'                   => __('No regions', 'humanitarianblog'),
+        'items_list'                 => __('Regions list', 'humanitarianblog'),
+        'items_list_navigation'      => __('Regions list navigation', 'humanitarianblog'),
     );
 
     $args = array(
@@ -172,7 +172,7 @@ function flavor_article_type_columns($columns) {
     $new_columns = array();
     $new_columns['cb'] = $columns['cb'];
     $new_columns['name'] = $columns['name'];
-    $new_columns['description'] = __('Description', 'flavor-starter');
+    $new_columns['description'] = __('Description', 'humanitarianblog');
     $new_columns['count'] = $columns['posts'];
 
     return $new_columns;
@@ -186,7 +186,7 @@ function flavor_region_columns($columns) {
     $new_columns = array();
     $new_columns['cb'] = $columns['cb'];
     $new_columns['name'] = $columns['name'];
-    $new_columns['description'] = __('Description', 'flavor-starter');
+    $new_columns['description'] = __('Description', 'humanitarianblog');
     $new_columns['count'] = $columns['posts'];
 
     return $new_columns;

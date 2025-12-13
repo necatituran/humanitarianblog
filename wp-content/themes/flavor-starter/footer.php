@@ -2,7 +2,7 @@
 /**
  * The footer template file
  *
- * @package Flavor_Starter
+ * @package HumanitarianBlog
  * @since 1.0.0
  */
 ?>
@@ -28,7 +28,7 @@
             </div>
 
             <div class="site-info">
-                <p>&copy; <?php echo date('Y'); ?> <?php bloginfo('name'); ?>. <?php _e('All rights reserved.', 'flavor-starter'); ?></p>
+                <p>&copy; <?php echo date('Y'); ?> <?php bloginfo('name'); ?>. <?php _e('All rights reserved.', 'humanitarianblog'); ?></p>
             </div>
 
         </div>

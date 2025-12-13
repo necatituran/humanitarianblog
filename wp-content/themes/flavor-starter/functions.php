@@ -1,8 +1,8 @@
 <?php
 /**
- * Flavor Starter Theme Functions
+ * HumanitarianBlog Theme Functions
  *
- * @package Flavor_Starter
+ * @package HumanitarianBlog
  * @since 1.0.0
  */
 
@@ -14,17 +14,17 @@ if (!defined('ABSPATH')) {
 /**
  * Define Constants
  */
-define('FLAVOR_THEME_VERSION', '1.0.0');
-define('FLAVOR_THEME_DIR', get_template_directory());
-define('FLAVOR_THEME_URI', get_template_directory_uri());
+define('HUMANITARIAN_THEME_VERSION', '1.0.0');
+define('HUMANITARIAN_THEME_DIR', get_template_directory());
+define('HUMANITARIAN_THEME_URI', get_template_directory_uri());
 
 /**
  * Theme Setup
  */
-function flavor_starter_theme_setup() {
+function humanitarianblog_theme_setup() {
 
     // Make theme available for translation
-    load_theme_textdomain('flavor-starter', FLAVOR_THEME_DIR . '/languages');
+    load_theme_textdomain('humanitarianblog', HUMANITARIAN_THEME_DIR . '/languages');
 
     // Add default posts and comments RSS feed links to head
     add_theme_support('automatic-feed-links');
@@ -43,9 +43,9 @@ function flavor_starter_theme_setup() {
 
     // Register navigation menus
     register_nav_menus(array(
-        'primary'   => __('Primary Menu', 'flavor-starter'),
-        'footer'    => __('Footer Menu', 'flavor-starter'),
-        'social'    => __('Social Links', 'flavor-starter'),
+        'primary'   => __('Primary Menu', 'humanitarianblog'),
+        'footer'    => __('Footer Menu', 'humanitarianblog'),
+        'social'    => __('Social Links', 'humanitarianblog'),
     ));
 
     // Switch default core markup to output valid HTML5
@@ -79,44 +79,44 @@ function flavor_starter_theme_setup() {
         'default-color' => 'F9FAFB',
     ));
 }
-add_action('after_setup_theme', 'flavor_starter_theme_setup');
+add_action('after_setup_theme', 'humanitarianblog_theme_setup');
 
 /**
  * Set the content width
  */
-function flavor_starter_content_width() {
-    $GLOBALS['content_width'] = apply_filters('flavor_starter_content_width', 800);
+function humanitarianblog_content_width() {
+    $GLOBALS['content_width'] = apply_filters('humanitarianblog_content_width', 800);
 }
-add_action('after_setup_theme', 'flavor_starter_content_width', 0);
+add_action('after_setup_theme', 'humanitarianblog_content_width', 0);
 
 /**
  * Google Fonts URL
  *
  * @return string Google Fonts URL
  */
-function flavor_starter_fonts_url() {
+function humanitarianblog_fonts_url() {
     $fonts_url = '';
     $fonts     = array();
     $subsets   = 'latin,latin-ext';
 
     // Source Serif 4 (Headlines)
-    if ('off' !== _x('on', 'Source Serif 4 font: on or off', 'flavor-starter')) {
+    if ('off' !== _x('on', 'Source Serif 4 font: on or off', 'humanitarianblog')) {
         $fonts[] = 'Source Serif 4:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700';
     }
 
     // Inter (Body & UI)
-    if ('off' !== _x('on', 'Inter font: on or off', 'flavor-starter')) {
+    if ('off' !== _x('on', 'Inter font: on or off', 'humanitarianblog')) {
         $fonts[] = 'Inter:wght@400;500;600;700';
     }
 
     // Amiri (Arabic Headlines)
-    if ('off' !== _x('on', 'Amiri font: on or off', 'flavor-starter')) {
+    if ('off' !== _x('on', 'Amiri font: on or off', 'humanitarianblog')) {
         $fonts[] = 'Amiri:ital,wght@0,400;0,700;1,400;1,700';
         $subsets .= ',arabic';
     }
 
     // IBM Plex Sans Arabic (Arabic Body)
-    if ('off' !== _x('on', 'IBM Plex Sans Arabic font: on or off', 'flavor-starter')) {
+    if ('off' !== _x('on', 'IBM Plex Sans Arabic font: on or off', 'humanitarianblog')) {
         $fonts[] = 'IBM+Plex+Sans+Arabic:wght@400;500;600;700';
         $subsets .= ',arabic';
     }
@@ -134,12 +134,12 @@ function flavor_starter_fonts_url() {
 /**
  * Register Widget Areas
  */
-function flavor_starter_widgets_init() {
+function humanitarianblog_widgets_init() {
 
     register_sidebar(array(
-        'name'          => __('Sidebar', 'flavor-starter'),
+        'name'          => __('Sidebar', 'humanitarianblog'),
         'id'            => 'sidebar-1',
-        'description'   => __('Add widgets here to appear in your sidebar.', 'flavor-starter'),
+        'description'   => __('Add widgets here to appear in your sidebar.', 'humanitarianblog'),
         'before_widget' => '<section id="%1$s" class="widget %2$s">',
         'after_widget'  => '</section>',
         'before_title'  => '<h2 class="widget-title">',
@@ -147,9 +147,9 @@ function flavor_starter_widgets_init() {
     ));
 
     register_sidebar(array(
-        'name'          => __('Footer Widget Area 1', 'flavor-starter'),
+        'name'          => __('Footer Widget Area 1', 'humanitarianblog'),
         'id'            => 'footer-1',
-        'description'   => __('Appears in the footer section.', 'flavor-starter'),
+        'description'   => __('Appears in the footer section.', 'humanitarianblog'),
         'before_widget' => '<section id="%1$s" class="widget %2$s">',
         'after_widget'  => '</section>',
         'before_title'  => '<h3 class="widget-title">',
@@ -157,9 +157,9 @@ function flavor_starter_widgets_init() {
     ));
 
     register_sidebar(array(
-        'name'          => __('Footer Widget Area 2', 'flavor-starter'),
+        'name'          => __('Footer Widget Area 2', 'humanitarianblog'),
         'id'            => 'footer-2',
-        'description'   => __('Appears in the footer section.', 'flavor-starter'),
+        'description'   => __('Appears in the footer section.', 'humanitarianblog'),
         'before_widget' => '<section id="%1$s" class="widget %2$s">',
         'after_widget'  => '</section>',
         'before_title'  => '<h3 class="widget-title">',
@@ -167,9 +167,9 @@ function flavor_starter_widgets_init() {
     ));
 
     register_sidebar(array(
-        'name'          => __('Footer Widget Area 3', 'flavor-starter'),
+        'name'          => __('Footer Widget Area 3', 'humanitarianblog'),
         'id'            => 'footer-3',
-        'description'   => __('Appears in the footer section.', 'flavor-starter'),
+        'description'   => __('Appears in the footer section.', 'humanitarianblog'),
         'before_widget' => '<section id="%1$s" class="widget %2$s">',
         'after_widget'  => '</section>',
         'before_title'  => '<h3 class="widget-title">',
@@ -177,63 +177,63 @@ function flavor_starter_widgets_init() {
     ));
 
     register_sidebar(array(
-        'name'          => __('Footer Widget Area 4', 'flavor-starter'),
+        'name'          => __('Footer Widget Area 4', 'humanitarianblog'),
         'id'            => 'footer-4',
-        'description'   => __('Appears in the footer section.', 'flavor-starter'),
+        'description'   => __('Appears in the footer section.', 'humanitarianblog'),
         'before_widget' => '<section id="%1$s" class="widget %2$s">',
         'after_widget'  => '</section>',
         'before_title'  => '<h3 class="widget-title">',
         'after_title'   => '</h3>',
     ));
 }
-add_action('widgets_init', 'flavor_starter_widgets_init');
+add_action('widgets_init', 'humanitarianblog_widgets_init');
 
 /**
  * Enqueue Scripts and Styles
  */
-function flavor_starter_enqueue_scripts() {
+function humanitarianblog_enqueue_scripts() {
 
     // Google Fonts
     wp_enqueue_style(
-        'flavor-starter-fonts',
-        flavor_starter_fonts_url(),
+        'humanitarianblog-fonts',
+        humanitarianblog_fonts_url(),
         array(),
         null
     );
 
     // Main stylesheet
     wp_enqueue_style(
-        'flavor-starter-style',
-        FLAVOR_THEME_URI . '/assets/css/style.css',
-        array('flavor-starter-fonts'),
-        FLAVOR_THEME_VERSION
+        'humanitarianblog-style',
+        HUMANITARIAN_THEME_URI . '/assets/css/style.css',
+        array('humanitarianblog-fonts'),
+        HUMANITARIAN_THEME_VERSION
     );
 
     // RTL support
     if (is_rtl()) {
         wp_enqueue_style(
-            'flavor-starter-rtl',
-            FLAVOR_THEME_URI . '/assets/css/rtl.css',
-            array('flavor-starter-style'),
-            FLAVOR_THEME_VERSION
+            'humanitarianblog-rtl',
+            HUMANITARIAN_THEME_URI . '/assets/css/rtl.css',
+            array('humanitarianblog-style'),
+            HUMANITARIAN_THEME_VERSION
         );
     }
 
     // Print styles
     wp_enqueue_style(
-        'flavor-starter-print',
-        FLAVOR_THEME_URI . '/assets/css/print.css',
+        'humanitarianblog-print',
+        HUMANITARIAN_THEME_URI . '/assets/css/print.css',
         array(),
-        FLAVOR_THEME_VERSION,
+        HUMANITARIAN_THEME_VERSION,
         'print'
     );
 
     // Main JavaScript
     wp_enqueue_script(
-        'flavor-starter-main',
-        FLAVOR_THEME_URI . '/assets/js/main.js',
+        'humanitarianblog-main',
+        HUMANITARIAN_THEME_URI . '/assets/js/main.js',
         array(),
-        FLAVOR_THEME_VERSION,
+        HUMANITARIAN_THEME_VERSION,
         true
     );
 
@@ -243,21 +243,21 @@ function flavor_starter_enqueue_scripts() {
     }
 
     // Localize script for AJAX
-    wp_localize_script('flavor-starter-main', 'flavorAjax', array(
+    wp_localize_script('humanitarianblog-main', 'flavorAjax', array(
         'ajaxurl' => admin_url('admin-ajax.php'),
         'nonce'   => wp_create_nonce('flavor_nonce'),
     ));
 }
-add_action('wp_enqueue_scripts', 'flavor_starter_enqueue_scripts');
+add_action('wp_enqueue_scripts', 'humanitarianblog_enqueue_scripts');
 
 /**
  * Include required files
  */
-require_once FLAVOR_THEME_DIR . '/inc/custom-taxonomies.php';
-require_once FLAVOR_THEME_DIR . '/inc/admin-simplify.php';
+require_once HUMANITARIAN_THEME_DIR . '/inc/custom-taxonomies.php';
+require_once HUMANITARIAN_THEME_DIR . '/inc/admin-simplify.php';
 
 // Additional includes will be added in future phases
-// require_once FLAVOR_THEME_DIR . '/inc/template-functions.php';
-// require_once FLAVOR_THEME_DIR . '/inc/ajax-handlers.php';
-// require_once FLAVOR_THEME_DIR . '/inc/pdf-generator.php';
-// require_once FLAVOR_THEME_DIR . '/inc/qr-generator.php';
+// require_once HUMANITARIAN_THEME_DIR . '/inc/template-functions.php';
+// require_once HUMANITARIAN_THEME_DIR . '/inc/ajax-handlers.php';
+// require_once HUMANITARIAN_THEME_DIR . '/inc/pdf-generator.php';
+// require_once HUMANITARIAN_THEME_DIR . '/inc/qr-generator.php';

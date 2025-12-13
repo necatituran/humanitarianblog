@@ -2,7 +2,7 @@
 /**
  * The template for displaying 404 pages (not found)
  *
- * @package Flavor_Starter
+ * @package HumanitarianBlog
  * @since 1.0.0
  */
 
@@ -15,19 +15,19 @@ get_header();
 
         <div class="error-content text-center">
             <h1 class="error-title">404</h1>
-            <h2 class="error-subtitle"><?php _e('Page Not Found', 'flavor-starter'); ?></h2>
+            <h2 class="error-subtitle"><?php _e('Page Not Found', 'humanitarianblog'); ?></h2>
             <p class="error-message">
-                <?php _e('The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.', 'flavor-starter'); ?>
+                <?php _e('The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.', 'humanitarianblog'); ?>
             </p>
 
             <div class="error-search mt-8">
-                <p><?php _e('Try searching for what you need:', 'flavor-starter'); ?></p>
+                <p><?php _e('Try searching for what you need:', 'humanitarianblog'); ?></p>
                 <?php get_search_form(); ?>
             </div>
 
             <div class="error-links mt-8">
                 <a href="<?php echo esc_url(home_url('/')); ?>" class="btn btn-primary">
-                    <?php _e('Go to Homepage', 'flavor-starter'); ?>
+                    <?php _e('Go to Homepage', 'humanitarianblog'); ?>
                 </a>
             </div>
         </div>
@@ -42,7 +42,7 @@ get_header();
         if ($recent_posts->have_posts()) :
             ?>
             <div class="recent-posts mt-12">
-                <h3><?php _e('Recent Articles', 'flavor-starter'); ?></h3>
+                <h3><?php _e('Recent Articles', 'humanitarianblog'); ?></h3>
                 <div class="grid grid-cols-3">
                     <?php while ($recent_posts->have_posts()) : $recent_posts->the_post(); ?>
                         <article <?php post_class('article-card'); ?>>

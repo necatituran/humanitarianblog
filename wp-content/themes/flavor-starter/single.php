@@ -2,7 +2,7 @@
 /**
  * The template for displaying single posts
  *
- * @package Flavor_Starter
+ * @package HumanitarianBlog
  * @since 1.0.0
  */
 
@@ -31,7 +31,7 @@ get_header();
 
                 <div class="entry-meta">
                     <span class="author">
-                        <?php _e('By', 'flavor-starter'); ?>
+                        <?php _e('By', 'humanitarianblog'); ?>
                         <a href="<?php echo esc_url(get_author_posts_url(get_the_author_meta('ID'))); ?>">
                             <?php the_author(); ?>
                         </a>
@@ -58,7 +58,7 @@ get_header();
                 the_content();
 
                 wp_link_pages(array(
-                    'before' => '<div class="page-links">' . esc_html__('Pages:', 'flavor-starter'),
+                    'before' => '<div class="page-links">' . esc_html__('Pages:', 'humanitarianblog'),
                     'after'  => '</div>',
                 ));
                 ?>
@@ -70,7 +70,7 @@ get_header();
                 if ($tags) :
                     ?>
                     <div class="entry-tags">
-                        <strong><?php _e('Tags:', 'flavor-starter'); ?></strong>
+                        <strong><?php _e('Tags:', 'humanitarianblog'); ?></strong>
                         <?php the_tags('', ', ', ''); ?>
                     </div>
                 <?php endif; ?>
@@ -90,7 +90,7 @@ get_header();
                     <h3 class="author-name"><?php the_author(); ?></h3>
                     <p class="author-description"><?php the_author_meta('description'); ?></p>
                     <a href="<?php echo esc_url(get_author_posts_url(get_the_author_meta('ID'))); ?>" class="author-link">
-                        <?php _e('View all posts', 'flavor-starter'); ?> →
+                        <?php _e('View all posts', 'humanitarianblog'); ?> →
                     </a>
                 </div>
             </div>
@@ -108,7 +108,7 @@ get_header();
         if ($related->have_posts()) :
             ?>
             <section class="related-articles container">
-                <h2><?php _e('Related Articles', 'flavor-starter'); ?></h2>
+                <h2><?php _e('Related Articles', 'humanitarianblog'); ?></h2>
                 <div class="grid grid-cols-3">
                     <?php while ($related->have_posts()) : $related->the_post(); ?>
                         <article <?php post_class('article-card'); ?>>
@@ -153,5 +153,5 @@ function flavor_reading_time() {
     $word_count = str_word_count(strip_tags($content));
     $reading_time = ceil($word_count / 200); // 200 words per minute
 
-    return sprintf(_n('%s min read', '%s min read', $reading_time, 'flavor-starter'), $reading_time);
+    return sprintf(_n('%s min read', '%s min read', $reading_time, 'humanitarianblog'), $reading_time);
 }

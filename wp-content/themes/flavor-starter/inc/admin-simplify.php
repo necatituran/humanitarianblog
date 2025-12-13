@@ -4,7 +4,7 @@
  *
  * Simplify the WordPress admin interface for non-technical elderly writers
  *
- * @package Flavor_Starter
+ * @package HumanitarianBlog
  * @since 1.0.0
  */
 
@@ -97,7 +97,7 @@ add_action('wp_dashboard_setup', 'flavor_remove_dashboard_widgets', 999);
 function flavor_change_publish_button($translation, $text) {
 
     if ($text == 'Publish' && !current_user_can('publish_posts') && current_user_can('edit_posts')) {
-        return __('Submit for Review', 'flavor-starter');
+        return __('Submit for Review', 'humanitarianblog');
     }
 
     return $translation;
@@ -153,18 +153,18 @@ function flavor_author_help_notice() {
     if ($screen->id === 'post' && !current_user_can('publish_posts') && current_user_can('edit_posts')) {
         ?>
         <div class="notice notice-info">
-            <h3><?php _e('How to Write an Article', 'flavor-starter'); ?></h3>
+            <h3><?php _e('How to Write an Article', 'humanitarianblog'); ?></h3>
             <ol>
-                <li><?php _e('Write your article title in the box above', 'flavor-starter'); ?></li>
-                <li><?php _e('Add your content in the editor below', 'flavor-starter'); ?></li>
-                <li><?php _e('Select a Category (Aid & Policy, Conflict, Environment, etc.)', 'flavor-starter'); ?></li>
-                <li><?php _e('Select an Article Type (News, Opinion, Investigation, etc.)', 'flavor-starter'); ?></li>
-                <li><?php _e('Select a Region where the story takes place', 'flavor-starter'); ?></li>
-                <li><?php _e('Add Tags to help readers find your article', 'flavor-starter'); ?></li>
-                <li><?php _e('Upload a Featured Image (main photo for your article)', 'flavor-starter'); ?></li>
-                <li><?php _e('Click "Submit for Review" - An editor will review and publish your article', 'flavor-starter'); ?></li>
+                <li><?php _e('Write your article title in the box above', 'humanitarianblog'); ?></li>
+                <li><?php _e('Add your content in the editor below', 'humanitarianblog'); ?></li>
+                <li><?php _e('Select a Category (Aid & Policy, Conflict, Environment, etc.)', 'humanitarianblog'); ?></li>
+                <li><?php _e('Select an Article Type (News, Opinion, Investigation, etc.)', 'humanitarianblog'); ?></li>
+                <li><?php _e('Select a Region where the story takes place', 'humanitarianblog'); ?></li>
+                <li><?php _e('Add Tags to help readers find your article', 'humanitarianblog'); ?></li>
+                <li><?php _e('Upload a Featured Image (main photo for your article)', 'humanitarianblog'); ?></li>
+                <li><?php _e('Click "Submit for Review" - An editor will review and publish your article', 'humanitarianblog'); ?></li>
             </ol>
-            <p><strong><?php _e('Need help?', 'flavor-starter'); ?></strong> <?php _e('Contact your editor at editor@humanitarianblog.org', 'flavor-starter'); ?></p>
+            <p><strong><?php _e('Need help?', 'humanitarianblog'); ?></strong> <?php _e('Contact your editor at editor@humanitarianblog.org', 'humanitarianblog'); ?></p>
         </div>
         <?php
     }
@@ -218,9 +218,9 @@ add_filter('mce_buttons_2', 'flavor_remove_tinymce_second_row');
 function flavor_admin_styles() {
     wp_enqueue_style(
         'flavor-admin-style',
-        FLAVOR_THEME_URI . '/assets/css/admin-style.css',
+        HUMANITARIAN_THEME_URI . '/assets/css/admin-style.css',
         array(),
-        FLAVOR_THEME_VERSION
+        HUMANITARIAN_THEME_VERSION
     );
 }
 add_action('admin_enqueue_scripts', 'flavor_admin_styles');
@@ -230,7 +230,7 @@ add_action('admin_enqueue_scripts', 'flavor_admin_styles');
  */
 function flavor_admin_footer_text() {
     echo sprintf(
-        __('Thank you for contributing to %s', 'flavor-starter'),
+        __('Thank you for contributing to %s', 'humanitarianblog'),
         '<strong>' . get_bloginfo('name') . '</strong>'
     );
 }
@@ -246,10 +246,10 @@ function flavor_add_help_links($wp_admin_bar) {
 
         $wp_admin_bar->add_node(array(
             'id'    => 'writing-guide',
-            'title' => __('Writing Guide', 'flavor-starter'),
+            'title' => __('Writing Guide', 'humanitarianblog'),
             'href'  => admin_url('admin.php?page=writing-guide'),
             'meta'  => array(
-                'title' => __('View the writing guide', 'flavor-starter'),
+                'title' => __('View the writing guide', 'humanitarianblog'),
             ),
         ));
     }
