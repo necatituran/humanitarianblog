@@ -1,0 +1,35 @@
+/*
+Theme Name: Flavor Starter - Humanitarian Blog
+Theme URI: https://humanitarianblog.org
+Author: HumanitarianBlog Team
+Author URI: https://humanitarianblog.org
+Description: Premium WordPress theme optimized for humanitarian journalism in conflict zones. Features offline capabilities (PDF, QR), multi-language support (Arabic RTL, French, English), and accessibility for elderly writers and readers with limited internet access.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.4
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: flavor-starter
+Domain Path: /languages
+Tags: news, journalism, rtl-language-support, translation-ready, custom-menu, featured-images, threaded-comments, accessibility-ready
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned.
+*/
+
+/**
+ * Table of Contents
+ *
+ * 1. CSS Variables (Design System)
+ * 2. Base Styles
+ * 3. Typography
+ * 4. Layout
+ * 5. Components
+ * 6. Templates
+ * 7. Responsive
+ * 8. Utilities
+ */
+
+/* Actual styles will be imported from /assets/css/style.css */
+@import url('assets/css/style.css');

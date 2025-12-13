@@ -1,0 +1,15 @@
+/**
+ * Flavor Starter Theme Stylesheet
+ *
+ * Main stylesheet - will be populated in Phase 2
+ *
+ * @package Flavor_Starter
+ * @since 1.0.0
+ */
+
+/* Placeholder - Design System will be added in Phase 2 */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+}

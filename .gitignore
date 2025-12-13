@@ -1,0 +1,112 @@
+# WordPress Core Files
+/wp-admin/
+/wp-includes/
+/wp-*.php
+/xmlrpc.php
+/license.txt
+/readme.html
+/index.php
+
+# REACT_HUMANITARIAN folder (not part of WordPress theme)
+/REACT_HUMANITARIAN/
+
+# WordPress Configuration
+wp-config.php
+wp-config-sample.php
+
+# WordPress Uploads (media files are too large)
+/wp-content/uploads/
+
+# WordPress Default Themes (only our custom theme)
+/wp-content/themes/twentytwenty*/
+
+# WordPress Cache & Temp Files
+/wp-content/cache/
+/wp-content/backup*/
+/wp-content/upgrade/
+/wp-content/temp/
+
+# Plugins (will be installed separately, not versioned)
+/wp-content/plugins/
+!wp-content/plugins/.gitkeep
+
+# WordPress Language Files (auto-generated)
+/wp-content/languages/
+
+# Node modules (if any)
+node_modules/
+package-lock.json
+yarn.lock
+
+# IDE and Editor Files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# Log Files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment Files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build Files
+/dist/
+/build/
+*.map
+
+# Temporary Files
+*.tmp
+*.swp
+*.swo
+*~
+
+# OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Composer
+/vendor/
+composer.lock
+
+# Database
+*.sql
+*.sqlite
+*.db
+
+# Backups
+*.bak
+*.backup
+*-backup-*
+
+# Local by Flywheel specific
+/conf/
+/logs/
+/app/sql/
+
+# Keep empty directories with .gitkeep
+!.gitkeep
+
+# Theme specific - Keep our custom theme
+!/wp-content/themes/flavor-starter/
+
+# Documentation
+!docs/
+!/docs/**
+
+# README
+!README.md

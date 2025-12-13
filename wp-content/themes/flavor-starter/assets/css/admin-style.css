@@ -1,0 +1,105 @@
+/**
+ * Admin Stylesheet
+ *
+ * Custom styles for WordPress admin panel
+ *
+ * @package Flavor_Starter
+ * @since 1.0.0
+ */
+
+/* Admin Bar Branding */
+#wpadminbar {
+    background: #0D5C63;
+}
+
+#wpadminbar .ab-item,
+#wpadminbar a.ab-item,
+#wpadminbar > #wp-toolbar span.ab-label,
+#wpadminbar > #wp-toolbar span.noticons {
+    color: #ffffff;
+}
+
+#wpadminbar .ab-top-menu > li.hover > .ab-item,
+#wpadminbar.nojq .quicklinks .ab-top-menu > li > .ab-item:focus,
+#wpadminbar:not(.mobile) .ab-top-menu > li:hover > .ab-item,
+#wpadminbar:not(.mobile) .ab-top-menu > li > .ab-item:focus {
+    background: #094147;
+    color: #ffffff;
+}
+
+/* Dashboard Widgets */
+.postbox {
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+}
+
+.postbox-header {
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+/* Improve readability */
+.wrap h1,
+.wrap h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+/* Author Help Notice */
+.notice.notice-info h3 {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    color: #0D5C63;
+}
+
+.notice.notice-info ol {
+    margin-left: 1.5em;
+    line-height: 1.8;
+}
+
+.notice.notice-info li {
+    margin-bottom: 0.5em;
+}
+
+/* Larger, more readable buttons */
+.button,
+.button-primary,
+.button-secondary {
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
+.button-primary {
+    background: #0D5C63;
+    border-color: #094147;
+}
+
+.button-primary:hover {
+    background: #094147;
+}
+
+/* Post Editor Improvements */
+.editor-post-title__input,
+.wp-block-post-title {
+    font-size: 32px;
+    font-weight: 600;
+}
+
+/* Category/Taxonomy Checkboxes - Larger for elderly users */
+#taxonomy-category label,
+#taxonomy-article_type label,
+#taxonomy-region label {
+    display: block;
+    padding: 8px 0;
+    font-size: 14px;
+}
+
+#taxonomy-category input[type="checkbox"],
+#taxonomy-article_type input[type="checkbox"],
+#taxonomy-region input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+}
