@@ -39,8 +39,21 @@
                 }, DEBOUNCE_DELAY);
             });
 
-            // Keyboard navigation
-            input.addEventListener('keydown', handleSearchKeyboard);
+            // Enter key: immediate search (bypass debounce)
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const query = this.value.trim();
+
+                    if (query.length >= 3) {
+                        clearTimeout(searchTimeout);
+                        performSearch(query, input);
+                    }
+                } else {
+                    // Other keyboard navigation
+                    handleSearchKeyboard.call(this, e);
+                }
+            });
         });
     }
 
@@ -113,15 +126,20 @@
     }
 
     /**
-     * Highlight search term in text
+     * Highlight search term in text (XSS-safe)
      */
     function highlightTerm(text, term) {
-        const regex = new RegExp('(' + escapeRegex(term) + ')', 'gi');
-        return text.replace(regex, '<mark>$1</mark>');
+        // Escape HTML in both text and term first (XSS prevention)
+        const escapedText = escapeHtml(text);
+        const escapedTerm = escapeHtml(term);
+
+        // Then apply highlighting with escaped values
+        const regex = new RegExp('(' + escapeRegex(escapedTerm) + ')', 'gi');
+        return escapedText.replace(regex, '<mark>$1</mark>');
     }
 
     /**
-     * Escape HTML
+     * Escape HTML (XSS prevention)
      */
     function escapeHtml(text) {
         const div = document.createElement('div');

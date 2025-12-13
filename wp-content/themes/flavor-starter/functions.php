@@ -265,6 +265,17 @@ function humanitarianblog_enqueue_scripts() {
         );
     }
 
+    // Bookmarks Page (only on page-bookmarks.php template)
+    if (is_page_template('page-bookmarks.php')) {
+        wp_enqueue_script(
+            'humanitarianblog-bookmarks-page',
+            HUMANITARIAN_THEME_URI . '/assets/js/bookmarks-page.js',
+            array(),
+            HUMANITARIAN_THEME_VERSION,
+            true
+        );
+    }
+
     // Modals
     wp_enqueue_script(
         'humanitarianblog-modals',
@@ -289,6 +300,19 @@ function humanitarianblog_enqueue_scripts() {
 add_action('wp_enqueue_scripts', 'humanitarianblog_enqueue_scripts');
 
 /**
+ * Add custom body classes
+ */
+function humanitarianblog_body_classes($classes) {
+    // Add single-post class for single posts (compatibility with reading-experience.js)
+    if (is_singular('post')) {
+        $classes[] = 'single-post';
+    }
+
+    return $classes;
+}
+add_filter('body_class', 'humanitarianblog_body_classes');
+
+/**
  * Include required files
  */
 require_once HUMANITARIAN_THEME_DIR . '/inc/custom-taxonomies.php';
@@ -297,5 +321,5 @@ require_once HUMANITARIAN_THEME_DIR . '/inc/ajax-handlers.php';
 
 // Additional includes will be added in future phases
 // require_once HUMANITARIAN_THEME_DIR . '/inc/template-functions.php';
-// require_once HUMANITARIAN_THEME_DIR . '/inc/pdf-generator.php';
-// require_once HUMANITARIAN_THEME_DIR . '/inc/qr-generator.php';
+require_once HUMANITARIAN_THEME_DIR . '/inc/pdf-generator.php';
+require_once HUMANITARIAN_THEME_DIR . '/inc/qr-generator.php';

@@ -12,7 +12,11 @@
     let toolbar;
 
     document.addEventListener('DOMContentLoaded', function() {
-        if (!document.body.classList.contains('single-post')) return;
+        // Check if single post (WordPress adds 'single' class, check both for compatibility)
+        const isSinglePost = document.body.classList.contains('single-post') ||
+                           (document.body.classList.contains('single') && document.body.classList.contains('single-format-standard'));
+
+        if (!isSinglePost) return;
 
         initProgressBar();
         initToolbarVisibility();
@@ -28,8 +32,18 @@
         progressBar.innerHTML = '<div class="reading-progress-fill"></div>';
         document.body.prepend(progressBar);
 
-        // Update on scroll
-        window.addEventListener('scroll', updateProgressBar);
+        // Throttled scroll handler for progress bar (performance)
+        let ticking = false;
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    updateProgressBar();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
         updateProgressBar(); // Initial update
     }
 
@@ -54,22 +68,30 @@
 
         let lastScrollTop = 0;
         let isVisible = false;
+        let ticking = false;
 
+        // Throttled scroll handler (performance optimization)
         window.addEventListener('scroll', function() {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-            // Show toolbar after scrolling 200px
-            if (scrollTop > 200 && !isVisible) {
-                toolbar.classList.add('is-visible');
-                isVisible = true;
-            }
-            // Hide when at top
-            else if (scrollTop <= 200 && isVisible) {
-                toolbar.classList.remove('is-visible');
-                isVisible = false;
-            }
+                    // Show toolbar after scrolling 200px
+                    if (scrollTop > 200 && !isVisible) {
+                        toolbar.classList.add('is-visible');
+                        isVisible = true;
+                    }
+                    // Hide when at top
+                    else if (scrollTop <= 200 && isVisible) {
+                        toolbar.classList.remove('is-visible');
+                        isVisible = false;
+                    }
 
-            lastScrollTop = scrollTop;
+                    lastScrollTop = scrollTop;
+                    ticking = false;
+                });
+                ticking = true;
+            }
         });
     }
 

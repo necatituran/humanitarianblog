@@ -20,6 +20,10 @@
 
     });
 
+    // Global event handlers (stored to prevent memory leaks)
+    let escapeHandler = null;
+    let clickOutsideHandler = null;
+
     /**
      * Mobile Menu Toggle
      */
@@ -40,29 +44,59 @@
             // Trap focus in menu when open
             if (!isExpanded) {
                 trapFocus(navigation);
+                attachMenuEventListeners(menuToggle, navigation, body);
+            } else {
+                removeMenuEventListeners();
             }
         });
+    }
 
-        // Close menu on Escape key
-        document.addEventListener('keydown', function(e) {
+    /**
+     * Attach menu event listeners (Escape & click outside)
+     */
+    function attachMenuEventListeners(menuToggle, navigation, body) {
+        // Remove old listeners first (prevent duplicates)
+        removeMenuEventListeners();
+
+        // Escape key handler
+        escapeHandler = function(e) {
             if (e.key === 'Escape' && navigation.classList.contains('is-open')) {
                 menuToggle.setAttribute('aria-expanded', 'false');
                 navigation.classList.remove('is-open');
                 body.classList.remove('menu-open');
                 menuToggle.focus();
+                removeMenuEventListeners();
             }
-        });
+        };
 
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
+        // Click outside handler
+        clickOutsideHandler = function(e) {
             if (navigation.classList.contains('is-open') &&
                 !navigation.contains(e.target) &&
                 !menuToggle.contains(e.target)) {
                 menuToggle.setAttribute('aria-expanded', 'false');
                 navigation.classList.remove('is-open');
                 body.classList.remove('menu-open');
+                removeMenuEventListeners();
             }
-        });
+        };
+
+        document.addEventListener('keydown', escapeHandler);
+        document.addEventListener('click', clickOutsideHandler);
+    }
+
+    /**
+     * Remove menu event listeners (cleanup)
+     */
+    function removeMenuEventListeners() {
+        if (escapeHandler) {
+            document.removeEventListener('keydown', escapeHandler);
+            escapeHandler = null;
+        }
+        if (clickOutsideHandler) {
+            document.removeEventListener('click', clickOutsideHandler);
+            clickOutsideHandler = null;
+        }
     }
 
     /**
@@ -259,12 +293,19 @@
             return;
         }
 
-        // Show/hide on scroll
+        // Throttled scroll handler (performance optimization)
+        let ticking = false;
         window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 300) {
-                backToTopButton.classList.add('is-visible');
-            } else {
-                backToTopButton.classList.remove('is-visible');
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    if (window.pageYOffset > 300) {
+                        backToTopButton.classList.add('is-visible');
+                    } else {
+                        backToTopButton.classList.remove('is-visible');
+                    }
+                    ticking = false;
+                });
+                ticking = true;
             }
         });
 
