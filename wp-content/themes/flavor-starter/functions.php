@@ -90,6 +90,48 @@ function flavor_starter_content_width() {
 add_action('after_setup_theme', 'flavor_starter_content_width', 0);
 
 /**
+ * Google Fonts URL
+ *
+ * @return string Google Fonts URL
+ */
+function flavor_starter_fonts_url() {
+    $fonts_url = '';
+    $fonts     = array();
+    $subsets   = 'latin,latin-ext';
+
+    // Source Serif 4 (Headlines)
+    if ('off' !== _x('on', 'Source Serif 4 font: on or off', 'flavor-starter')) {
+        $fonts[] = 'Source Serif 4:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700';
+    }
+
+    // Inter (Body & UI)
+    if ('off' !== _x('on', 'Inter font: on or off', 'flavor-starter')) {
+        $fonts[] = 'Inter:wght@400;500;600;700';
+    }
+
+    // Amiri (Arabic Headlines)
+    if ('off' !== _x('on', 'Amiri font: on or off', 'flavor-starter')) {
+        $fonts[] = 'Amiri:ital,wght@0,400;0,700;1,400;1,700';
+        $subsets .= ',arabic';
+    }
+
+    // IBM Plex Sans Arabic (Arabic Body)
+    if ('off' !== _x('on', 'IBM Plex Sans Arabic font: on or off', 'flavor-starter')) {
+        $fonts[] = 'IBM+Plex+Sans+Arabic:wght@400;500;600;700';
+        $subsets .= ',arabic';
+    }
+
+    if ($fonts) {
+        $fonts_url = add_query_arg(array(
+            'family'  => implode('&family=', $fonts),
+            'display' => 'swap',
+        ), 'https://fonts.googleapis.com/css2');
+    }
+
+    return esc_url_raw($fonts_url);
+}
+
+/**
  * Register Widget Areas
  */
 function flavor_starter_widgets_init() {
@@ -151,11 +193,19 @@ add_action('widgets_init', 'flavor_starter_widgets_init');
  */
 function flavor_starter_enqueue_scripts() {
 
+    // Google Fonts
+    wp_enqueue_style(
+        'flavor-starter-fonts',
+        flavor_starter_fonts_url(),
+        array(),
+        null
+    );
+
     // Main stylesheet
     wp_enqueue_style(
         'flavor-starter-style',
         FLAVOR_THEME_URI . '/assets/css/style.css',
-        array(),
+        array('flavor-starter-fonts'),
         FLAVOR_THEME_VERSION
     );
 
