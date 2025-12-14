@@ -1,0 +1,31 @@
+{
+    "name": "humanitarian/blog-theme",
+    "description": "HumanitarianBlog WordPress Theme - Elderly-friendly humanitarian news platform",
+    "type": "wordpress-theme",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Claude Sonnet 4.5",
+            "email": "noreply@anthropic.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "mpdf/mpdf": "^8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "HumanitarianBlog\\": "lib/"
+        }
+    },
+    "config": {
+        "vendor-dir": "vendor",
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/installers": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
