@@ -261,8 +261,16 @@ add_action('admin_bar_menu', 'flavor_add_help_links', 100);
  */
 function flavor_set_default_post_status($post) {
 
-    if ($post->post_type === 'post' && $post->post_status === 'auto-draft' && !current_user_can('publish_posts')) {
-        $post->post_status = 'pending';
+    // Check if $post is an array (happens with wp_insert_post_data filter)
+    $post_type = is_array($post) ? $post['post_type'] : $post->post_type;
+    $post_status = is_array($post) ? $post['post_status'] : $post->post_status;
+
+    if ($post_type === 'post' && $post_status === 'auto-draft' && !current_user_can('publish_posts')) {
+        if (is_array($post)) {
+            $post['post_status'] = 'pending';
+        } else {
+            $post->post_status = 'pending';
+        }
     }
 
     return $post;
