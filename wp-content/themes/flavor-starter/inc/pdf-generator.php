@@ -30,6 +30,9 @@ function humanitarianblog_is_mpdf_available() {
         return class_exists('Mpdf\Mpdf');
     }
 
+    // NOTE: mPDF requires Composer installation
+    // Run: composer install in theme directory
+    // For now, return false (feature disabled until Composer is set up)
     return false;
 }
 
