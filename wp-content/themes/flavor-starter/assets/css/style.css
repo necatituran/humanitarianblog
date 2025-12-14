@@ -723,3 +723,591 @@ a:hover {
 @media (min-width: 768px) {
     .hide-desktop { display: none; }
 }
+
+/* ============================================================================
+   PHASE 7: MODALS, BOOKMARKS, READING EXPERIENCE
+   ========================================================================= */
+
+/* ==========================================================================
+   Modal System
+   ========================================================================== */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.is-open {
+    display: flex;
+    opacity: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    position: relative;
+    background-color: var(--color-white);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    z-index: 10000;
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    background: none;
+    border: none;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--color-text-muted);
+    transition: color 0.2s;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-close:hover {
+    color: var(--color-danger);
+}
+
+.modal-content h2 {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-4);
+    padding-right: var(--space-8);
+}
+
+/* PDF Modal */
+.pdf-options {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+}
+
+.pdf-download {
+    text-align: left;
+    padding: var(--space-4);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    transition: all 0.2s;
+    background: white;
+    cursor: pointer;
+}
+
+.pdf-download strong {
+    display: block;
+    font-size: var(--text-lg);
+    margin-bottom: 0.25rem;
+    color: var(--color-text);
+}
+
+.pdf-download small {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+}
+
+.pdf-download:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.pdf-download:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#pdf-status {
+    margin-top: var(--space-4);
+    padding: var(--space-3);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-sm);
+}
+
+#pdf-status .loading {
+    color: var(--color-primary);
+    background: var(--color-primary-light);
+}
+
+#pdf-status .success {
+    color: var(--color-success);
+    background: #d1fae5;
+}
+
+#pdf-status .error {
+    color: var(--color-danger);
+    background: #fee2e2;
+}
+
+/* QR Modal */
+.qr-code-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-6) 0;
+}
+
+.qr-image {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2);
+    background: white;
+}
+
+.qr-url {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    word-break: break-all;
+    text-align: center;
+}
+
+.qr-loading {
+    padding: var(--space-8);
+    text-align: center;
+    color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   Bookmarks Page
+   ========================================================================== */
+
+.bookmarks-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-6);
+    padding: var(--space-4);
+    background: var(--color-background-light);
+    border-radius: var(--radius-md);
+}
+
+.bookmarks-filters,
+.bookmarks-sort {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.bookmarks-filters label,
+.bookmarks-sort label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+.bookmark-filter,
+.bookmark-sort-select {
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: white;
+    font-size: var(--text-base);
+}
+
+.bookmarks-actions {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.bookmarks-meta {
+    text-align: center;
+    margin-bottom: var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+}
+
+.bookmarks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-6);
+    margin-top: var(--space-6);
+}
+
+.bookmark-card {
+    background: white;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.bookmark-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.bookmark-thumbnail {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.bookmark-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.no-thumbnail {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+}
+
+.bookmark-content {
+    padding: var(--space-4);
+}
+
+.bookmark-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+
+.bookmark-category {
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+}
+
+.bookmark-title {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-2);
+    line-height: 1.4;
+}
+
+.bookmark-title a {
+    color: var(--color-text);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.bookmark-title a:hover {
+    color: var(--color-primary);
+}
+
+.bookmark-excerpt {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: var(--space-4);
+}
+
+.bookmark-actions {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: var(--text-sm);
+}
+
+.btn-danger {
+    background-color: var(--color-danger);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #dc2626;
+}
+
+/* Empty State */
+.bookmarks-empty {
+    text-align: center;
+    padding: var(--space-12) var(--space-6);
+}
+
+.empty-state svg {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+}
+
+.empty-state h2 {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-2);
+    color: var(--color-text);
+}
+
+.empty-state p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+}
+
+/* Loading State */
+.bookmarks-loading {
+    text-align: center;
+    padding: var(--space-8);
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   Reading Experience
+   ========================================================================== */
+
+/* Reading Progress Bar */
+.reading-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 9998;
+}
+
+.reading-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    width: 0%;
+    transition: width 0.1s ease;
+}
+
+/* Reading Toolbar */
+#reading-toolbar {
+    position: fixed;
+    bottom: -100px;
+    right: var(--space-6);
+    background: white;
+    border-radius: 50px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    padding: var(--space-3);
+    display: flex;
+    gap: var(--space-2);
+    z-index: 9997;
+    transition: bottom 0.3s ease;
+}
+
+#reading-toolbar.is-visible {
+    bottom: var(--space-6);
+}
+
+#reading-toolbar button {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: var(--color-background-light);
+    color: var(--color-text);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#reading-toolbar button:hover {
+    background: var(--color-primary);
+    color: white;
+    transform: scale(1.1);
+}
+
+/* ==========================================================================
+   Notifications
+   ========================================================================== */
+
+.notification {
+    position: fixed;
+    bottom: -100px;
+    right: var(--space-6);
+    background: var(--color-success);
+    color: white;
+    padding: var(--space-4) var(--space-6);
+    border-radius: var(--radius-md);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    z-index: 10001;
+    transition: bottom 0.3s ease;
+}
+
+.notification.show {
+    bottom: var(--space-6);
+}
+
+/* ==========================================================================
+   Mobile Menu
+   ========================================================================== */
+
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2);
+    cursor: pointer;
+    color: var(--color-primary);
+    transition: all 0.2s;
+}
+
+.mobile-menu-toggle:hover {
+    background: var(--color-primary);
+    color: white;
+}
+
+.mobile-menu-toggle svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+}
+
+/* Body lock when menu open */
+body.menu-open {
+    overflow: hidden;
+}
+
+body.menu-open::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+    backdrop-filter: blur(4px);
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    .site-navigation {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 400px;
+        height: 100vh;
+        background: white;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        transition: right 0.3s ease;
+        overflow-y: auto;
+        z-index: 9999;
+        padding: var(--space-6);
+    }
+
+    .site-navigation.is-open {
+        right: 0;
+    }
+
+    .site-navigation ul {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .site-navigation li {
+        width: 100%;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .site-navigation a {
+        display: block;
+        padding: var(--space-4);
+    }
+
+    .bookmarks-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .bookmarks-filters,
+    .bookmarks-sort,
+    .bookmarks-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .bookmarks-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: var(--space-4);
+    }
+
+    #reading-toolbar {
+        right: var(--space-4);
+    }
+
+    #reading-toolbar button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .notification {
+        right: var(--space-4);
+        left: var(--space-4);
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .bookmarks-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1025px) {
+    .bookmarks-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
