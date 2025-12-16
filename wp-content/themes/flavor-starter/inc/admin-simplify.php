@@ -276,3 +276,132 @@ function flavor_set_default_post_status($post) {
     return $post;
 }
 add_filter('wp_insert_post_data', 'flavor_set_default_post_status');
+
+/**
+ * Rename "Posts" to "Articles" in admin
+ */
+function humanitarian_rename_posts_to_articles($args, $post_type) {
+    if ($post_type !== 'post') {
+        return $args;
+    }
+
+    $args['labels'] = array(
+        'name'                  => __('Articles', 'humanitarianblog'),
+        'singular_name'         => __('Article', 'humanitarianblog'),
+        'add_new'               => __('Add New', 'humanitarianblog'),
+        'add_new_item'          => __('Add New Article', 'humanitarianblog'),
+        'edit_item'             => __('Edit Article', 'humanitarianblog'),
+        'new_item'              => __('New Article', 'humanitarianblog'),
+        'view_item'             => __('View Article', 'humanitarianblog'),
+        'view_items'            => __('View Articles', 'humanitarianblog'),
+        'search_items'          => __('Search Articles', 'humanitarianblog'),
+        'not_found'             => __('No articles found', 'humanitarianblog'),
+        'not_found_in_trash'    => __('No articles found in Trash', 'humanitarianblog'),
+        'all_items'             => __('All Articles', 'humanitarianblog'),
+        'archives'              => __('Article Archives', 'humanitarianblog'),
+        'attributes'            => __('Article Attributes', 'humanitarianblog'),
+        'insert_into_item'      => __('Insert into article', 'humanitarianblog'),
+        'uploaded_to_this_item' => __('Uploaded to this article', 'humanitarianblog'),
+        'filter_items_list'     => __('Filter articles list', 'humanitarianblog'),
+        'items_list_navigation' => __('Articles list navigation', 'humanitarianblog'),
+        'items_list'            => __('Articles list', 'humanitarianblog'),
+        'menu_name'             => __('Articles', 'humanitarianblog'),
+        'name_admin_bar'        => __('Article', 'humanitarianblog'),
+    );
+
+    // Change menu icon to document
+    $args['menu_icon'] = 'dashicons-media-document';
+
+    return $args;
+}
+add_filter('register_post_type_args', 'humanitarian_rename_posts_to_articles', 10, 2);
+
+/**
+ * Add "My Articles" filter button in admin post list
+ */
+function humanitarian_my_articles_filter_button($post_type) {
+    if ($post_type !== 'post') {
+        return;
+    }
+
+    $current_user_id = get_current_user_id();
+    $is_my_articles = isset($_GET['author']) && $_GET['author'] == $current_user_id;
+
+    // Get user's article count
+    $user_post_count = count_user_posts($current_user_id, 'post', true);
+
+    $all_url = admin_url('edit.php?post_type=post');
+    $my_url = add_query_arg('author', $current_user_id, $all_url);
+
+    ?>
+    <div class="alignleft actions humanitarian-article-filters" style="margin-right: 8px;">
+        <a href="<?php echo esc_url($all_url); ?>"
+           class="button <?php echo !$is_my_articles ? 'button-primary' : ''; ?>"
+           style="margin-right: 4px;">
+            <?php _e('All Articles', 'humanitarianblog'); ?>
+        </a>
+        <a href="<?php echo esc_url($my_url); ?>"
+           class="button <?php echo $is_my_articles ? 'button-primary' : ''; ?>">
+            <span class="dashicons dashicons-edit" style="vertical-align: middle; margin-right: 3px; font-size: 16px;"></span>
+            <?php printf(__('My Articles (%d)', 'humanitarianblog'), $user_post_count); ?>
+        </a>
+    </div>
+    <?php
+}
+add_action('restrict_manage_posts', 'humanitarian_my_articles_filter_button');
+
+/**
+ * Add article count column to admin post list
+ */
+function humanitarian_add_thumbnail_column($columns) {
+    $new_columns = array();
+
+    foreach ($columns as $key => $value) {
+        if ($key === 'title') {
+            $new_columns['thumbnail'] = __('Image', 'humanitarianblog');
+        }
+        $new_columns[$key] = $value;
+    }
+
+    return $new_columns;
+}
+add_filter('manage_posts_columns', 'humanitarian_add_thumbnail_column');
+
+/**
+ * Display thumbnail in admin column
+ */
+function humanitarian_thumbnail_column_content($column, $post_id) {
+    if ($column !== 'thumbnail') {
+        return;
+    }
+
+    $thumbnail = get_the_post_thumbnail($post_id, array(60, 45), array(
+        'style' => 'border-radius: 4px; object-fit: cover;'
+    ));
+
+    if ($thumbnail) {
+        echo $thumbnail;
+    } else {
+        echo '<span class="dashicons dashicons-format-image" style="font-size: 30px; color: #ccc; width: 60px; text-align: center;"></span>';
+    }
+}
+add_action('manage_posts_custom_column', 'humanitarian_thumbnail_column_content', 10, 2);
+
+/**
+ * Set thumbnail column width
+ */
+function humanitarian_thumbnail_column_width() {
+    ?>
+    <style>
+        .column-thumbnail { width: 70px; }
+        .column-thumbnail img {
+            width: 60px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+    </style>
+    <?php
+}
+add_action('admin_head-edit.php', 'humanitarian_thumbnail_column_width');

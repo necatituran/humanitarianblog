@@ -666,6 +666,9 @@ require_once HUMANITARIAN_THEME_DIR . '/inc/ajax-handlers.php';
 // require_once HUMANITARIAN_THEME_DIR . '/inc/template-functions.php';
 require_once HUMANITARIAN_THEME_DIR . '/inc/pdf-generator.php';
 require_once HUMANITARIAN_THEME_DIR . '/inc/qr-generator.php';
+require_once HUMANITARIAN_THEME_DIR . '/inc/email-verification.php';
+require_once HUMANITARIAN_THEME_DIR . '/inc/post-notifications.php';
+require_once HUMANITARIAN_THEME_DIR . '/inc/auto-translate.php';
 
 /**
  * ==========================================================================
@@ -1152,3 +1155,125 @@ function humanitarianblog_bookmark_scripts() {
     }
 }
 add_action('wp_enqueue_scripts', 'humanitarianblog_bookmark_scripts', 20);
+
+/**
+ * ============================================
+ * AUTHOR PROFILE CUSTOM FIELDS
+ * Additional fields for author pages
+ * ============================================
+ */
+
+/**
+ * Add custom contact methods to user profile
+ */
+function humanitarian_custom_contact_methods($contactmethods) {
+    $contactmethods['twitter'] = __('Twitter Username (without @)', 'humanitarianblog');
+    $contactmethods['linkedin'] = __('LinkedIn Profile URL', 'humanitarianblog');
+    $contactmethods['facebook'] = __('Facebook Profile URL', 'humanitarianblog');
+    $contactmethods['instagram'] = __('Instagram Username (without @)', 'humanitarianblog');
+    $contactmethods['author_website'] = __('Personal Website', 'humanitarianblog');
+
+    return $contactmethods;
+}
+add_filter('user_contactmethods', 'humanitarian_custom_contact_methods');
+
+/**
+ * Add custom profile fields for authors
+ */
+function humanitarian_extra_profile_fields($user) {
+    // Only show for users who can edit posts
+    if (!current_user_can('edit_posts')) {
+        return;
+    }
+    ?>
+    <h3><?php _e('Author Profile Information', 'humanitarianblog'); ?></h3>
+    <table class="form-table">
+        <tr>
+            <th><label for="user_title"><?php _e('Title / Role', 'humanitarianblog'); ?></label></th>
+            <td>
+                <input type="text" name="user_title" id="user_title"
+                       value="<?php echo esc_attr(get_user_meta($user->ID, 'user_title', true)); ?>"
+                       class="regular-text" />
+                <p class="description"><?php _e('e.g., Senior Correspondent, Editor-in-Chief, Investigative Journalist', 'humanitarianblog'); ?></p>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="location"><?php _e('Location', 'humanitarianblog'); ?></label></th>
+            <td>
+                <input type="text" name="location" id="location"
+                       value="<?php echo esc_attr(get_user_meta($user->ID, 'location', true)); ?>"
+                       class="regular-text" />
+                <p class="description"><?php _e('e.g., Istanbul, Turkey or Middle East Bureau', 'humanitarianblog'); ?></p>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="cover_image"><?php _e('Cover Image URL', 'humanitarianblog'); ?></label></th>
+            <td>
+                <input type="url" name="cover_image" id="cover_image"
+                       value="<?php echo esc_url(get_user_meta($user->ID, 'cover_image', true)); ?>"
+                       class="regular-text" />
+                <p class="description"><?php _e('URL of the cover/banner image for your author page (1200x400 recommended)', 'humanitarianblog'); ?></p>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="expertise"><?php _e('Areas of Expertise', 'humanitarianblog'); ?></label></th>
+            <td>
+                <input type="text" name="expertise" id="expertise"
+                       value="<?php echo esc_attr(get_user_meta($user->ID, 'expertise', true)); ?>"
+                       class="regular-text" />
+                <p class="description"><?php _e('Comma-separated: e.g., Refugee Crisis, Human Rights, Middle East Politics', 'humanitarianblog'); ?></p>
+            </td>
+        </tr>
+    </table>
+    <?php
+}
+add_action('show_user_profile', 'humanitarian_extra_profile_fields');
+add_action('edit_user_profile', 'humanitarian_extra_profile_fields');
+
+/**
+ * Save custom profile fields
+ */
+function humanitarian_save_extra_profile_fields($user_id) {
+    if (!current_user_can('edit_user', $user_id)) {
+        return false;
+    }
+
+    $fields = array('user_title', 'location', 'cover_image', 'expertise');
+
+    foreach ($fields as $field) {
+        if (isset($_POST[$field])) {
+            if ($field === 'cover_image') {
+                update_user_meta($user_id, $field, esc_url_raw($_POST[$field]));
+            } else {
+                update_user_meta($user_id, $field, sanitize_text_field($_POST[$field]));
+            }
+        }
+    }
+}
+add_action('personal_options_update', 'humanitarian_save_extra_profile_fields');
+add_action('edit_user_profile_update', 'humanitarian_save_extra_profile_fields');
+
+/**
+ * Get total views for an author's posts
+ */
+function humanitarian_get_author_total_views($author_id) {
+    $args = array(
+        'author' => $author_id,
+        'post_type' => 'post',
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'fields' => 'ids',
+    );
+
+    $posts = get_posts($args);
+    $total_views = 0;
+
+    foreach ($posts as $post_id) {
+        $views = get_post_meta($post_id, '_post_views_count', true);
+        if ($views) {
+            $total_views += intval($views);
+        }
+    }
+
+    return $total_views;
+}

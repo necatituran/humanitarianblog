@@ -18,12 +18,55 @@ get_header();
 
 // Handle login errors
 $login_error = '';
+$login_message_type = 'error';
+
 if (isset($_GET['login']) && $_GET['login'] === 'failed') {
     $login_error = __('Invalid username or password. Please try again.', 'flavor-starter');
 } elseif (isset($_GET['login']) && $_GET['login'] === 'empty') {
     $login_error = __('Please enter both username and password.', 'flavor-starter');
 } elseif (isset($_GET['logged_out']) && $_GET['logged_out'] === 'true') {
     $login_error = __('You have been logged out successfully.', 'flavor-starter');
+    $login_message_type = 'success';
+}
+
+// Handle email verification messages
+if (isset($_GET['verify'])) {
+    $verify_messages = [
+        'success' => [
+            'type' => 'success',
+            'message' => __('Your email has been verified successfully! You can now log in.', 'humanitarianblog')
+        ],
+        'already' => [
+            'type' => 'info',
+            'message' => __('Your email has already been verified. Please log in.', 'humanitarianblog')
+        ],
+        'invalid' => [
+            'type' => 'error',
+            'message' => __('Invalid verification link. Please try again or request a new verification email.', 'humanitarianblog')
+        ],
+        'expired' => [
+            'type' => 'error',
+            'message' => __('This verification link has expired. Please request a new verification email.', 'humanitarianblog')
+        ],
+        'resent' => [
+            'type' => 'success',
+            'message' => __('A new verification email has been sent. Please check your inbox.', 'humanitarianblog')
+        ],
+        'limit' => [
+            'type' => 'error',
+            'message' => __('Too many verification email requests. Please try again in an hour.', 'humanitarianblog')
+        ],
+        'error' => [
+            'type' => 'error',
+            'message' => __('An error occurred. Please try again later.', 'humanitarianblog')
+        ]
+    ];
+
+    $verify_status = sanitize_key($_GET['verify']);
+    if (isset($verify_messages[$verify_status])) {
+        $login_error = $verify_messages[$verify_status]['message'];
+        $login_message_type = $verify_messages[$verify_status]['type'];
+    }
 }
 ?>
 
@@ -37,8 +80,8 @@ if (isset($_GET['login']) && $_GET['login'] === 'failed') {
                 </div>
 
                 <?php if ($login_error) : ?>
-                    <div class="auth-message <?php echo isset($_GET['logged_out']) ? 'auth-message-success' : 'auth-message-error'; ?>">
-                        <?php echo esc_html($login_error); ?>
+                    <div class="auth-message auth-message-<?php echo esc_attr($login_message_type); ?>">
+                        <?php echo wp_kses_post($login_error); ?>
                     </div>
                 <?php endif; ?>
 
