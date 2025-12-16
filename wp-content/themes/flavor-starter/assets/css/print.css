@@ -2,15 +2,11 @@
  * Print Stylesheet
  *
  * Optimized styles for printing articles
- * Designed for conflict zones with limited printing resources
+ * Only prints article title, meta, and content
  *
  * @package HumanitarianBlog
  * @since 1.0.0
  */
-
-/* ==========================================================================
-   Base Print Settings
-   ========================================================================== */
 
 @media print {
 
@@ -20,416 +16,343 @@
         size: A4;
     }
 
-    * {
-        background: transparent !important;
-        color: #000 !important;
-        box-shadow: none !important;
-        text-shadow: none !important;
+    /* ==========================================================================
+       HIDE EVERYTHING BY DEFAULT
+       ========================================================================== */
+
+    body * {
+        visibility: hidden;
     }
 
     /* ==========================================================================
-       Typography for Print
+       SHOW ONLY ARTICLE CONTENT
+       ========================================================================== */
+
+    /* Main article container */
+    .single-article,
+    .single-article * {
+        visibility: visible;
+    }
+
+    .single-article {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+
+    /* Article Hero (title, meta, image) */
+    .article-hero,
+    .article-hero * {
+        visibility: visible;
+    }
+
+    /* Article Content */
+    .article-content,
+    .article-content * {
+        visibility: visible;
+    }
+
+    /* Article Footer (tags) */
+    .article-footer,
+    .article-footer * {
+        visibility: visible;
+    }
+
+    /* Author Bio */
+    .author-bio-section,
+    .author-bio-section * {
+        visibility: visible;
+    }
+
+    /* ==========================================================================
+       HIDE NON-ESSENTIAL PARTS OF ARTICLE
+       ========================================================================== */
+
+    /* Hide share buttons */
+    .article-share,
+    .share-buttons {
+        display: none !important;
+    }
+
+    /* Hide category badge (keep title clean) */
+    .category-badge {
+        display: none !important;
+    }
+
+    /* Hide related articles */
+    .related-articles-section {
+        display: none !important;
+    }
+
+    /* Hide comments */
+    .comments-section {
+        display: none !important;
+    }
+
+    /* Hide toolbar */
+    .reading-toolbar,
+    #reading-toolbar {
+        display: none !important;
+    }
+
+    /* Hide progress bar */
+    .reading-progress-bar {
+        display: none !important;
+    }
+
+    /* Hide modals */
+    .modal {
+        display: none !important;
+    }
+
+    /* Hide notifications */
+    .notification {
+        display: none !important;
+    }
+
+    /* ==========================================================================
+       TYPOGRAPHY FOR PRINT
        ========================================================================== */
 
     body {
-        font-family: Georgia, 'Times New Roman', serif;
-        font-size: 12pt;
-        line-height: 1.5;
-        color: #000;
-        background: #fff;
+        font-family: Georgia, 'Times New Roman', serif !important;
+        font-size: 12pt !important;
+        line-height: 1.6 !important;
+        color: #000 !important;
+        background: #fff !important;
     }
 
-    h1, h2, h3, h4, h5, h6 {
-        font-family: Georgia, 'Times New Roman', serif;
+    /* Title */
+    .article-hero-title {
+        font-size: 24pt !important;
+        font-weight: bold !important;
+        margin-bottom: 12pt !important;
+        color: #000 !important;
+    }
+
+    /* Excerpt */
+    .article-hero-excerpt {
+        font-size: 14pt !important;
+        font-style: italic !important;
+        margin-bottom: 12pt !important;
+        color: #333 !important;
+    }
+
+    /* Meta info */
+    .article-hero-meta {
+        font-size: 10pt !important;
+        border-bottom: 1pt solid #ccc !important;
+        padding-bottom: 10pt !important;
+        margin-bottom: 20pt !important;
+    }
+
+    /* Hide author avatar in print */
+    .meta-author img,
+    .author-avatar img {
+        display: none !important;
+    }
+
+    /* Content headings */
+    .article-content h2 {
+        font-size: 18pt !important;
+        margin-top: 20pt !important;
+        margin-bottom: 10pt !important;
         page-break-after: avoid;
-        page-break-inside: avoid;
     }
 
-    h1 {
-        font-size: 24pt;
-        margin-bottom: 12pt;
+    .article-content h3 {
+        font-size: 14pt !important;
+        margin-top: 16pt !important;
+        margin-bottom: 8pt !important;
+        page-break-after: avoid;
     }
 
-    h2 {
-        font-size: 18pt;
-        margin-bottom: 10pt;
-        margin-top: 16pt;
-    }
-
-    h3 {
-        font-size: 14pt;
-        margin-bottom: 8pt;
-        margin-top: 12pt;
-    }
-
-    p {
-        font-size: 12pt;
-        margin-bottom: 10pt;
+    /* Paragraphs */
+    .article-content p {
+        font-size: 12pt !important;
+        margin-bottom: 10pt !important;
+        text-align: justify !important;
         orphans: 3;
         widows: 3;
     }
 
     /* ==========================================================================
-       Hide Non-Essential Elements
+       IMAGES
        ========================================================================== */
 
-    /* Navigation */
-    nav,
-    .main-navigation,
-    .site-navigation,
-    .breadcrumbs {
+    .article-hero-image img {
+        max-width: 100% !important;
+        height: auto !important;
+        margin-bottom: 10pt !important;
+    }
+
+    /* Hide image caption overlay */
+    .image-caption {
         display: none !important;
     }
 
-    /* Interactive Elements */
-    .search-form,
-    .comment-form,
-    .reading-toolbar,
-    .share-buttons,
-    .social-links,
-    button,
-    .btn {
-        display: none !important;
-    }
-
-    /* Widgets & Sidebar */
-    .sidebar,
-    .widget,
-    .widget-area,
-    aside {
-        display: none !important;
-    }
-
-    /* Footer */
-    .site-footer,
-    footer {
-        display: none !important;
-    }
-
-    /* WordPress Admin Bar */
-    #wpadminbar {
-        display: none !important;
-    }
-
-    /* Modals & Overlays */
-    .modal,
-    .popup,
-    .overlay,
-    .newsletter-signup {
-        display: none !important;
-    }
-
-    /* Related Posts (save ink) */
-    .related-articles,
-    .related-posts {
-        display: none !important;
-    }
-
-    /* Pagination */
-    .pagination,
-    .post-navigation {
-        display: none !important;
-    }
-
-    /* ==========================================================================
-       Show Essential Content
-       ========================================================================== */
-
-    /* Article Content */
-    .entry-header,
-    .entry-content,
-    .entry-footer {
-        display: block !important;
-    }
-
-    /* Author Bio (important for credibility) */
-    .author-bio {
-        display: block !important;
-        border-top: 1pt solid #000;
-        padding-top: 10pt;
-        margin-top: 20pt;
-        page-break-inside: avoid;
-    }
-
-    /* ==========================================================================
-       Links
-       ========================================================================== */
-
-    /* Show URLs after links */
-    a[href]:after {
-        content: " (" attr(href) ")";
-        font-size: 10pt;
-        color: #666;
-    }
-
-    /* Don't show URLs for anchors or javascript */
-    a[href^="#"]:after,
-    a[href^="javascript:"]:after {
-        content: "";
-    }
-
-    /* Internal links - no need to show full URL */
-    a[href^="/"]:after {
-        content: "";
-    }
-
-    a {
-        text-decoration: underline;
-        color: #000;
-    }
-
-    /* ==========================================================================
-       Images
-       ========================================================================== */
-
-    img {
+    .article-content img {
         max-width: 100% !important;
         height: auto !important;
         page-break-inside: avoid;
-        page-break-after: avoid;
-    }
-
-    /* Featured Image */
-    .entry-thumbnail,
-    .post-thumbnail {
-        margin-bottom: 15pt;
-        page-break-inside: avoid;
-    }
-
-    /* Image Captions */
-    .wp-caption-text,
-    figcaption {
-        font-size: 10pt;
-        font-style: italic;
-        margin-top: 5pt;
-        color: #666;
     }
 
     /* ==========================================================================
-       Blockquotes
+       BLOCKQUOTES
        ========================================================================== */
 
     blockquote {
-        border-left: 3pt solid #000;
-        padding-left: 10pt;
-        margin: 15pt 0;
-        font-style: italic;
+        border-left: 3pt solid #000 !important;
+        padding-left: 15pt !important;
+        margin: 15pt 0 !important;
+        font-style: italic !important;
         page-break-inside: avoid;
     }
 
     /* ==========================================================================
-       Lists
+       LINKS
        ========================================================================== */
 
-    ul, ol {
-        margin-bottom: 10pt;
-        padding-left: 20pt;
+    a {
+        color: #000 !important;
+        text-decoration: underline !important;
     }
 
-    li {
-        margin-bottom: 5pt;
+    /* Show URL after external links */
+    .article-content a[href^="http"]:after {
+        content: " (" attr(href) ")" !important;
+        font-size: 9pt !important;
+        color: #666 !important;
+    }
+
+    /* Don't show URL for internal links */
+    .article-content a[href^="/"]:after,
+    .article-content a[href^="#"]:after {
+        content: "" !important;
     }
 
     /* ==========================================================================
-       Tables
+       TAGS
        ========================================================================== */
 
-    table {
-        border-collapse: collapse;
-        width: 100%;
-        margin-bottom: 15pt;
-        page-break-inside: avoid;
+    .article-tags {
+        margin-top: 20pt !important;
+        padding-top: 10pt !important;
+        border-top: 1pt solid #ccc !important;
+        font-size: 10pt !important;
     }
 
-    th, td {
-        border: 1pt solid #000;
-        padding: 5pt;
-        text-align: left;
-    }
-
-    th {
-        font-weight: bold;
-        background: #f0f0f0 !important;
+    .tag-link {
+        display: inline-block !important;
+        padding: 2pt 5pt !important;
+        border: 1pt solid #000 !important;
+        margin: 2pt !important;
+        text-decoration: none !important;
     }
 
     /* ==========================================================================
-       Code Blocks
+       AUTHOR BIO
        ========================================================================== */
 
-    pre, code {
-        font-family: 'Courier New', Courier, monospace;
-        font-size: 10pt;
-        border: 1pt solid #000;
-        padding: 5pt;
-        page-break-inside: avoid;
+    .author-bio-section {
+        margin-top: 30pt !important;
+        padding-top: 15pt !important;
+        border-top: 2pt solid #000 !important;
     }
 
-    pre {
-        white-space: pre-wrap;
-        word-wrap: break-word;
-    }
-
-    /* ==========================================================================
-       Article Metadata
-       ========================================================================== */
-
-    .entry-meta {
-        font-size: 11pt;
-        margin-bottom: 15pt;
-        padding-bottom: 10pt;
-        border-bottom: 1pt solid #ccc;
-    }
-
-    /* Categories & Tags */
-    .entry-footer {
-        margin-top: 20pt;
-        padding-top: 10pt;
-        border-top: 1pt solid #ccc;
-        font-size: 10pt;
-    }
-
-    /* Category Badges (show as text) */
-    .category-badge {
-        display: inline-block;
-        padding: 2pt 5pt;
-        border: 1pt solid #000;
-        margin-right: 5pt;
-        font-size: 10pt;
-    }
-
-    /* ==========================================================================
-       Page Breaks
-       ========================================================================== */
-
-    /* Avoid breaks inside these elements */
-    h1, h2, h3, h4, h5, h6,
-    blockquote,
-    pre,
-    table,
-    figure,
     .author-bio {
-        page-break-inside: avoid;
-    }
-
-    /* Avoid breaks after headings */
-    h1, h2, h3, h4, h5, h6 {
-        page-break-after: avoid;
-    }
-
-    /* ==========================================================================
-       Header & Footer for Each Page
-       ========================================================================== */
-
-    /* Print Header - Site Name and Date */
-    .site-header {
         display: block !important;
-        text-align: center;
-        border-bottom: 2pt solid #000;
-        padding-bottom: 10pt;
-        margin-bottom: 20pt;
     }
 
-    .site-title {
-        font-size: 16pt;
-        font-weight: bold;
-    }
-
-    /* Print Footer - Page Numbers */
-    .print-footer {
-        display: block;
-        text-align: center;
-        margin-top: 20pt;
-        padding-top: 10pt;
-        border-top: 1pt solid #ccc;
-        font-size: 10pt;
-    }
-
-    /* ==========================================================================
-       Reading Time & Author Info
-       ========================================================================== */
-
-    .reading-time,
     .author-name {
-        font-weight: bold;
+        font-weight: bold !important;
+        font-size: 12pt !important;
+    }
+
+    .author-description {
+        font-size: 10pt !important;
+        font-style: italic !important;
+    }
+
+    /* Hide view all articles link */
+    .author-link {
+        display: none !important;
     }
 
     /* ==========================================================================
-       Abbreviations
+       PRINT FOOTER
        ========================================================================== */
 
-    abbr[title]:after {
-        content: " (" attr(title) ")";
+    /* Add print footer with source URL */
+    .article-content:after {
+        content: "Printed from: " attr(data-url);
+        display: block !important;
+        margin-top: 30pt !important;
+        padding-top: 10pt !important;
+        border-top: 1pt dashed #ccc !important;
+        font-size: 9pt !important;
+        color: #666 !important;
     }
 
     /* ==========================================================================
-       Optimize for Ink Saving
+       REMOVE BACKGROUNDS AND SHADOWS
        ========================================================================== */
 
-    /* Remove background images */
     * {
-        background-image: none !important;
-    }
-
-    /* Remove box shadows and effects */
-    * {
+        background: transparent !important;
         box-shadow: none !important;
         text-shadow: none !important;
     }
 
     /* ==========================================================================
-       RTL Support for Print
+       PAGE BREAKS
        ========================================================================== */
 
-    [dir="rtl"] body,
-    [lang="ar"] body {
-        direction: rtl;
-        text-align: right;
+    h1, h2, h3, h4, h5, h6 {
+        page-break-after: avoid;
+        page-break-inside: avoid;
     }
 
-    [dir="rtl"] blockquote,
-    [lang="ar"] blockquote {
-        border-left: none;
-        border-right: 3pt solid #000;
-        padding-left: 0;
-        padding-right: 10pt;
-    }
-
-    [dir="rtl"] ul,
-    [lang="ar"] ul,
-    [dir="rtl"] ol,
-    [lang="ar"] ol {
-        padding-left: 0;
-        padding-right: 20pt;
-    }
-
-    /* ==========================================================================
-       Emergency Contact Info (for humanitarian articles)
-       ========================================================================== */
-
-    .emergency-contact {
-        display: block !important;
-        border: 2pt solid #000;
-        padding: 10pt;
-        margin: 20pt 0;
-        font-weight: bold;
+    img, blockquote, table, figure {
         page-break-inside: avoid;
     }
 
     /* ==========================================================================
-       Source Attribution
+       RTL SUPPORT
        ========================================================================== */
 
-    .article-source {
-        margin-top: 20pt;
-        padding-top: 10pt;
-        border-top: 1pt dashed #000;
-        font-size: 10pt;
-        font-style: italic;
+    [dir="rtl"] .article-content {
+        direction: rtl !important;
+        text-align: right !important;
     }
 
-    .article-source:before {
-        content: "Source: ";
-        font-weight: bold;
+    [dir="rtl"] blockquote {
+        border-left: none !important;
+        border-right: 3pt solid #000 !important;
+        padding-left: 0 !important;
+        padding-right: 15pt !important;
+    }
+
+    /* ==========================================================================
+       GRID LAYOUT FIX
+       ========================================================================== */
+
+    .article-hero-grid {
+        display: block !important;
+    }
+
+    .article-hero-info,
+    .article-hero-image {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .container,
+    .article-container {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
     }
 
 }

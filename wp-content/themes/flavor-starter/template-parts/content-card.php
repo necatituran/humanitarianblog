@@ -5,9 +5,14 @@
  * @package HumanitarianBlog
  * @since 1.0.0
  */
+
+// Get article type for visual differentiation
+$article_type = humanitarianblog_get_article_type();
+$type_attr = $article_type ? ' data-article-type="' . esc_attr($article_type['slug']) . '"' : '';
+$is_breaking = humanitarianblog_is_breaking();
 ?>
 
-<article <?php post_class('article-card'); ?>>
+<article <?php post_class('article-card'); ?><?php echo $type_attr; ?>>
 	<?php if (has_post_thumbnail()) : ?>
 		<div class="card-thumbnail">
 			<a href="<?php the_permalink(); ?>">
@@ -29,6 +34,16 @@
 	<?php endif; ?>
 
 	<div class="card-content">
+		<?php if ($is_breaking) : ?>
+			<span class="breaking-indicator"><?php _e('Breaking', 'humanitarianblog'); ?></span>
+		<?php endif; ?>
+
+		<?php if ($article_type && !$is_breaking) : ?>
+			<a href="<?php echo esc_url($article_type['url']); ?>" class="category-badge category-badge--<?php echo esc_attr($article_type['color']); ?>">
+				<?php echo esc_html($article_type['name']); ?>
+			</a>
+		<?php endif; ?>
+
 		<?php the_title('<h3 class="card-title"><a href="' . esc_url(get_permalink()) . '">', '</a></h3>'); ?>
 
 		<?php if (has_excerpt()) : ?>

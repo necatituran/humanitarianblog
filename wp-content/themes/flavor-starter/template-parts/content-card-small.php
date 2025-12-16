@@ -5,9 +5,14 @@
  * @package HumanitarianBlog
  * @since 1.0.0
  */
+
+// Get article type for visual differentiation
+$article_type = humanitarianblog_get_article_type();
+$type_attr = $article_type ? ' data-article-type="' . esc_attr($article_type['slug']) . '"' : '';
+$is_breaking = humanitarianblog_is_breaking();
 ?>
 
-<article <?php post_class('article-card article-card-small'); ?>>
+<article <?php post_class('article-card article-card-small'); ?><?php echo $type_attr; ?>>
 	<?php if (has_post_thumbnail()) : ?>
 		<div class="card-thumbnail">
 			<a href="<?php the_permalink(); ?>">

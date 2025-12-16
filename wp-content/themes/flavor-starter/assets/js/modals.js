@@ -14,7 +14,25 @@
     document.addEventListener('DOMContentLoaded', function() {
         initModalTriggers();
         initModalClose();
+        checkBookmarkStatus();
     });
+
+    /**
+     * Check if current post is bookmarked and update UI
+     */
+    function checkBookmarkStatus() {
+        if (!window.localStorage) return;
+
+        const bookmarks = JSON.parse(localStorage.getItem('bookmarked_posts') || '[]');
+        const saveButtons = document.querySelectorAll('[data-action="save"]');
+
+        saveButtons.forEach(btn => {
+            const postId = btn.dataset.postId;
+            if (postId && bookmarks.includes(postId)) {
+                btn.classList.add('is-bookmarked');
+            }
+        });
+    }
 
     /**
      * Initialize modal triggers
@@ -108,37 +126,89 @@
         let content = '';
 
         if (modalId === 'share-modal') {
+            const pageUrl = window.location.href;
+            const pageTitle = document.title;
             content = `
                 <div class="modal-content">
                     <button class="modal-close" aria-label="Close">&times;</button>
                     <h2>Share this article</h2>
-                    ${document.querySelector('.share-buttons')?.innerHTML || ''}
+                    <p class="share-subtitle">Spread the word on social media</p>
+
+                    <div class="share-modal-buttons">
+                        <a href="https://twitter.com/intent/tweet?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(pageTitle)}"
+                           target="_blank" rel="noopener" class="share-btn share-twitter" aria-label="Share on Twitter">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}"
+                           target="_blank" rel="noopener" class="share-btn share-facebook" aria-label="Share on Facebook">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}"
+                           target="_blank" rel="noopener" class="share-btn share-linkedin" aria-label="Share on LinkedIn">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                        <button class="share-btn share-copy" aria-label="Copy link" onclick="navigator.clipboard.writeText('${pageUrl}').then(() => { this.innerHTML = '<svg viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'currentColor\\' stroke-width=\\'2\\'><polyline points=\\'20 6 9 17 4 12\\'></polyline></svg>'; setTimeout(() => { this.innerHTML = '<svg viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'currentColor\\' stroke-width=\\'2\\'><path d=\\'M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71\\'></path><path d=\\'M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71\\'></path></svg>'; }, 2000); })">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="share-copy-section">
+                        <label>Or copy link</label>
+                        <div class="share-copy-input">
+                            <input type="text" value="${pageUrl}" readonly onclick="this.select()">
+                            <button onclick="navigator.clipboard.writeText('${pageUrl}'); this.textContent = 'Copied!'; this.classList.add('copied'); setTimeout(() => { this.textContent = 'Copy'; this.classList.remove('copied'); }, 2000)">Copy</button>
+                        </div>
+                    </div>
                 </div>
             `;
         } else if (modalId === 'pdf-modal') {
             const postId = document.querySelector('[data-action="pdf"]')?.dataset.postId || '';
-            content = `
-                <div class="modal-content">
-                    <button class="modal-close" aria-label="Close">&times;</button>
-                    <h2>Download PDF</h2>
-                    <p>Choose PDF format:</p>
-                    <div class="pdf-options">
-                        <button class="btn btn-primary pdf-download" data-format="standard" data-post-id="${postId}">
-                            <strong>Standard</strong><br>
-                            <small>Full color with images</small>
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+            if (isMobile) {
+                // Mobile: Show alternative options
+                content = `
+                    <div class="modal-content">
+                        <button class="modal-close" aria-label="Close">&times;</button>
+                        <h2>Save Article</h2>
+                        <p>To save this article as PDF on mobile:</p>
+                        <div class="pdf-mobile-tips">
+                            <div class="tip"><strong>iOS Safari:</strong> Tap Share > Print > Pinch to zoom > Share > Save to Files</div>
+                            <div class="tip"><strong>Android Chrome:</strong> Menu (3 dots) > Share > Print > Save as PDF</div>
+                        </div>
+                        <button class="btn btn-primary pdf-download" data-format="print" data-post-id="${postId}">
+                            Open Print Dialog
                         </button>
-                        <button class="btn btn-outline pdf-download" data-format="light" data-post-id="${postId}">
-                            <strong>Light</strong><br>
-                            <small>Black & white, no images</small>
-                        </button>
-                        <button class="btn btn-outline pdf-download" data-format="print" data-post-id="${postId}">
-                            <strong>Print-Friendly</strong><br>
-                            <small>Optimized for printing</small>
-                        </button>
+                        <p class="pdf-note">Or use the <strong>Save</strong> button to bookmark this article for later reading.</p>
                     </div>
-                    <div id="pdf-status"></div>
-                </div>
-            `;
+                `;
+            } else {
+                // Desktop: Simple print button
+                content = `
+                    <div class="modal-content">
+                        <button class="modal-close" aria-label="Close">&times;</button>
+                        <h2>Save as PDF</h2>
+                        <p>Click the button below and select "Save as PDF" in the print dialog.</p>
+                        <button class="btn btn-primary pdf-download" data-format="print" data-post-id="${postId}">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                            </svg>
+                            Save as PDF
+                        </button>
+                        <p class="pdf-note">Tip: In the print dialog, select "Save as PDF" as the destination.</p>
+                    </div>
+                `;
+            }
         } else if (modalId === 'qr-modal') {
             content = `
                 <div class="modal-content">
@@ -366,86 +436,23 @@
     }
 
     /**
-     * Handle PDF download
+     * Handle PDF download - Uses browser print-to-PDF
      */
     function handlePDFDownload(button) {
         const format = button.dataset.format;
-        const postId = button.dataset.postId;
         const statusDiv = document.getElementById('pdf-status');
 
-        if (!postId) {
-            if (statusDiv) statusDiv.innerHTML = '<p class="error">Post ID not found</p>';
-            return;
-        }
+        // Close modal first
+        const modal = document.getElementById('pdf-modal');
+        if (modal) closeModal(modal);
 
-        if (typeof humanitarianBlogAjax === 'undefined') {
-            if (statusDiv) statusDiv.innerHTML = '<p class="error">AJAX not configured</p>';
-            return;
-        }
+        // Show notification
+        showNotification('Opening print dialog - save as PDF');
 
-        // Disable all PDF buttons
-        const allButtons = document.querySelectorAll('.pdf-download');
-        allButtons.forEach(btn => btn.disabled = true);
-
-        // Show loading state
-        if (statusDiv) statusDiv.innerHTML = '<p class="loading">Generating PDF... This may take a moment.</p>';
-
-        // AJAX request to generate PDF
-        fetch(humanitarianBlogAjax.ajax_url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({
-                action: 'generate_pdf',
-                nonce: humanitarianBlogAjax.nonce,
-                post_id: postId,
-                format: format
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Re-enable buttons
-            allButtons.forEach(btn => btn.disabled = false);
-
-            if (data.success && data.data.file_url) {
-                // Show success message
-                if (statusDiv) {
-                    statusDiv.innerHTML = `<p class="success">PDF generated successfully!</p>`;
-                }
-
-                // Trigger download
-                const link = document.createElement('a');
-                link.href = data.data.file_url;
-                link.download = '';
-                link.style.display = 'none';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-
-                // Show notification
-                showNotification('PDF download started');
-
-                // Close modal after 1 second
-                setTimeout(() => {
-                    const modal = document.getElementById('pdf-modal');
-                    if (modal) closeModal(modal);
-                }, 1000);
-
-            } else {
-                const errorMsg = data.data || 'Failed to generate PDF';
-                if (statusDiv) {
-                    statusDiv.innerHTML = `<p class="error">${escapeHtml(errorMsg)}</p>`;
-                }
-            }
-        })
-        .catch(error => {
-            console.error('PDF generation error:', error);
-            allButtons.forEach(btn => btn.disabled = false);
-            if (statusDiv) {
-                statusDiv.innerHTML = '<p class="error">Network error. Please try again.</p>';
-            }
-        });
+        // Small delay then open print dialog
+        setTimeout(() => {
+            window.print();
+        }, 300);
     }
 
     /**

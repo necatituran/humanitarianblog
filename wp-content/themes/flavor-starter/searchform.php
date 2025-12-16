@@ -17,13 +17,7 @@
             placeholder="<?php esc_attr_e('Search articles...', 'humanitarianblog'); ?>"
             value="<?php echo get_search_query(); ?>"
             name="s"
-            required
         />
-        <button type="submit" class="search-submit btn btn-primary">
-            <span class="screen-reader-text"><?php _e('Search', 'humanitarianblog'); ?></span>
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM19 19l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </button>
     </div>
+    <p class="search-hint"><?php _e('Start typing to search. e.g. "earthquake", "climate", "refugees"', 'humanitarianblog'); ?></p>
 </form>

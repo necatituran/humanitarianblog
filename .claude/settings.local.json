@@ -15,7 +15,30 @@
       "Bash(git push:*)",
       "Bash(git commit:*)",
       "Bash(git checkout:*)",
-      "Bash(git merge:*)"
+      "Bash(git merge:*)",
+      "Bash(powershell -Command \"Start-Process ''https://getcomposer.org/Composer-Setup.exe''\")",
+      "Bash(choco --version:*)",
+      "Bash(powershell:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(grep:*)",
+      "Bash(tree:*)",
+      "Bash(composer:*)",
+      "Bash(echo:*)",
+      "Bash(move:*)",
+      "Bash(php -v:*)",
+      "Bash(where:*)",
+      "Bash(ssh -p 65002 -o StrictHostKeyChecking=no u237104017@212.85.28.215 \"pwd && ls -la\")",
+      "Bash(ssh -p 65002 -o StrictHostKeyChecking=no u237104017@212.85.28.215 \"ls -la public_html/ && ls -la domains/\")",
+      "Bash(ssh -p 65002 -o StrictHostKeyChecking=no u237104017@212.85.28.215 \"ls -la domains/lightcyan-mosquito-311349.hostingersite.com/\")",
+      "Bash(ssh -p 65002 -o StrictHostKeyChecking=no u237104017@212.85.28.215 \"ls -la domains/lightcyan-mosquito-311349.hostingersite.com/public_html/\")",
+      "Bash(ssh:*)",
+      "Bash(tar:*)",
+      "Bash(scp:*)",
+      "Bash(\"c:/Users/nhtur/AppData/Roaming/Local/lightning-services/mysql-8.0.35+4/bin/win64/bin/mysqldump.exe\":*)",
+      "Bash(curl:*)",
+      "Bash(php composer.phar install:*)",
+      "Bash(\"c:/Users/nhtur/AppData/Roaming/Local/lightning-services/php-8.2.27+1/bin/win64/php.exe\" composer.phar install:*)"
     ]
   }
 }

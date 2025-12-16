@@ -90,7 +90,7 @@ function humanitarianblog_content_width() {
 add_action('after_setup_theme', 'humanitarianblog_content_width', 0);
 
 /**
- * Google Fonts URL
+ * Google Fonts URL - Editorial Magazine Style
  *
  * @return string Google Fonts URL
  */
@@ -99,14 +99,14 @@ function humanitarianblog_fonts_url() {
     $fonts     = array();
     $subsets   = 'latin,latin-ext';
 
-    // Source Serif 4 (Headlines)
-    if ('off' !== _x('on', 'Source Serif 4 font: on or off', 'humanitarianblog')) {
-        $fonts[] = 'Source Serif 4:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700';
+    // Playfair Display (Headlines - Editorial serif)
+    if ('off' !== _x('on', 'Playfair Display font: on or off', 'humanitarianblog')) {
+        $fonts[] = 'Playfair Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,700';
     }
 
-    // Inter (Body & UI)
+    // Inter (Body & UI - Clean modern sans-serif)
     if ('off' !== _x('on', 'Inter font: on or off', 'humanitarianblog')) {
-        $fonts[] = 'Inter:wght@400;500;600;700';
+        $fonts[] = 'Inter:wght@300;400;500;600;700';
     }
 
     // Amiri (Arabic Headlines)
@@ -129,6 +129,285 @@ function humanitarianblog_fonts_url() {
     }
 
     return esc_url_raw($fonts_url);
+}
+
+/**
+ * Fallback Menu (when no menu is assigned)
+ */
+function humanitarianblog_fallback_menu() {
+    // Get blog page URL
+    $blog_page_id = get_option('page_for_posts');
+    $blog_url = $blog_page_id ? get_permalink($blog_page_id) : home_url('/blog/');
+
+    echo '<ul id="primary-menu" class="nav-menu">';
+    echo '<li class="menu-item"><a href="' . esc_url(home_url('/')) . '">' . __('Home', 'humanitarianblog') . '</a></li>';
+    echo '<li class="menu-item"><a href="' . esc_url($blog_url) . '">' . __('Blog', 'humanitarianblog') . '</a></li>';
+    echo '<li class="menu-item"><a href="' . esc_url(home_url('/about-us/')) . '">' . __('About Us', 'humanitarianblog') . '</a></li>';
+    echo '<li class="menu-item"><a href="' . esc_url(home_url('/contact/')) . '">' . __('Contact', 'humanitarianblog') . '</a></li>';
+    echo '<li class="menu-item"><a href="' . esc_url(home_url('/privacy-policy/')) . '">' . __('Privacy Policy', 'humanitarianblog') . '</a></li>';
+    echo '</ul>';
+}
+
+/**
+ * Breadcrumb Navigation
+ */
+function humanitarianblog_breadcrumb() {
+    if (is_front_page()) {
+        return;
+    }
+
+    $separator = '<span class="breadcrumb-separator">/</span>';
+    $home_title = __('Home', 'humanitarianblog');
+
+    echo '<nav class="breadcrumb" aria-label="' . esc_attr__('Breadcrumb', 'humanitarianblog') . '">';
+    echo '<ol class="breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">';
+
+    // Home link
+    echo '<li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">';
+    echo '<a href="' . esc_url(home_url('/')) . '" itemprop="item"><span itemprop="name">' . esc_html($home_title) . '</span></a>';
+    echo '<meta itemprop="position" content="1" />';
+    echo '</li>';
+
+    $position = 2;
+
+    if (is_single()) {
+        // Article type
+        $article_type = humanitarianblog_get_article_type();
+        if ($article_type) {
+            echo $separator;
+            echo '<li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">';
+            echo '<a href="' . esc_url($article_type['url']) . '" itemprop="item"><span itemprop="name">' . esc_html($article_type['name']) . '</span></a>';
+            echo '<meta itemprop="position" content="' . $position++ . '" />';
+            echo '</li>';
+        } else {
+            // Fallback to category
+            $categories = get_the_category();
+            if (!empty($categories)) {
+                echo $separator;
+                echo '<li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">';
+                echo '<a href="' . esc_url(get_category_link($categories[0]->term_id)) . '" itemprop="item"><span itemprop="name">' . esc_html($categories[0]->name) . '</span></a>';
+                echo '<meta itemprop="position" content="' . $position++ . '" />';
+                echo '</li>';
+            }
+        }
+
+        // Current post title
+        echo $separator;
+        echo '<li class="breadcrumb-item breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">';
+        echo '<span itemprop="name">' . esc_html(wp_trim_words(get_the_title(), 6, '...')) . '</span>';
+        echo '<meta itemprop="position" content="' . $position . '" />';
+        echo '</li>';
+
+    } elseif (is_category()) {
+        echo $separator;
+        echo '<li class="breadcrumb-item breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">';
+        echo '<span itemprop="name">' . single_cat_title('', false) . '</span>';
+        echo '<meta itemprop="position" content="' . $position . '" />';
+        echo '</li>';
+
+    } elseif (is_tax('article_type')) {
+        echo $separator;
+        echo '<li class="breadcrumb-item breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">';
+        echo '<span itemprop="name">' . single_term_title('', false) . '</span>';
+        echo '<meta itemprop="position" content="' . $position . '" />';
+        echo '</li>';
+
+    } elseif (is_tax('region')) {
+        echo $separator;
+        echo '<li class="breadcrumb-item breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">';
+        echo '<span itemprop="name">' . single_term_title('', false) . '</span>';
+        echo '<meta itemprop="position" content="' . $position . '" />';
+        echo '</li>';
+
+    } elseif (is_page()) {
+        $ancestors = get_post_ancestors(get_the_ID());
+        if ($ancestors) {
+            $ancestors = array_reverse($ancestors);
+            foreach ($ancestors as $ancestor) {
+                echo $separator;
+                echo '<li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">';
+                echo '<a href="' . esc_url(get_permalink($ancestor)) . '" itemprop="item"><span itemprop="name">' . esc_html(get_the_title($ancestor)) . '</span></a>';
+                echo '<meta itemprop="position" content="' . $position++ . '" />';
+                echo '</li>';
+            }
+        }
+        echo $separator;
+        echo '<li class="breadcrumb-item breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">';
+        echo '<span itemprop="name">' . esc_html(get_the_title()) . '</span>';
+        echo '<meta itemprop="position" content="' . $position . '" />';
+        echo '</li>';
+
+    } elseif (is_search()) {
+        echo $separator;
+        echo '<li class="breadcrumb-item breadcrumb-current">';
+        echo '<span>' . sprintf(__('Search: %s', 'humanitarianblog'), get_search_query()) . '</span>';
+        echo '</li>';
+
+    } elseif (is_author()) {
+        echo $separator;
+        echo '<li class="breadcrumb-item breadcrumb-current">';
+        echo '<span>' . get_the_author() . '</span>';
+        echo '</li>';
+    }
+
+    echo '</ol>';
+    echo '</nav>';
+}
+
+/**
+ * Calculate reading time for a post
+ *
+ * @param int $post_id Optional post ID
+ * @return string Formatted reading time
+ */
+function humanitarianblog_reading_time($post_id = null) {
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+
+    $content = get_post_field('post_content', $post_id);
+    $word_count = str_word_count(strip_tags($content));
+    $reading_time = ceil($word_count / 200); // Average reading speed: 200 words per minute
+
+    if ($reading_time < 1) {
+        $reading_time = 1;
+    }
+
+    return sprintf(
+        _n('%d min read', '%d min read', $reading_time, 'humanitarianblog'),
+        $reading_time
+    );
+}
+
+/**
+ * Generate Table of Contents from H2/H3 headings
+ * Only shows if there are 3+ headings
+ */
+function humanitarianblog_table_of_contents($content) {
+    if (!is_single()) {
+        return $content;
+    }
+
+    // Find all h2 and h3 headings
+    preg_match_all('/<h([23])([^>]*)>(.*?)<\/h[23]>/i', $content, $matches, PREG_SET_ORDER);
+
+    // Only show TOC if 3 or more headings
+    if (count($matches) < 3) {
+        return $content;
+    }
+
+    $toc_items = array();
+    $counter = 0;
+
+    foreach ($matches as $match) {
+        $level = $match[1];
+        $attrs = $match[2];
+        $title = strip_tags($match[3]);
+        $counter++;
+
+        // Generate unique ID
+        $id = 'toc-' . $counter . '-' . sanitize_title($title);
+
+        // Add ID to heading if not present
+        if (strpos($attrs, 'id=') === false) {
+            $new_heading = '<h' . $level . ' id="' . esc_attr($id) . '"' . $attrs . '>' . $match[3] . '</h' . $level . '>';
+            $content = str_replace($match[0], $new_heading, $content);
+        } else {
+            // Extract existing ID
+            preg_match('/id=["\']([^"\']+)["\']/', $attrs, $id_match);
+            $id = $id_match[1];
+        }
+
+        $toc_items[] = array(
+            'level' => $level,
+            'id' => $id,
+            'title' => $title
+        );
+    }
+
+    // Build TOC HTML
+    $toc_html = '<aside class="table-of-contents" id="table-of-contents">';
+    $toc_html .= '<div class="toc-header">';
+    $toc_html .= '<h4 class="toc-title">' . __('In This Article', 'humanitarianblog') . '</h4>';
+    $toc_html .= '<button type="button" class="toc-toggle" aria-expanded="true" aria-controls="toc-list">';
+    $toc_html .= '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>';
+    $toc_html .= '</button>';
+    $toc_html .= '</div>';
+    $toc_html .= '<nav class="toc-nav"><ol class="toc-list" id="toc-list">';
+
+    foreach ($toc_items as $item) {
+        $indent_class = $item['level'] == '3' ? 'toc-item--indent' : '';
+        $toc_html .= '<li class="toc-item ' . $indent_class . '">';
+        $toc_html .= '<a href="#' . esc_attr($item['id']) . '">' . esc_html($item['title']) . '</a>';
+        $toc_html .= '</li>';
+    }
+
+    $toc_html .= '</ol></nav></aside>';
+
+    return $toc_html . $content;
+}
+add_filter('the_content', 'humanitarianblog_table_of_contents', 5);
+
+/**
+ * Get article type data (slug, name, color class)
+ *
+ * @param int $post_id Optional post ID
+ * @return array|false Article type data or false if not set
+ */
+function humanitarianblog_get_article_type($post_id = null) {
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+
+    $terms = get_the_terms($post_id, 'article_type');
+    if (!$terms || is_wp_error($terms)) {
+        return false;
+    }
+
+    $term = $terms[0]; // Get first article type
+    $slug = $term->slug;
+
+    // Color mapping for article types
+    $colors = array(
+        'news'             => 'blue',
+        'opinion'          => 'orange',
+        'investigation'    => 'purple',
+        'in-depth-analysis' => 'green',
+        'feature'          => 'yellow',
+        'breaking'         => 'red',
+    );
+
+    return array(
+        'slug'  => $slug,
+        'name'  => $term->name,
+        'color' => isset($colors[$slug]) ? $colors[$slug] : 'blue',
+        'url'   => get_term_link($term),
+    );
+}
+
+/**
+ * Check if post is breaking news
+ *
+ * @param int $post_id Optional post ID
+ * @return bool
+ */
+function humanitarianblog_is_breaking($post_id = null) {
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+
+    $terms = get_the_terms($post_id, 'article_type');
+    if (!$terms || is_wp_error($terms)) {
+        return false;
+    }
+
+    foreach ($terms as $term) {
+        if ($term->slug === 'breaking') {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 /**
@@ -285,6 +564,15 @@ function humanitarianblog_enqueue_scripts() {
         true
     );
 
+    // Accessibility Features (for elderly readers)
+    wp_enqueue_script(
+        'humanitarianblog-accessibility',
+        HUMANITARIAN_THEME_URI . '/assets/js/accessibility.js',
+        array(),
+        HUMANITARIAN_THEME_VERSION,
+        false // Load in head to prevent FOUC
+    );
+
     // Comments script
     if (is_singular() && comments_open() && get_option('thread_comments')) {
         wp_enqueue_script('comment-reply');
@@ -313,6 +601,61 @@ function humanitarianblog_body_classes($classes) {
 add_filter('body_class', 'humanitarianblog_body_classes');
 
 /**
+ * Custom Comment Callback
+ */
+function humanitarianblog_comment_callback($comment, $args, $depth) {
+    $tag = ('div' === $args['style']) ? 'div' : 'li';
+    ?>
+    <<?php echo $tag; ?> id="comment-<?php comment_ID(); ?>" <?php comment_class(empty($args['has_children']) ? '' : 'parent', $comment); ?>>
+        <article id="div-comment-<?php comment_ID(); ?>" class="comment-body">
+            <footer class="comment-meta">
+                <div class="comment-author vcard">
+                    <?php
+                    if (0 != $args['avatar_size']) {
+                        echo get_avatar($comment, $args['avatar_size']);
+                    }
+                    ?>
+                    <?php printf('<b class="fn">%s</b>', get_comment_author_link($comment)); ?>
+                </div>
+
+                <div class="comment-metadata">
+                    <a href="<?php echo esc_url(get_comment_link($comment, $args)); ?>">
+                        <time datetime="<?php comment_time('c'); ?>">
+                            <?php
+                            printf(
+                                '%1$s at %2$s',
+                                get_comment_date('', $comment),
+                                get_comment_time()
+                            );
+                            ?>
+                        </time>
+                    </a>
+                    <?php edit_comment_link(__('Edit', 'humanitarianblog'), '<span class="edit-link">', '</span>'); ?>
+                </div>
+
+                <?php if ('0' == $comment->comment_approved) : ?>
+                    <p class="comment-awaiting-moderation"><?php esc_html_e('Your comment is awaiting moderation.', 'humanitarianblog'); ?></p>
+                <?php endif; ?>
+            </footer>
+
+            <div class="comment-content">
+                <?php comment_text(); ?>
+            </div>
+
+            <?php
+            comment_reply_link(array_merge($args, [
+                'add_below' => 'div-comment',
+                'depth'     => $depth,
+                'max_depth' => $args['max_depth'],
+                'before'    => '<div class="reply">',
+                'after'     => '</div>',
+            ]));
+            ?>
+        </article>
+    <?php
+}
+
+/**
  * Include required files
  */
 require_once HUMANITARIAN_THEME_DIR . '/inc/custom-taxonomies.php';
@@ -323,6 +666,92 @@ require_once HUMANITARIAN_THEME_DIR . '/inc/ajax-handlers.php';
 // require_once HUMANITARIAN_THEME_DIR . '/inc/template-functions.php';
 require_once HUMANITARIAN_THEME_DIR . '/inc/pdf-generator.php';
 require_once HUMANITARIAN_THEME_DIR . '/inc/qr-generator.php';
+
+/**
+ * ==========================================================================
+ * Photo Caption Meta Box (Foto Etiketi)
+ * Allows authors to add a descriptive caption overlay on featured images
+ * ==========================================================================
+ */
+
+// Register the meta box
+function humanitarian_photo_caption_meta_box() {
+    add_meta_box(
+        'photo_caption_meta',
+        __('Photo Caption / Foto Etiketi', 'humanitarianblog'),
+        'humanitarian_photo_caption_callback',
+        'post',
+        'side',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'humanitarian_photo_caption_meta_box');
+
+// Meta box HTML
+function humanitarian_photo_caption_callback($post) {
+    wp_nonce_field('humanitarian_photo_caption_nonce', 'photo_caption_nonce');
+
+    $caption = get_post_meta($post->ID, '_photo_caption', true);
+    ?>
+    <p>
+        <label for="photo_caption" style="font-weight: 600; display: block; margin-bottom: 8px;">
+            <?php _e('Image overlay text (appears on photo)', 'humanitarianblog'); ?>
+        </label>
+        <input
+            type="text"
+            id="photo_caption"
+            name="photo_caption"
+            value="<?php echo esc_attr($caption); ?>"
+            class="widefat"
+            placeholder="<?php esc_attr_e('e.g., Inside a displacement camp', 'humanitarianblog'); ?>"
+            style="margin-bottom: 8px;"
+        />
+        <span class="description" style="color: #666; font-size: 12px;">
+            <?php _e('Short, descriptive text (max 50 chars). Appears on the featured image.', 'humanitarianblog'); ?>
+        </span>
+    </p>
+    <?php
+}
+
+// Save meta box data
+function humanitarian_save_photo_caption($post_id) {
+    // Verify nonce
+    if (!isset($_POST['photo_caption_nonce']) || !wp_verify_nonce($_POST['photo_caption_nonce'], 'humanitarian_photo_caption_nonce')) {
+        return;
+    }
+
+    // Check autosave
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+
+    // Check permissions
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    // Save or delete
+    if (isset($_POST['photo_caption'])) {
+        $caption = sanitize_text_field($_POST['photo_caption']);
+        // Limit to 50 characters
+        $caption = mb_substr($caption, 0, 50);
+        update_post_meta($post_id, '_photo_caption', $caption);
+    }
+}
+add_action('save_post', 'humanitarian_save_photo_caption');
+
+/**
+ * Get photo caption for a post
+ *
+ * @param int $post_id Optional post ID
+ * @return string Photo caption or empty string
+ */
+function humanitarian_get_photo_caption($post_id = null) {
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+    return get_post_meta($post_id, '_photo_caption', true);
+}
 
 // Demo content generator (REMOVE AFTER USE)
 /**
@@ -378,6 +807,7 @@ function humanitarian_create_demo_content_page() {
             'region' => 'Middle East',
             'tags' => ['Syria', 'Winter Emergency', 'Humanitarian Crisis'],
             'excerpt' => 'More than 2.5 million displaced people face harsh winter conditions in northwest Syria.',
+            'photo_caption' => 'Displaced families in Idlib camps',
         ],
         [
             'title' => 'Why Climate Finance Must Prioritize Frontline Communities',
@@ -397,6 +827,7 @@ function humanitarian_create_demo_content_page() {
             'region' => 'Global',
             'tags' => ['Climate Change', 'Climate Finance', 'Environmental Justice'],
             'excerpt' => 'Current climate finance mechanisms fail frontline communities. We need direct funding and local knowledge.',
+            'photo_caption' => 'Pacific island facing rising seas',
         ],
         [
             'title' => 'How Social Media Shapes Modern Humanitarian Response',
@@ -416,6 +847,7 @@ function humanitarian_create_demo_content_page() {
             'region' => 'Global',
             'tags' => ['Social Media', 'Technology', 'Digital Humanitarianism'],
             'excerpt' => 'Social media has fundamentally transformed humanitarian response, bringing both opportunities and challenges.',
+            'photo_caption' => 'Aid workers coordinating via mobile',
         ],
         [
             'title' => 'Inside Yemen\'s Hidden Hunger Crisis',
@@ -435,6 +867,7 @@ function humanitarian_create_demo_content_page() {
             'region' => 'Middle East',
             'tags' => ['Yemen', 'Hunger', 'Food Security'],
             'excerpt' => 'An investigation into Yemen\'s severe hunger crisis, where 17 million face acute food insecurity.',
+            'photo_caption' => 'Therapeutic feeding center in Hodeidah',
         ],
         [
             'title' => 'UNHCR Chief on the Global Refugee Crisis at Record Levels',
@@ -456,6 +889,7 @@ function humanitarian_create_demo_content_page() {
             'region' => 'Global',
             'tags' => ['Refugees', 'UNHCR', 'Migration'],
             'excerpt' => 'UNHCR Chief discusses the unprecedented global displacement crisis and why traditional responses must evolve.',
+            'photo_caption' => 'Interview at UN headquarters',
         ],
         [
             'title' => 'The Women Rebuilding Healthcare in Post-Conflict Liberia',
@@ -481,6 +915,7 @@ function humanitarian_create_demo_content_page() {
             'region' => 'Africa',
             'tags' => ['Liberia', 'Healthcare', 'Women', 'Post-Conflict'],
             'excerpt' => 'Women health workers are rebuilding Liberia\'s shattered healthcare system, transforming maternal health.',
+            'photo_caption' => 'Dr. Williams at community clinic',
         ],
     ];
 
@@ -525,6 +960,11 @@ function humanitarian_create_demo_content_page() {
             $words = str_word_count(strip_tags($article['content']));
             update_post_meta($post_id, 'reading_time', ceil($words / 200));
 
+            // Photo caption (foto etiketi)
+            if (!empty($article['photo_caption'])) {
+                update_post_meta($post_id, '_photo_caption', $article['photo_caption']);
+            }
+
             echo '<p style="color: green;">✓ Created: ' . esc_html($article['title']) . '</p>';
             $created++;
         }
@@ -538,3 +978,177 @@ function humanitarian_create_demo_content_page() {
 
     echo '</div>';
 }
+
+/**
+ * Admin Tool: Add Photo Captions to Existing Posts
+ * Run once via Tools menu, then remove
+ */
+add_action('admin_menu', 'humanitarian_add_captions_menu');
+
+function humanitarian_add_captions_menu() {
+    add_management_page(
+        'Add Photo Captions',
+        'Add Photo Captions',
+        'manage_options',
+        'humanitarian-add-captions',
+        'humanitarian_add_captions_page'
+    );
+}
+
+function humanitarian_add_captions_page() {
+    if (!current_user_can('manage_options')) {
+        wp_die('Access denied');
+    }
+
+    // Photo captions mapping by post title keywords
+    $caption_map = [
+        'syria' => 'Displaced families in Idlib camps',
+        'climate' => 'Pacific island facing rising seas',
+        'social media' => 'Aid workers coordinating via mobile',
+        'yemen' => 'Therapeutic feeding center in Hodeidah',
+        'unhcr' => 'Interview at UN headquarters',
+        'refugee' => 'Families waiting at border crossing',
+        'liberia' => 'Dr. Williams at community clinic',
+        'healthcare' => 'Community health worker on duty',
+        'women' => 'Women-led health initiative',
+        'hunger' => 'Food distribution point',
+        'crisis' => 'Emergency response in action',
+        'conflict' => 'Aftermath of recent fighting',
+        'migration' => 'Journey to safety',
+        'aid' => 'Humanitarian aid delivery',
+    ];
+
+    echo '<div class="wrap">';
+    echo '<h1>Add Photo Captions to Posts</h1>';
+
+    if (isset($_GET['run'])) {
+        $posts = get_posts([
+            'numberposts' => -1,
+            'post_type' => 'post',
+            'post_status' => 'publish',
+        ]);
+
+        $updated = 0;
+
+        foreach ($posts as $post) {
+            // Skip if already has caption
+            $existing = get_post_meta($post->ID, '_photo_caption', true);
+            if (!empty($existing)) {
+                echo '<p>⏭️ Skipped (has caption): ' . esc_html($post->post_title) . '</p>';
+                continue;
+            }
+
+            // Find matching caption
+            $title_lower = strtolower($post->post_title);
+            $caption = '';
+
+            foreach ($caption_map as $keyword => $cap) {
+                if (strpos($title_lower, $keyword) !== false) {
+                    $caption = $cap;
+                    break;
+                }
+            }
+
+            if ($caption) {
+                update_post_meta($post->ID, '_photo_caption', $caption);
+                echo '<p style="color: green;">✓ Added caption to: ' . esc_html($post->post_title) . ' → "' . $caption . '"</p>';
+                $updated++;
+            } else {
+                echo '<p style="color: orange;">⚠️ No match for: ' . esc_html($post->post_title) . '</p>';
+            }
+        }
+
+        echo '<div class="notice notice-success"><p><strong>✅ Updated ' . $updated . ' posts with photo captions.</strong></p></div>';
+    } else {
+        echo '<p>This will add photo captions to existing posts based on their titles.</p>';
+        echo '<p><a href="?page=humanitarian-add-captions&run=1" class="button button-primary">Run Now</a></p>';
+    }
+
+    echo '</div>';
+}
+
+/**
+ * Custom Login Failure Redirect
+ * Redirect failed login attempts to the frontend login page
+ */
+function humanitarianblog_login_failed($username) {
+    // Get the referrer to determine if login came from frontend
+    $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+
+    // Check if login came from frontend login page
+    if (strpos($referrer, '/login/') !== false || strpos($referrer, 'wp-login.php') !== false) {
+        wp_redirect(home_url('/login/?login=failed'));
+        exit;
+    }
+}
+add_action('wp_login_failed', 'humanitarianblog_login_failed');
+
+/**
+ * Custom Empty Login Redirect
+ * Redirect empty login attempts to the frontend login page
+ */
+function humanitarianblog_authenticate_empty($user, $username, $password) {
+    // Get the referrer
+    $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+
+    // Check if login came from frontend login page
+    if (strpos($referrer, '/login/') !== false) {
+        if (empty($username) || empty($password)) {
+            wp_redirect(home_url('/login/?login=empty'));
+            exit;
+        }
+    }
+
+    return $user;
+}
+add_filter('authenticate', 'humanitarianblog_authenticate_empty', 30, 3);
+
+/**
+ * Redirect subscribers away from wp-admin
+ * Subscribers should use frontend account page
+ */
+function humanitarianblog_redirect_subscribers() {
+    if (is_admin() && !defined('DOING_AJAX') && current_user_can('subscriber') && !current_user_can('edit_posts')) {
+        wp_redirect(home_url('/my-account/'));
+        exit;
+    }
+}
+add_action('admin_init', 'humanitarianblog_redirect_subscribers');
+
+/**
+ * Custom login redirect based on user role
+ */
+function humanitarianblog_login_redirect($redirect_to, $request, $user) {
+    // Is there a user to check?
+    if (isset($user->roles) && is_array($user->roles)) {
+        // Check for subscribers - send to frontend account
+        if (in_array('subscriber', $user->roles)) {
+            return home_url('/my-account/');
+        }
+    }
+
+    return $redirect_to;
+}
+add_filter('login_redirect', 'humanitarianblog_login_redirect', 10, 3);
+
+/**
+ * Enqueue bookmark nonce for AJAX
+ */
+function humanitarianblog_bookmark_scripts() {
+    if (is_single() && is_user_logged_in()) {
+        wp_localize_script('humanitarianblog-main', 'humanitarianBookmark', array(
+            'ajaxurl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('bookmark_nonce'),
+            'isLoggedIn' => true,
+            'loginUrl' => home_url('/login/'),
+        ));
+    } elseif (is_single()) {
+        wp_localize_script('humanitarianblog-main', 'humanitarianBookmark', array(
+            'ajaxurl' => admin_url('admin-ajax.php'),
+            'nonce' => '',
+            'isLoggedIn' => false,
+            'loginUrl' => home_url('/login/'),
+        ));
+    }
+}
+add_action('wp_enqueue_scripts', 'humanitarianblog_bookmark_scripts', 20);

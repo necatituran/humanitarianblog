@@ -5,6 +5,18 @@
  * @package HumanitarianBlog
  * @since 1.0.0
  */
+
+// Check if current post is bookmarked by logged-in user
+$is_bookmarked = false;
+if (is_user_logged_in()) {
+    $current_user_id = get_current_user_id();
+    $bookmarks = get_user_meta($current_user_id, 'bookmarked_posts', true);
+    if (is_array($bookmarks) && in_array(get_the_ID(), $bookmarks)) {
+        $is_bookmarked = true;
+    }
+}
+$bookmark_class = $is_bookmarked ? ' is-bookmarked' : '';
+$bookmark_label = $is_bookmarked ? __('Saved', 'humanitarianblog') : __('Save', 'humanitarianblog');
 ?>
 
 <div class="reading-toolbar" id="reading-toolbar">
@@ -24,7 +36,7 @@
 
 		<!-- Save Button (Bookmark) -->
 		<button type="button"
-		        class="toolbar-button toolbar-save"
+		        class="toolbar-button toolbar-save<?php echo esc_attr($bookmark_class); ?>"
 		        id="save-button"
 		        aria-label="<?php esc_attr_e('Save article', 'humanitarianblog'); ?>"
 		        data-action="save"
@@ -32,7 +44,7 @@
 			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 				<path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
 			</svg>
-			<span class="toolbar-label"><?php _e('Save', 'humanitarianblog'); ?></span>
+			<span class="toolbar-label"><?php echo esc_html($bookmark_label); ?></span>
 		</button>
 
 		<!-- Share Button -->

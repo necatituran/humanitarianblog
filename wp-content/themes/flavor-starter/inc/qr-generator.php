@@ -2,8 +2,8 @@
 /**
  * QR Code Generator
  *
- * Uses phpqrcode library (included in WordPress core since 5.6)
- * For offline reading - generates QR codes for article URLs
+ * Uses QRServer.com API for reliable QR code generation
+ * No external PHP libraries required
  *
  * @package HumanitarianBlog
  * @since 1.0.0
@@ -15,11 +15,13 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Generate QR Code for post URL
+ * Generate QR Code URL for post
+ *
+ * Uses QRServer.com free API - reliable and fast
  *
  * @param int $post_id Post ID
  * @param string $size QR code size (small, medium, large)
- * @return string Base64 encoded PNG image or empty string on failure
+ * @return string QR code image URL or empty string on failure
  */
 function humanitarianblog_generate_qr_code($post_id, $size = 'medium') {
     // Validate post ID
@@ -35,100 +37,24 @@ function humanitarianblog_generate_qr_code($post_id, $size = 'medium') {
 
     // Size mapping (pixels)
     $sizes = [
-        'small'  => 200,
-        'medium' => 300,
-        'large'  => 400,
+        'small'  => 150,
+        'medium' => 200,
+        'large'  => 300,
     ];
 
     $pixel_size = isset($sizes[$size]) ? $sizes[$size] : $sizes['medium'];
 
-    // Check cache first (24 hours)
-    $cache_key = 'qr_code_' . md5($post_url . $size);
-    $cached_qr = get_transient($cache_key);
+    // Generate QR code URL using QRServer.com API
+    // This is a free, reliable API that doesn't require any keys
+    $qr_url = add_query_arg([
+        'size' => $pixel_size . 'x' . $pixel_size,
+        'data' => urlencode($post_url),
+        'format' => 'png',
+        'margin' => 10,
+        'ecc' => 'M', // Error correction level: L, M, Q, H
+    ], 'https://api.qrserver.com/v1/create-qr-code/');
 
-    if ($cached_qr !== false) {
-        return $cached_qr;
-    }
-
-    // Generate QR code using phpqrcode
-    try {
-        // Include phpqrcode library
-        if (!class_exists('QRcode')) {
-            require_once ABSPATH . 'wp-includes/ID3/phpqrcode.php';
-        }
-
-        // Create temporary file for QR code
-        $temp_file = tempnam(sys_get_temp_dir(), 'qr_');
-
-        // Generate QR code
-        // Parameters: data, filename, error_correction_level, size, margin
-        // L = ~7% error correction (fastest, smallest)
-        // M = ~15% error correction (balanced) - DEFAULT
-        // Q = ~25% error correction
-        // H = ~30% error correction (slowest, largest)
-        QRcode::png($post_url, $temp_file, 'M', 10, 2);
-
-        // Read the generated file
-        $qr_data = file_get_contents($temp_file);
-
-        // Delete temporary file
-        unlink($temp_file);
-
-        if (!$qr_data) {
-            return '';
-        }
-
-        // Resize image to desired size
-        $image = imagecreatefromstring($qr_data);
-        if (!$image) {
-            return '';
-        }
-
-        $original_width = imagesx($image);
-        $original_height = imagesy($image);
-
-        // Create new image with desired size
-        $new_image = imagecreatetruecolor($pixel_size, $pixel_size);
-
-        // Set white background
-        $white = imagecolorallocate($new_image, 255, 255, 255);
-        imagefill($new_image, 0, 0, $white);
-
-        // Copy and resize
-        imagecopyresampled(
-            $new_image,
-            $image,
-            0, 0, 0, 0,
-            $pixel_size,
-            $pixel_size,
-            $original_width,
-            $original_height
-        );
-
-        // Convert to base64
-        ob_start();
-        imagepng($new_image);
-        $image_data = ob_get_clean();
-
-        // Free memory
-        imagedestroy($image);
-        imagedestroy($new_image);
-
-        if (!$image_data) {
-            return '';
-        }
-
-        $base64_qr = 'data:image/png;base64,' . base64_encode($image_data);
-
-        // Cache for 24 hours
-        set_transient($cache_key, $base64_qr, 24 * HOUR_IN_SECONDS);
-
-        return $base64_qr;
-
-    } catch (Exception $e) {
-        error_log('QR Code generation error: ' . $e->getMessage());
-        return '';
-    }
+    return $qr_url;
 }
 
 /**
@@ -159,15 +85,21 @@ function humanitarianblog_ajax_generate_qr() {
     // Increment rate limit counter
     set_transient($rate_limit_key, $qr_count ? $qr_count + 1 : 1, 60);
 
-    // Generate QR code
-    $qr_code = humanitarianblog_generate_qr_code($post_id, $size);
+    // Validate post
+    $post = get_post($post_id);
+    if (!$post || $post->post_status !== 'publish') {
+        wp_send_json_error('Invalid post.');
+    }
 
-    if (empty($qr_code)) {
+    // Generate QR code URL
+    $qr_url = humanitarianblog_generate_qr_code($post_id, $size);
+
+    if (empty($qr_url)) {
         wp_send_json_error('Failed to generate QR code.');
     }
 
     wp_send_json_success([
-        'qr_code' => $qr_code,
+        'qr_code' => $qr_url,
         'post_url' => get_permalink($post_id),
         'post_title' => get_the_title($post_id),
     ]);

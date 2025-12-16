@@ -1,40 +1,29 @@
-/**
- * Reading Experience - Progress bar and toolbar visibility
- *
- * @package HumanitarianBlog
- * @since 1.0.0
- */
-
 (function() {
-    'use strict';
+    "use strict";
+    var progressBar = null, toolbar = null;
 
-    let progressBar;
-    let toolbar;
-
-    document.addEventListener('DOMContentLoaded', function() {
-        // Check if single post (WordPress adds 'single' class, check both for compatibility)
-        const isSinglePost = document.body.classList.contains('single-post') ||
-                           (document.body.classList.contains('single') && document.body.classList.contains('single-format-standard'));
-
+    document.addEventListener("DOMContentLoaded", function() {
+        var isSinglePost = document.body.classList.contains("single-post") ||
+                          document.body.classList.contains("single") ||
+                          document.querySelector(".single-article") !== null ||
+                          document.querySelector("article.post") !== null;
         if (!isSinglePost) return;
-
         initProgressBar();
         initToolbarVisibility();
     });
 
-    /**
-     * Initialize reading progress bar
-     */
     function initProgressBar() {
-        // Create progress bar
-        progressBar = document.createElement('div');
-        progressBar.className = 'reading-progress-bar';
-        progressBar.innerHTML = '<div class="reading-progress-fill"></div>';
-        document.body.prepend(progressBar);
+        if (document.querySelector(".reading-progress-bar")) {
+            progressBar = document.querySelector(".reading-progress-bar");
+            return;
+        }
+        progressBar = document.createElement("div");
+        progressBar.className = "reading-progress-bar";
+        progressBar.innerHTML = "<div class=\"reading-progress-fill\"></div>";
+        document.body.appendChild(progressBar);
 
-        // Throttled scroll handler for progress bar (performance)
-        let ticking = false;
-        window.addEventListener('scroll', function() {
+        var ticking = false;
+        window.addEventListener("scroll", function() {
             if (!ticking) {
                 window.requestAnimationFrame(function() {
                     updateProgressBar();
@@ -43,56 +32,66 @@
                 ticking = true;
             }
         });
-
-        updateProgressBar(); // Initial update
+        updateProgressBar();
     }
 
-    /**
-     * Update progress bar based on scroll position
-     */
     function updateProgressBar() {
-        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = (winScroll / height) * 100;
-
-        const fillElement = progressBar.querySelector('.reading-progress-fill');
-        fillElement.style.width = scrolled + '%';
+        if (!progressBar) return;
+        var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        var windowHeight = window.innerHeight;
+        var endElement = document.getElementById("comments") ||
+                        document.querySelector(".comments-area") ||
+                        document.querySelector(".article-comments");
+        if (!endElement) {
+            endElement = document.querySelector(".single-article") ||
+                        document.querySelector("article.post") ||
+                        document.querySelector(".entry-content");
+        }
+        if (!endElement) {
+            var height = document.documentElement.scrollHeight - windowHeight;
+            if (height <= 0) return;
+            updateProgressDisplay(Math.min((winScroll / height) * 100, 100));
+            return;
+        }
+        var endElementTop = endElement.getBoundingClientRect().top + winScroll;
+        var endPoint = endElementTop - windowHeight;
+        if (endPoint <= 0) {
+            updateProgressDisplay(100);
+            return;
+        }
+        updateProgressDisplay(Math.min(Math.max((winScroll / endPoint) * 100, 0), 100));
     }
 
-    /**
-     * Initialize toolbar visibility on scroll
-     */
+    function updateProgressDisplay(scrolled) {
+        var fillElement = progressBar.querySelector(".reading-progress-fill");
+        if (fillElement) {
+            fillElement.style.height = scrolled + "%";
+        }
+    }
+
     function initToolbarVisibility() {
-        toolbar = document.getElementById('reading-toolbar');
+        toolbar = document.getElementById("reading-toolbar");
         if (!toolbar) return;
-
-        let lastScrollTop = 0;
-        let isVisible = false;
-        let ticking = false;
-
-        // Throttled scroll handler (performance optimization)
-        window.addEventListener('scroll', function() {
+        var isVisible = false, ticking = false;
+        window.addEventListener("scroll", function() {
             if (!ticking) {
                 window.requestAnimationFrame(function() {
-                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-                    // Show toolbar after scrolling 200px
+                    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                     if (scrollTop > 200 && !isVisible) {
-                        toolbar.classList.add('is-visible');
+                        toolbar.classList.add("is-visible");
                         isVisible = true;
-                    }
-                    // Hide when at top
-                    else if (scrollTop <= 200 && isVisible) {
-                        toolbar.classList.remove('is-visible');
+                    } else if (scrollTop <= 200 && isVisible) {
+                        toolbar.classList.remove("is-visible");
                         isVisible = false;
                     }
-
-                    lastScrollTop = scrollTop;
                     ticking = false;
                 });
                 ticking = true;
             }
         });
+        if (window.pageYOffset > 200) {
+            toolbar.classList.add("is-visible");
+            isVisible = true;
+        }
     }
-
 })();
