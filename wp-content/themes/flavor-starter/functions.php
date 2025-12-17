@@ -1412,3 +1412,141 @@ function humanitarian_test_email_page() {
 
     echo '</div>';
 }
+
+/**
+ * ============================================
+ * LANGUAGE DETECTION & RTL SUPPORT
+ * Auto-detect browser language + RTL for Arabic
+ * ============================================
+ */
+
+/**
+ * Auto-detect browser language and redirect (first visit only)
+ */
+function humanitarian_detect_browser_language() {
+    // Skip if not using Polylang
+    if (!function_exists('pll_the_languages') || !function_exists('pll_default_language')) {
+        return;
+    }
+
+    // Skip admin, AJAX, REST API
+    if (is_admin() || wp_doing_ajax() || defined('REST_REQUEST')) {
+        return;
+    }
+
+    // Skip if user already has language preference cookie
+    if (isset($_COOKIE['pll_language'])) {
+        return;
+    }
+
+    // Get browser language
+    $browser_lang = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) : '';
+
+    // Map browser language to Polylang language
+    $lang_map = array(
+        'ar' => 'ar',  // Arabic
+        'fr' => 'fr',  // French
+        'en' => 'en',  // English
+    );
+
+    // Check if we have a matching language
+    if (isset($lang_map[$browser_lang])) {
+        $target_lang = $lang_map[$browser_lang];
+        $current_lang = pll_current_language('slug');
+
+        // If browser language differs from current, redirect
+        if ($target_lang !== $current_lang && function_exists('pll_home_url')) {
+            // Set cookie to remember preference
+            setcookie('pll_language', $target_lang, time() + (365 * 24 * 60 * 60), '/');
+
+            // Redirect to language home
+            wp_redirect(pll_home_url($target_lang));
+            exit;
+        }
+    }
+}
+add_action('template_redirect', 'humanitarian_detect_browser_language', 1);
+
+/**
+ * Load RTL stylesheet for Arabic
+ */
+function humanitarian_load_rtl_styles() {
+    // Check if current language is Arabic
+    $is_rtl = false;
+
+    if (function_exists('pll_current_language')) {
+        $current_lang = pll_current_language('slug');
+        $is_rtl = ($current_lang === 'ar');
+    }
+
+    // Also check WordPress locale
+    if (is_rtl()) {
+        $is_rtl = true;
+    }
+
+    if ($is_rtl) {
+        wp_enqueue_style(
+            'humanitarian-rtl',
+            HUMANITARIAN_THEME_URI . '/assets/css/rtl.css',
+            array('humanitarianblog-style'),
+            HUMANITARIAN_THEME_VERSION
+        );
+
+        // Add RTL body class
+        add_filter('body_class', function($classes) {
+            $classes[] = 'rtl-layout';
+            return $classes;
+        });
+    }
+}
+add_action('wp_enqueue_scripts', 'humanitarian_load_rtl_styles', 20);
+
+/**
+ * Add dir="rtl" to HTML tag for Arabic
+ */
+function humanitarian_add_rtl_html_attribute($output) {
+    if (function_exists('pll_current_language')) {
+        $current_lang = pll_current_language('slug');
+        if ($current_lang === 'ar') {
+            $output .= ' dir="rtl"';
+        }
+    }
+    return $output;
+}
+add_filter('language_attributes', 'humanitarian_add_rtl_html_attribute');
+
+/**
+ * Language switcher JS for dropdown functionality
+ */
+function humanitarian_language_switcher_js() {
+    if (!function_exists('pll_the_languages')) {
+        return;
+    }
+    ?>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var langSwitcher = document.querySelector('.language-switcher');
+        if (!langSwitcher) return;
+
+        var toggle = langSwitcher.querySelector('.lang-toggle');
+        var dropdown = langSwitcher.querySelector('.lang-dropdown');
+
+        toggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var expanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', !expanded);
+            dropdown.classList.toggle('active');
+        });
+
+        // Close on outside click
+        document.addEventListener('click', function(e) {
+            if (!langSwitcher.contains(e.target)) {
+                toggle.setAttribute('aria-expanded', 'false');
+                dropdown.classList.remove('active');
+            }
+        });
+    });
+    </script>
+    <?php
+}
+add_action('wp_footer', 'humanitarian_language_switcher_js');

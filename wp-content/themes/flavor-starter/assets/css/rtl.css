@@ -352,3 +352,149 @@ input[type="radio"] {
         text-align: right;
     }
 }
+
+/* ==========================================================================
+   Top Bar RTL
+   ========================================================================== */
+
+.top-bar-content {
+    flex-direction: row-reverse;
+}
+
+.top-bar-nav {
+    flex-direction: row-reverse;
+}
+
+.top-bar-nav a {
+    margin-right: 0;
+    margin-left: var(--space-4);
+}
+
+/* ==========================================================================
+   Header Pill RTL
+   ========================================================================== */
+
+.header-pill {
+    flex-direction: row-reverse;
+}
+
+.site-navigation .nav-menu {
+    flex-direction: row-reverse;
+}
+
+.nav-menu > li {
+    margin-right: 0;
+    margin-left: var(--space-6);
+}
+
+/* Dropdown menus */
+.nav-menu .sub-menu {
+    right: 0;
+    left: auto;
+}
+
+/* ==========================================================================
+   Language Switcher RTL
+   ========================================================================== */
+
+.language-switcher {
+    margin-left: 0;
+    margin-right: var(--space-4);
+}
+
+.lang-toggle svg {
+    margin-right: 0;
+    margin-left: var(--space-1);
+}
+
+.lang-dropdown {
+    right: 0;
+    left: auto;
+}
+
+.lang-dropdown li a {
+    flex-direction: row-reverse;
+}
+
+/* ==========================================================================
+   Card Grid RTL
+   ========================================================================== */
+
+.article-card .card-content {
+    text-align: right;
+}
+
+.article-card .card-meta {
+    flex-direction: row-reverse;
+}
+
+.card-meta span {
+    margin-right: 0;
+    margin-left: var(--space-3);
+}
+
+/* ==========================================================================
+   Author Card RTL
+   ========================================================================== */
+
+.author-bio {
+    flex-direction: row-reverse;
+    text-align: right;
+}
+
+.author-bio .author-avatar {
+    margin-right: 0;
+    margin-left: var(--space-4);
+}
+
+/* ==========================================================================
+   User Dropdown RTL
+   ========================================================================== */
+
+.user-dropdown-menu {
+    right: 0;
+    left: auto;
+}
+
+.user-dropdown-menu a svg {
+    margin-right: 0;
+    margin-left: var(--space-2);
+}
+
+/* ==========================================================================
+   Mobile Menu RTL
+   ========================================================================== */
+
+.mobile-menu-toggle {
+    right: auto;
+    left: var(--space-4);
+}
+
+.mobile-menu-overlay {
+    right: auto;
+    left: 0;
+    transform: translateX(-100%);
+}
+
+.mobile-menu-overlay.active {
+    transform: translateX(0);
+}
+
+.mobile-menu-close {
+    right: auto;
+    left: var(--space-4);
+}
+
+/* ==========================================================================
+   Accessibility Toolbar RTL
+   ========================================================================== */
+
+.accessibility-toolbar {
+    right: auto;
+    left: 0;
+}
+
+.a11y-toolbar-panel {
+    right: auto;
+    left: 100%;
+}
