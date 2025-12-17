@@ -1277,3 +1277,123 @@ function humanitarian_get_author_total_views($author_id) {
 
     return $total_views;
 }
+
+/**
+ * ============================================
+ * SMTP CONFIGURATION FOR EMAIL
+ * Uses SiteGround SMTP server
+ * ============================================
+ */
+
+/**
+ * Configure PHPMailer to use SMTP
+ */
+function humanitarian_configure_smtp($phpmailer) {
+    // Only configure if SMTP constants are defined
+    if (!defined('SMTP_HOST') || !defined('SMTP_USER') || !defined('SMTP_PASS')) {
+        return;
+    }
+
+    $phpmailer->isSMTP();
+    $phpmailer->Host       = SMTP_HOST;
+    $phpmailer->SMTPAuth   = true;
+    $phpmailer->Port       = defined('SMTP_PORT') ? SMTP_PORT : 465;
+    $phpmailer->Username   = SMTP_USER;
+    $phpmailer->Password   = SMTP_PASS;
+    $phpmailer->SMTPSecure = defined('SMTP_SECURE') ? SMTP_SECURE : 'ssl';
+
+    // From address
+    if (defined('SMTP_FROM_EMAIL')) {
+        $phpmailer->From = SMTP_FROM_EMAIL;
+    }
+    if (defined('SMTP_FROM_NAME')) {
+        $phpmailer->FromName = SMTP_FROM_NAME;
+    }
+
+    // Debug mode (disable in production)
+    // $phpmailer->SMTPDebug = 2;
+}
+add_action('phpmailer_init', 'humanitarian_configure_smtp');
+
+/**
+ * Test email function (for admin use)
+ */
+function humanitarian_test_email_admin_page() {
+    add_management_page(
+        __('Test Email', 'humanitarianblog'),
+        __('Test Email', 'humanitarianblog'),
+        'manage_options',
+        'test-email',
+        'humanitarian_test_email_page'
+    );
+}
+add_action('admin_menu', 'humanitarian_test_email_admin_page');
+
+function humanitarian_test_email_page() {
+    if (!current_user_can('manage_options')) {
+        wp_die('Access denied');
+    }
+
+    echo '<div class="wrap">';
+    echo '<h1>' . __('Test Email Configuration', 'humanitarianblog') . '</h1>';
+
+    // Show current configuration
+    echo '<h2>' . __('Current SMTP Settings', 'humanitarianblog') . '</h2>';
+    echo '<table class="widefat" style="max-width: 600px;">';
+    echo '<tr><th>SMTP Host</th><td>' . (defined('SMTP_HOST') ? SMTP_HOST : '<span style="color:red;">Not configured</span>') . '</td></tr>';
+    echo '<tr><th>SMTP Port</th><td>' . (defined('SMTP_PORT') ? SMTP_PORT : '<span style="color:red;">Not configured</span>') . '</td></tr>';
+    echo '<tr><th>SMTP User</th><td>' . (defined('SMTP_USER') ? SMTP_USER : '<span style="color:red;">Not configured</span>') . '</td></tr>';
+    echo '<tr><th>SMTP Pass</th><td>' . (defined('SMTP_PASS') ? '********' : '<span style="color:red;">Not configured</span>') . '</td></tr>';
+    echo '<tr><th>DeepL API Key</th><td>' . (defined('DEEPL_API_KEY') ? substr(DEEPL_API_KEY, 0, 10) . '...' : '<span style="color:red;">Not configured</span>') . '</td></tr>';
+    echo '</table>';
+
+    // Test email form
+    if (isset($_POST['send_test_email']) && wp_verify_nonce($_POST['test_email_nonce'], 'send_test_email')) {
+        $to = sanitize_email($_POST['test_email_to']);
+
+        if (is_email($to)) {
+            $subject = __('Test Email from Humanitarian Blog', 'humanitarianblog');
+            $message = '<html><body>';
+            $message .= '<h2>' . __('Test Email Successful!', 'humanitarianblog') . '</h2>';
+            $message .= '<p>' . __('If you are reading this, your SMTP configuration is working correctly.', 'humanitarianblog') . '</p>';
+            $message .= '<p><strong>' . __('Server:', 'humanitarianblog') . '</strong> ' . SMTP_HOST . '</p>';
+            $message .= '<p><strong>' . __('Sent at:', 'humanitarianblog') . '</strong> ' . current_time('mysql') . '</p>';
+            $message .= '</body></html>';
+
+            $headers = array('Content-Type: text/html; charset=UTF-8');
+
+            $sent = wp_mail($to, $subject, $message, $headers);
+
+            if ($sent) {
+                echo '<div class="notice notice-success"><p>' . sprintf(__('Test email sent to %s!', 'humanitarianblog'), esc_html($to)) . '</p></div>';
+            } else {
+                echo '<div class="notice notice-error"><p>' . __('Failed to send test email. Check your SMTP settings.', 'humanitarianblog') . '</p></div>';
+            }
+        } else {
+            echo '<div class="notice notice-error"><p>' . __('Invalid email address.', 'humanitarianblog') . '</p></div>';
+        }
+    }
+
+    ?>
+    <h2><?php _e('Send Test Email', 'humanitarianblog'); ?></h2>
+    <form method="post" style="max-width: 400px;">
+        <?php wp_nonce_field('send_test_email', 'test_email_nonce'); ?>
+        <table class="form-table">
+            <tr>
+                <th><label for="test_email_to"><?php _e('Send to:', 'humanitarianblog'); ?></label></th>
+                <td>
+                    <input type="email" name="test_email_to" id="test_email_to"
+                           value="<?php echo esc_attr(wp_get_current_user()->user_email); ?>"
+                           class="regular-text" required />
+                </td>
+            </tr>
+        </table>
+        <p class="submit">
+            <input type="submit" name="send_test_email" class="button button-primary"
+                   value="<?php esc_attr_e('Send Test Email', 'humanitarianblog'); ?>" />
+        </p>
+    </form>
+    <?php
+
+    echo '</div>';
+}
