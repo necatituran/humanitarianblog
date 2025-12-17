@@ -1362,12 +1362,27 @@ function humanitarian_test_email_page() {
 
             $headers = array('Content-Type: text/html; charset=UTF-8');
 
+            // Capture PHPMailer errors for debugging
+            global $phpmailer_error;
+            $phpmailer_error = '';
+
+            add_action('wp_mail_failed', function($wp_error) {
+                global $phpmailer_error;
+                $phpmailer_error = $wp_error->get_error_message();
+            });
+
             $sent = wp_mail($to, $subject, $message, $headers);
 
             if ($sent) {
                 echo '<div class="notice notice-success"><p>' . sprintf(__('Test email sent to %s!', 'humanitarianblog'), esc_html($to)) . '</p></div>';
             } else {
-                echo '<div class="notice notice-error"><p>' . __('Failed to send test email. Check your SMTP settings.', 'humanitarianblog') . '</p></div>';
+                echo '<div class="notice notice-error"><p>' . __('Failed to send test email.', 'humanitarianblog') . '</p></div>';
+                if (!empty($phpmailer_error)) {
+                    echo '<div class="notice notice-warning" style="background: #fff3cd; border-left-color: #ffc107;">';
+                    echo '<p><strong>Error Details:</strong></p>';
+                    echo '<pre style="background: #f5f5f5; padding: 10px; overflow-x: auto;">' . esc_html($phpmailer_error) . '</pre>';
+                    echo '</div>';
+                }
             }
         } else {
             echo '<div class="notice notice-error"><p>' . __('Invalid email address.', 'humanitarianblog') . '</p></div>';
