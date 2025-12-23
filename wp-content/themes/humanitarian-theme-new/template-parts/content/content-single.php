@@ -38,23 +38,48 @@ if (!defined('ABSPATH')) {
     </header>
     <?php endif; ?>
 
-    <!-- Post Meta -->
-    <div class="single-post__meta-wrapper">
-        <div class="single-post__meta">
-            <div class="single-post__author">
-                <div class="single-post__author-avatar">
-                    <?php echo get_avatar(get_the_author_meta('ID'), 40); ?>
-                </div>
-                <a href="<?php echo esc_url(get_author_posts_url(get_the_author_meta('ID'))); ?>" class="single-post__author-name">
+    <!-- Author Box (LinkedIn Style) - Top Position -->
+    <?php
+    $author_id = get_the_author_meta('ID');
+    $author_info = humanitarian_get_author_info($author_id);
+    ?>
+    <div class="author-card">
+        <div class="author-card__avatar">
+            <?php echo get_avatar($author_id, 80); ?>
+        </div>
+        <div class="author-card__info">
+            <h4 class="author-card__name">
+                <a href="<?php echo esc_url(get_author_posts_url($author_id)); ?>">
                     <?php the_author(); ?>
                 </a>
+            </h4>
+            <?php if (!empty($author_info['profession'])) : ?>
+            <p class="author-card__profession"><?php echo esc_html($author_info['profession']); ?></p>
+            <?php endif; ?>
+            <?php if (!empty($author_info['experience_years']) && !empty($author_info['experience_field'])) : ?>
+            <p class="author-card__experience">
+                <?php
+                printf(
+                    esc_html__('%d+ years in %s', 'humanitarian'),
+                    intval($author_info['experience_years']),
+                    esc_html($author_info['experience_field'])
+                );
+                ?>
+            </p>
+            <?php endif; ?>
+            <div class="author-card__meta">
+                <time datetime="<?php echo esc_attr(get_the_date(DATE_W3C)); ?>">
+                    <?php echo esc_html(get_the_date()); ?>
+                </time>
+                <span class="author-card__separator">&bull;</span>
+                <span><?php echo esc_html(humanitarian_reading_time()); ?></span>
+                <?php if (!empty($author_info['linkedin_url'])) : ?>
+                <span class="author-card__separator">&bull;</span>
+                <a href="<?php echo esc_url($author_info['linkedin_url']); ?>" class="author-card__linkedin-link" target="_blank" rel="noopener noreferrer">
+                    LinkedIn
+                </a>
+                <?php endif; ?>
             </div>
-            <span class="single-post__meta-separator">&bull;</span>
-            <time datetime="<?php echo esc_attr(get_the_date(DATE_W3C)); ?>">
-                <?php echo esc_html(get_the_date()); ?>
-            </time>
-            <span class="single-post__meta-separator">&bull;</span>
-            <span><?php echo esc_html(humanitarian_reading_time()); ?></span>
         </div>
     </div>
 
@@ -155,50 +180,6 @@ if (!defined('ABSPATH')) {
                     <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                 </button>
             </div>
-        </div>
-    </div>
-
-    <!-- Author Box (LinkedIn Style) -->
-    <?php
-    $author_id = get_the_author_meta('ID');
-    $author_info = humanitarian_get_author_info($author_id);
-    ?>
-    <div class="author-box author-box--linkedin">
-        <div class="author-box__avatar">
-            <?php echo get_avatar($author_id, 100); ?>
-        </div>
-        <div class="author-box__info">
-            <h4 class="author-box__name">
-                <?php the_author(); ?>
-                <?php if (!empty($author_info['linkedin_url'])) : ?>
-                <a href="<?php echo esc_url($author_info['linkedin_url']); ?>" class="author-box__linkedin" target="_blank" rel="noopener noreferrer" title="<?php esc_attr_e('View LinkedIn Profile', 'humanitarian'); ?>">
-                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                </a>
-                <?php endif; ?>
-            </h4>
-            <?php if (!empty($author_info['profession'])) : ?>
-            <p class="author-box__profession"><?php echo esc_html($author_info['profession']); ?></p>
-            <?php endif; ?>
-            <?php if (!empty($author_info['experience_years']) && !empty($author_info['experience_field'])) : ?>
-            <p class="author-box__experience">
-                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                </svg>
-                <?php
-                printf(
-                    esc_html__('%d+ years in %s', 'humanitarian'),
-                    intval($author_info['experience_years']),
-                    esc_html($author_info['experience_field'])
-                );
-                ?>
-            </p>
-            <?php endif; ?>
-            <?php if (get_the_author_meta('description')) : ?>
-            <p class="author-box__bio"><?php echo esc_html(get_the_author_meta('description')); ?></p>
-            <?php endif; ?>
-            <a href="<?php echo esc_url(get_author_posts_url($author_id)); ?>" class="author-box__link">
-                <?php esc_html_e('View all posts', 'humanitarian'); ?> &rarr;
-            </a>
         </div>
     </div>
 
