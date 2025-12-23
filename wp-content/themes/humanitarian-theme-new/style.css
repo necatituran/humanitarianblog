@@ -4176,6 +4176,84 @@ a img.alignleft {
     color: white;
 }
 
+/* Privacy Dropdown (Hover-based) */
+.privacy-dropdown {
+    position: relative;
+}
+
+.privacy-dropdown__toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.8);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.35rem 0.5rem;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+}
+
+.privacy-dropdown__toggle:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.privacy-dropdown__arrow {
+    transition: transform 0.2s ease;
+}
+
+.privacy-dropdown:hover .privacy-dropdown__arrow {
+    transform: rotate(180deg);
+}
+
+.privacy-dropdown__menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all 0.2s ease;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.privacy-dropdown:hover .privacy-dropdown__menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.privacy-dropdown__item {
+    display: block;
+    padding: 0.75rem 1rem;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-dark);
+    transition: background 0.15s ease;
+    border-bottom: 1px solid #f0f0f0;
+    white-space: nowrap;
+}
+
+.privacy-dropdown__item:last-child {
+    border-bottom: none;
+}
+
+.privacy-dropdown__item:hover {
+    background: var(--color-primary);
+    color: white;
+}
+
 .top-strip__login {
     display: flex;
     align-items: center;

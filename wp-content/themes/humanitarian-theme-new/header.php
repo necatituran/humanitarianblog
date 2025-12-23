@@ -83,6 +83,29 @@ if (!defined('ABSPATH')) {
                 }
                 ?>
             </nav>
+            <!-- Privacy Dropdown -->
+            <div class="privacy-dropdown">
+                <button type="button" class="privacy-dropdown__toggle">
+                    <span><?php esc_html_e('Privacy', 'humanitarian'); ?></span>
+                    <svg class="privacy-dropdown__arrow" width="10" height="10" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m19 9-7 7-7-7"/>
+                    </svg>
+                </button>
+                <div class="privacy-dropdown__menu">
+                    <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>" class="privacy-dropdown__item">
+                        <?php esc_html_e('Privacy Policy', 'humanitarian'); ?>
+                    </a>
+                    <a href="<?php echo esc_url(home_url('/child-safeguard/')); ?>" class="privacy-dropdown__item">
+                        <?php esc_html_e('Child Safeguard Policy', 'humanitarian'); ?>
+                    </a>
+                    <a href="<?php echo esc_url(home_url('/content-usage/')); ?>" class="privacy-dropdown__item">
+                        <?php esc_html_e('Content Usage Policy', 'humanitarian'); ?>
+                    </a>
+                    <a href="<?php echo esc_url(home_url('/user-agreement/')); ?>" class="privacy-dropdown__item">
+                        <?php esc_html_e('User Agreement', 'humanitarian'); ?>
+                    </a>
+                </div>
+            </div>
             <!-- Login/Member Button -->
             <a href="<?php echo is_user_logged_in() ? esc_url(admin_url('profile.php')) : esc_url(wp_login_url(get_permalink())); ?>" class="top-strip__login">
                 <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
