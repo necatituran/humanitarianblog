@@ -56,27 +56,29 @@ if (!defined('ABSPATH')) {
             <span class="single-post__meta-separator">&bull;</span>
             <span><?php echo esc_html(humanitarian_reading_time()); ?></span>
         </div>
+    </div>
 
-        <!-- Article Action Buttons: PDF, Voice, QR -->
+    <!-- Article Action Buttons: PDF, Voice, QR (Centered, Vertical) -->
+    <div class="single-post__actions-wrapper">
         <div class="single-post__actions">
             <button type="button" id="action-pdf-btn" class="single-post__action-btn" title="<?php esc_attr_e('Download as PDF', 'humanitarian'); ?>">
-                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 11v6m-3-3h6"/>
                 </svg>
-                <span><?php esc_html_e('PDF', 'humanitarian'); ?></span>
+                <span><?php esc_html_e('Download PDF', 'humanitarian'); ?></span>
             </button>
             <button type="button" id="action-voice-btn" class="single-post__action-btn" title="<?php esc_attr_e('Listen to Article', 'humanitarian'); ?>">
-                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072M18.364 5.636a9 9 0 010 12.728M12 12h.01M8 9l-5 3 5 3V9z"/>
                 </svg>
-                <span><?php esc_html_e('Voice Article', 'humanitarian'); ?></span>
+                <span><?php esc_html_e('Listen to Article', 'humanitarian'); ?></span>
             </button>
             <button type="button" id="action-qr-btn" class="single-post__action-btn" title="<?php esc_attr_e('Show QR Code', 'humanitarian'); ?>">
-                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h6v6H3zM15 3h6v6h-6zM3 15h6v6H3zM15 15h3v3h-3zM18 18h3v3h-3zM15 21h3M21 15v3"/>
                 </svg>
-                <span><?php esc_html_e('QR', 'humanitarian'); ?></span>
+                <span><?php esc_html_e('Show QR Code', 'humanitarian'); ?></span>
             </button>
         </div>
 
