@@ -373,7 +373,8 @@ function humanitarian_language_switcher() {
     $output = '';
 
     foreach ($languages as $slug => $lang) {
-        $url = add_query_arg('lang', $slug, remove_query_arg('lang'));
+        // Always use clean home URL with lang parameter
+        $url = home_url('/?lang=' . $slug);
         $active_class = ($slug === $current_lang) ? ' active' : '';
 
         $output .= sprintf(
@@ -387,6 +388,43 @@ function humanitarian_language_switcher() {
 
     return $output;
 }
+
+/**
+ * Add language parameter to URL
+ */
+function humanitarian_add_lang_to_url($url) {
+    $current_lang = humanitarian_get_current_language();
+    if ($current_lang && $current_lang !== 'en') {
+        $url = add_query_arg('lang', $current_lang, $url);
+    }
+    return $url;
+}
+
+/**
+ * Filter home_url to include language parameter
+ */
+function humanitarian_filter_home_url($url, $path) {
+    // Don't filter admin URLs or REST API
+    if (is_admin() || (defined('REST_REQUEST') && REST_REQUEST)) {
+        return $url;
+    }
+
+    // Don't filter if already has lang parameter
+    if (strpos($url, 'lang=') !== false) {
+        return $url;
+    }
+
+    // Only filter the main home URL (logo link, etc.)
+    if (empty($path) || $path === '/') {
+        $current_lang = humanitarian_get_current_language();
+        if ($current_lang) {
+            $url = add_query_arg('lang', $current_lang, $url);
+        }
+    }
+
+    return $url;
+}
+add_filter('home_url', 'humanitarian_filter_home_url', 10, 2);
 
 /**
  * Get post language
