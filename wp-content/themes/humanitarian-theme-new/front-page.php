@@ -23,11 +23,15 @@ if ($hero_post) {
 }
 
 // Get secondary posts to also exclude
-$secondary_query = new WP_Query(array(
+$secondary_args = array(
     'posts_per_page' => 2,
     'post__not_in'   => $exclude_ids,
     'fields'         => 'ids',
-));
+);
+if (function_exists('humanitarian_add_language_filter')) {
+    $secondary_args = humanitarian_add_language_filter($secondary_args);
+}
+$secondary_query = new WP_Query($secondary_args);
 $exclude_ids = array_merge($exclude_ids, $secondary_query->posts);
 ?>
 
@@ -82,10 +86,14 @@ if ($featured_query->have_posts()) :
 
                 <div class="current-coverage__grid">
                     <?php
-                    $coverage_query = new WP_Query(array(
+                    $coverage_args = array(
                         'posts_per_page' => 6,
                         'post__not_in'   => $exclude_ids,
-                    ));
+                    );
+                    if (function_exists('humanitarian_add_language_filter')) {
+                        $coverage_args = humanitarian_add_language_filter($coverage_args);
+                    }
+                    $coverage_query = new WP_Query($coverage_args);
 
                     if ($coverage_query->have_posts()) :
                         while ($coverage_query->have_posts()) : $coverage_query->the_post();
@@ -119,12 +127,16 @@ if ($featured_query->have_posts()) :
                 </div>
                 <div class="recent-news-sidebar__list" id="recentNewsList">
                     <?php
-                    $recent_query = new WP_Query(array(
+                    $recent_args = array(
                         'posts_per_page' => 5,
                         'post__not_in'   => $exclude_ids,
                         'orderby'        => 'date',
                         'order'          => 'DESC',
-                    ));
+                    );
+                    if (function_exists('humanitarian_add_language_filter')) {
+                        $recent_args = humanitarian_add_language_filter($recent_args);
+                    }
+                    $recent_query = new WP_Query($recent_args);
 
                     if ($recent_query->have_posts()) :
                         while ($recent_query->have_posts()) : $recent_query->the_post();

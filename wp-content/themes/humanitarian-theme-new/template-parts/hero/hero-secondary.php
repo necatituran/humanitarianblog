@@ -16,10 +16,14 @@ $hero_post = humanitarian_get_hero_post();
 $exclude_ids = $hero_post ? array($hero_post->ID) : array();
 
 // Get 2 secondary posts
-$secondary_query = new WP_Query(array(
+$secondary_args = array(
     'posts_per_page' => 2,
     'post__not_in'   => $exclude_ids,
-));
+);
+if (function_exists('humanitarian_add_language_filter')) {
+    $secondary_args = humanitarian_add_language_filter($secondary_args);
+}
+$secondary_query = new WP_Query($secondary_args);
 
 if (!$secondary_query->have_posts()) {
     return;
