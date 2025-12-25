@@ -59,6 +59,13 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
+# Hosting Credentials (NEVER COMMIT)
+.hosting-credentials
+.ssh-credentials
+*.pem
+*.key
+deploy-config.sh
+
 # Build Files
 /dist/
 /build/

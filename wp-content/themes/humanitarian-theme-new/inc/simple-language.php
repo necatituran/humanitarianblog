@@ -100,26 +100,43 @@ add_action('after_switch_theme', 'humanitarian_create_language_terms');
 add_action('init', 'humanitarian_create_language_terms', 10);
 
 /**
- * Get current language from URL or cookie
+ * Get current language from URL path, URL parameter, or cookie
  */
 function humanitarian_get_current_language() {
-    // Check URL parameter first
-    if (isset($_GET['lang']) && array_key_exists($_GET['lang'], humanitarian_get_languages())) {
+    $languages = humanitarian_get_languages();
+
+    // Check URL path first (e.g., /en/home/, /fr/article/, /ar/...)
+    $request_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+    if (preg_match('#^/([a-z]{2})(?:/|$)#', $request_uri, $matches)) {
+        $path_lang = $matches[1];
+        if (array_key_exists($path_lang, $languages)) {
+            // Set cookie for persistence
+            if (!headers_sent()) {
+                setcookie('humanitarian_lang', $path_lang, time() + (365 * 24 * 60 * 60), '/');
+            }
+            return $path_lang;
+        }
+    }
+
+    // Check URL parameter (e.g., ?lang=fr)
+    if (isset($_GET['lang']) && array_key_exists($_GET['lang'], $languages)) {
         $lang = sanitize_text_field($_GET['lang']);
         // Set cookie for persistence
-        setcookie('humanitarian_lang', $lang, time() + (365 * 24 * 60 * 60), '/');
+        if (!headers_sent()) {
+            setcookie('humanitarian_lang', $lang, time() + (365 * 24 * 60 * 60), '/');
+        }
         return $lang;
     }
 
     // Check cookie
-    if (isset($_COOKIE['humanitarian_lang']) && array_key_exists($_COOKIE['humanitarian_lang'], humanitarian_get_languages())) {
+    if (isset($_COOKIE['humanitarian_lang']) && array_key_exists($_COOKIE['humanitarian_lang'], $languages)) {
         return sanitize_text_field($_COOKIE['humanitarian_lang']);
     }
 
     // Check browser language
     if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
         $browser_lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-        if (array_key_exists($browser_lang, humanitarian_get_languages())) {
+        if (array_key_exists($browser_lang, $languages)) {
             return $browser_lang;
         }
     }
@@ -148,6 +165,85 @@ function humanitarian_switch_locale($locale) {
     return $locale;
 }
 add_filter('locale', 'humanitarian_switch_locale');
+
+/**
+ * Add rewrite rules for language prefixes
+ * Handles URLs like /en/home/, /fr/article/, /ar/page/
+ */
+function humanitarian_add_language_rewrite_rules() {
+    $languages = array_keys(humanitarian_get_languages());
+    $lang_pattern = '(' . implode('|', $languages) . ')';
+
+    // Language prefix for any URL
+    add_rewrite_rule(
+        '^' . $lang_pattern . '/(.*)$',
+        'index.php?lang=$matches[1]&pagename=$matches[2]',
+        'top'
+    );
+
+    // Language prefix only (homepage)
+    add_rewrite_rule(
+        '^' . $lang_pattern . '/?$',
+        'index.php?lang=$matches[1]',
+        'top'
+    );
+}
+add_action('init', 'humanitarian_add_language_rewrite_rules');
+
+/**
+ * Register lang as a query variable
+ */
+function humanitarian_add_query_vars($vars) {
+    $vars[] = 'lang';
+    return $vars;
+}
+add_filter('query_vars', 'humanitarian_add_query_vars');
+
+/**
+ * Handle language prefix URLs early in WordPress initialization
+ * Sets the language before any queries run
+ */
+function humanitarian_handle_language_prefix_early() {
+    $request_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+    $languages = humanitarian_get_languages();
+
+    // Check if URL starts with a language code
+    if (preg_match('#^/([a-z]{2})(/.*)?$#', $request_uri, $matches)) {
+        $lang_code = $matches[1];
+
+        if (array_key_exists($lang_code, $languages)) {
+            // Set the language in superglobals
+            $_GET['lang'] = $lang_code;
+            $_REQUEST['lang'] = $lang_code;
+
+            // Set cookie
+            if (!headers_sent()) {
+                setcookie('humanitarian_lang', $lang_code, time() + (365 * 24 * 60 * 60), '/');
+            }
+        }
+    }
+}
+add_action('plugins_loaded', 'humanitarian_handle_language_prefix_early', 1);
+
+/**
+ * Prevent WordPress canonical redirect for language-prefixed URLs
+ */
+function humanitarian_prevent_canonical_redirect($redirect_url, $requested_url) {
+    $request_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+    $languages = humanitarian_get_languages();
+
+    // Check if original URL has language prefix
+    if (preg_match('#^/([a-z]{2})(/.*)?$#', $request_uri, $matches)) {
+        $lang_code = $matches[1];
+        if (array_key_exists($lang_code, $languages)) {
+            // Don't redirect - let the page load
+            return false;
+        }
+    }
+
+    return $redirect_url;
+}
+add_filter('redirect_canonical', 'humanitarian_prevent_canonical_redirect', 10, 2);
 
 /**
  * Load theme text domain for translations
@@ -215,6 +311,36 @@ function humanitarian_filter_posts_by_language($query) {
     }
 }
 add_action('pre_get_posts', 'humanitarian_filter_posts_by_language');
+
+/**
+ * Redirect single posts to correct language version
+ * If user is viewing a post in the wrong language, redirect to translation
+ */
+function humanitarian_redirect_to_correct_language() {
+    // Only on single posts/pages
+    if (!is_singular(['post', 'page']) || is_admin()) {
+        return;
+    }
+
+    $post_id = get_the_ID();
+    $post_lang = humanitarian_get_post_language($post_id);
+    $user_lang = humanitarian_get_current_language();
+
+    // If post is already in user's language, do nothing
+    if ($post_lang === $user_lang) {
+        return;
+    }
+
+    // Try to find translation in user's language
+    $translation_id = humanitarian_get_translation($post_id, $user_lang);
+
+    // If translation exists and is different from current post, redirect
+    if ($translation_id && $translation_id !== $post_id) {
+        wp_redirect(get_permalink($translation_id), 301);
+        exit;
+    }
+}
+add_action('template_redirect', 'humanitarian_redirect_to_correct_language');
 
 /**
  * Add RTL support based on current language - FRONTEND ONLY

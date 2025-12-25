@@ -53,6 +53,13 @@ function flavor_simplify_admin_menu() {
 
         // Remove Users menu (Authors shouldn't manage users)
         remove_menu_page('users.php');
+
+        // Remove Translations menu - Authors don't need to manage translations
+        remove_menu_page('humanitarian-translations');
+
+        // Remove any Submissions menu if it exists
+        remove_menu_page('edit.php?post_type=submission');
+        remove_submenu_page('edit.php', 'edit.php?post_type=submission');
     }
 }
 add_action('admin_menu', 'flavor_simplify_admin_menu', 999);

@@ -42,6 +42,17 @@ if (!defined('ABSPATH')) {
     <?php
     $author_id = get_the_author_meta('ID');
     $author_info = humanitarian_get_author_info($author_id);
+
+    // Get display name - prefer first_name + last_name, fallback to display_name
+    $first_name = get_the_author_meta('first_name', $author_id);
+    $last_name = get_the_author_meta('last_name', $author_id);
+    $author_display_name = trim($first_name . ' ' . $last_name);
+    if (empty($author_display_name)) {
+        $author_display_name = get_the_author_meta('display_name', $author_id);
+    }
+
+    // Get bio
+    $author_bio = get_the_author_meta('description', $author_id);
     ?>
     <div class="author-card">
         <div class="author-card__avatar">
@@ -50,7 +61,7 @@ if (!defined('ABSPATH')) {
         <div class="author-card__info">
             <h4 class="author-card__name">
                 <a href="<?php echo esc_url(get_author_posts_url($author_id)); ?>">
-                    <?php the_author(); ?>
+                    <?php echo esc_html($author_display_name); ?>
                 </a>
             </h4>
             <?php if (!empty($author_info['profession'])) : ?>
@@ -66,6 +77,9 @@ if (!defined('ABSPATH')) {
                 );
                 ?>
             </p>
+            <?php endif; ?>
+            <?php if (!empty($author_bio)) : ?>
+            <p class="author-card__bio"><?php echo esc_html(wp_trim_words($author_bio, 25, '...')); ?></p>
             <?php endif; ?>
             <div class="author-card__meta">
                 <time datetime="<?php echo esc_attr(get_the_date(DATE_W3C)); ?>">

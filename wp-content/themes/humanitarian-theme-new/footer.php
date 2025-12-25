@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
             <p class="strip-section__tagline"><?php esc_html_e('Enlightens the fields with real stories and practical knowledge.', 'humanitarian'); ?></p>
         </div>
         <div class="strip-section__logo">
-            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/humanitarian_logo2.png'); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>" />
+            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/hum_logo_3.jpeg'); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>" />
         </div>
     </div>
 </section>

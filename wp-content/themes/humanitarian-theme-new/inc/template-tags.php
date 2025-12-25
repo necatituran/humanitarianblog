@@ -388,7 +388,7 @@ function humanitarian_post_thumbnail($size = 'humanitarian-card', $post_id = nul
  * @return void
  */
 function humanitarian_site_logo() {
-    $logo_url = get_template_directory_uri() . '/assets/images/humanitarian_logo2.png';
+    $logo_url = get_template_directory_uri() . '/assets/images/hum_logo_3.jpeg';
     ?>
     <a href="<?php echo esc_url(home_url('/')); ?>" class="site-logo" rel="home">
         <img src="<?php echo esc_url($logo_url); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>" class="site-logo__img" />
