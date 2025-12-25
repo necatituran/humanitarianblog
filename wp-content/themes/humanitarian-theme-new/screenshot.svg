@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+  <!-- Background -->
+  <rect fill="#FAF8F4" width="1200" height="900"/>
+
+  <!-- Top Strip -->
+  <rect fill="#4A1D1D" width="1200" height="35"/>
+  <text x="60" y="24" font-family="Georgia, serif" font-size="12" fill="rgba(255,255,255,0.9)" font-style="italic">Journalism from the heart of crises</text>
+
+  <!-- Header -->
+  <rect fill="#FAF8F4" y="35" width="1200" height="70"/>
+  <text x="60" y="80" font-family="Georgia, serif" font-size="28" font-weight="bold" fill="#1a1919">HumanitarianBlog</text>
+  <text x="280" y="80" font-family="Georgia, serif" font-size="32" fill="#7f2828">.</text>
+
+  <!-- Navigation -->
+  <text x="450" y="78" font-family="system-ui, sans-serif" font-size="11" fill="#1a1919" font-weight="bold" letter-spacing="1">AID &amp; POLICY</text>
+  <text x="580" y="78" font-family="system-ui, sans-serif" font-size="11" fill="#1a1919" font-weight="bold" letter-spacing="1">CONFLICT</text>
+  <text x="680" y="78" font-family="system-ui, sans-serif" font-size="11" fill="#1a1919" font-weight="bold" letter-spacing="1">ENVIRONMENT</text>
+  <text x="810" y="78" font-family="system-ui, sans-serif" font-size="11" fill="#1a1919" font-weight="bold" letter-spacing="1">INVESTIGATIONS</text>
+  <text x="960" y="78" font-family="system-ui, sans-serif" font-size="11" fill="#1a1919" font-weight="bold" letter-spacing="1">MIGRATION</text>
+
+  <!-- Hero Section -->
+  <rect fill="#d6d3d1" x="60" y="140" width="700" height="380" rx="2"/>
+  <rect fill="#D93025" x="60" y="540" width="100" height="24" rx="2"/>
+  <text x="74" y="556" font-family="system-ui, sans-serif" font-size="10" fill="white" font-weight="bold">INVESTIGATIONS</text>
+  <text x="60" y="600" font-family="Georgia, serif" font-size="32" font-weight="bold" fill="#1a1919">The Hidden Cost of 'Safe Zones':</text>
+  <text x="60" y="640" font-family="Georgia, serif" font-size="32" font-weight="bold" fill="#1a1919">Inside the Displacement Camps</text>
+  <text x="60" y="690" font-family="Georgia, serif" font-size="14" fill="#57534e">As conflict escalates in the eastern DRC, so-called safe zones</text>
+  <text x="60" y="710" font-family="Georgia, serif" font-size="14" fill="#57534e">are becoming traps for civilians...</text>
+
+  <!-- Secondary Articles -->
+  <rect fill="#d6d3d1" x="800" y="140" width="340" height="180" rx="2"/>
+  <rect fill="#1A73E8" x="800" y="340" width="60" height="22" rx="2"/>
+  <text x="810" y="355" font-family="system-ui, sans-serif" font-size="9" fill="white" font-weight="bold">POLICY</text>
+  <text x="800" y="385" font-family="Georgia, serif" font-size="18" font-weight="bold" fill="#1a1919">UN Security Council gridlock</text>
+  <text x="800" y="410" font-family="Georgia, serif" font-size="18" font-weight="bold" fill="#1a1919">stalls critical vote</text>
+
+  <rect fill="#188038" x="800" y="480" width="80" height="22" rx="2"/>
+  <text x="810" y="495" font-family="system-ui, sans-serif" font-size="9" fill="white" font-weight="bold">ENVIRONMENT</text>
+  <text x="800" y="525" font-family="Georgia, serif" font-size="16" font-weight="bold" fill="#1a1919">Rising tides, sinking hopes</text>
+  <rect fill="#d6d3d1" x="1030" y="470" width="110" height="110" rx="2"/>
+
+  <!-- Current Coverage Section -->
+  <rect fill="#e7e5e4" y="760" width="1200" height="2"/>
+  <text x="60" y="820" font-family="Georgia, serif" font-size="28" font-weight="bold" fill="#1a1919">Current Coverage</text>
+  <text x="60" y="845" font-family="system-ui, sans-serif" font-size="10" fill="#78716c" font-weight="bold" letter-spacing="2">GLOBAL DISPATCHES &amp; UPDATES</text>
+
+  <!-- Theme Info -->
+  <rect fill="#1a1919" y="870" width="1200" height="30"/>
+  <text x="600" y="890" font-family="system-ui, sans-serif" font-size="11" fill="#a8a29e" text-anchor="middle">HumanitarianBlog Theme - Minimalist Editorial Design</text>
+</svg>

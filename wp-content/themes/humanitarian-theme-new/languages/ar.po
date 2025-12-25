@@ -1,0 +1,290 @@
+# Arabic translation for Humanitarian Blog Theme
+msgid ""
+msgstr ""
+"Project-Id-Version: Humanitarian Blog Theme\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+
+# Top Strip
+msgid "No News. Just Knowledge—by People Like You."
+msgstr "لا أخبار. فقط المعرفة—من أشخاص مثلك."
+
+msgid "Language"
+msgstr "اللغة"
+
+msgid "About Us"
+msgstr "من نحن"
+
+msgid "Publish With Us"
+msgstr "انشر معنا"
+
+msgid "Contact Us"
+msgstr "اتصل بنا"
+
+msgid "Login"
+msgstr "تسجيل الدخول"
+
+# Navigation
+msgid "Technical Guides"
+msgstr "الأدلة الفنية"
+
+msgid "Aid and Policy"
+msgstr "المساعدات والسياسة"
+
+msgid "Environment and Conflict"
+msgstr "البيئة والصراع"
+
+msgid "Stories from the Field"
+msgstr "قصص من الميدان"
+
+msgid "Menu"
+msgstr "القائمة"
+
+msgid "Search"
+msgstr "بحث"
+
+msgid "Sections"
+msgstr "الأقسام"
+
+msgid "More"
+msgstr "المزيد"
+
+# Homepage
+msgid "Current Coverage"
+msgstr "التغطية الحالية"
+
+msgid "Global Dispatches & Updates"
+msgstr "برقيات وتحديثات عالمية"
+
+msgid "Browse Archives"
+msgstr "تصفح الأرشيف"
+
+msgid "View All Stories"
+msgstr "عرض جميع القصص"
+
+msgid "Recent News"
+msgstr "أحدث الأخبار"
+
+msgid "Refresh"
+msgstr "تحديث"
+
+msgid "Premium Reportage"
+msgstr "تقارير مميزة"
+
+msgid "In-Depth Analysis"
+msgstr "تحليلات معمقة"
+
+msgid "View All Reports"
+msgstr "عرض جميع التقارير"
+
+msgid "Editors' Picks"
+msgstr "اختيارات المحررين"
+
+# Newsletter
+msgid "Get the latest humanitarian news, direct to your inbox"
+msgstr "احصل على أحدث الأخبار الإنسانية مباشرة في بريدك الإلكتروني"
+
+msgid "Sign up to receive our original, on-the-ground coverage that informs policymakers, practitioners, donors, and others who want to make the world more humane."
+msgstr "سجل لتلقي تغطيتنا الأصلية من الميدان التي تعلم صانعي السياسات والممارسين والمانحين وغيرهم ممن يرغبون في جعل العالم أكثر إنسانية."
+
+msgid "Sign up"
+msgstr "سجل الآن"
+
+msgid "Subscribe to our newsletter"
+msgstr "اشترك في نشرتنا الإخبارية"
+
+msgid "Join humanitarians worldwide getting the latest knowledge delivered to their inbox."
+msgstr "انضم إلى العاملين في المجال الإنساني في جميع أنحاء العالم الذين يتلقون أحدث المعارف في بريدهم الإلكتروني."
+
+msgid "Subscribe"
+msgstr "اشترك"
+
+# Footer
+msgid "Enlightens the fields with real stories and practical knowledge."
+msgstr "ينير الميادين بقصص حقيقية ومعرفة عملية."
+
+msgid "An independent, non-profit, open-source platform dedicated to individuals engaged in humanitarian and development work."
+msgstr "منصة مستقلة وغير ربحية ومفتوحة المصدر مخصصة للأفراد العاملين في المجال الإنساني والتنموي."
+
+msgid "About"
+msgstr "حول"
+
+msgid "Share Your Knowledge"
+msgstr "شارك معرفتك"
+
+msgid "The Humanitarian Blog opens a door for field practitioners, analysts, and storytellers to share their experiences and perspectives."
+msgstr "يفتح المدونة الإنسانية باباً للممارسين الميدانيين والمحللين ورواة القصص لمشاركة تجاربهم ووجهات نظرهم."
+
+msgid "Write For Us"
+msgstr "اكتب لنا"
+
+#: footer.php:148
+#, php-format
+msgid "© %1$s %2$s. All rights reserved."
+msgstr "© %1$s %2$s. جميع الحقوق محفوظة."
+
+msgid "Cookies"
+msgstr "ملفات تعريف الارتباط"
+
+msgid "Privacy Policy"
+msgstr "سياسة الخصوصية"
+
+msgid "Child Safeguard Policy"
+msgstr "سياسة حماية الطفل"
+
+msgid "Content Usage Policy and User Agreement"
+msgstr "سياسة استخدام المحتوى واتفاقية المستخدم"
+
+# Cookie Banner
+msgid "We use strictly necessary cookies to ensure the best experience on our website."
+msgstr "نستخدم ملفات تعريف الارتباط الضرورية فقط لضمان أفضل تجربة على موقعنا."
+
+msgid "Learn more"
+msgstr "اعرف المزيد"
+
+msgid "Accept"
+msgstr "قبول"
+
+msgid "Decline"
+msgstr "رفض"
+
+# Category Tags - Technical Guides
+msgid "Strategy Development"
+msgstr "تطوير الاستراتيجية"
+
+msgid "Project Management Techniques"
+msgstr "تقنيات إدارة المشاريع"
+
+msgid "Humanitarian Aid Programming"
+msgstr "برمجة المساعدات الإنسانية"
+
+msgid "Cross Cutting"
+msgstr "شامل"
+
+# Category Tags - Aid and Policy
+msgid "Conflict"
+msgstr "صراع"
+
+msgid "Culture"
+msgstr "ثقافة"
+
+msgid "Policy"
+msgstr "سياسة"
+
+msgid "Aid"
+msgstr "مساعدات"
+
+# Category Tags - Environment and Conflict
+msgid "Climate"
+msgstr "مناخ"
+
+msgid "Resources"
+msgstr "موارد"
+
+msgid "Environment"
+msgstr "بيئة"
+
+# Category Tags - Stories from the Field
+msgid "Personal Stories"
+msgstr "قصص شخصية"
+
+msgid "Community Voices"
+msgstr "أصوات المجتمع"
+
+msgid "Frontline Reports"
+msgstr "تقارير من الخطوط الأمامية"
+
+# Single Post
+msgid "Download as PDF"
+msgstr "تحميل كملف PDF"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Listen to Article"
+msgstr "الاستماع للمقال"
+
+msgid "Voice Article"
+msgstr "مقال صوتي"
+
+msgid "Show QR Code"
+msgstr "إظهار رمز QR"
+
+msgid "QR"
+msgstr "QR"
+
+msgid "Play/Pause"
+msgstr "تشغيل/إيقاف مؤقت"
+
+msgid "Stop"
+msgstr "إيقاف"
+
+msgid "Speed"
+msgstr "السرعة"
+
+msgid "Tags:"
+msgstr "الوسوم:"
+
+msgid "Share"
+msgstr "شارك"
+
+msgid "View all posts"
+msgstr "عرض جميع المقالات"
+
+# Category Page
+msgid "All"
+msgstr "الكل"
+
+msgid "Previous"
+msgstr "السابق"
+
+msgid "Next"
+msgstr "التالي"
+
+msgid "No articles found in this category."
+msgstr "لم يتم العثور على مقالات في هذه الفئة."
+
+# Common
+msgid "Skip to content"
+msgstr "الانتقال إلى المحتوى"
+
+msgid "Open Menu"
+msgstr "فتح القائمة"
+
+msgid "Close Menu"
+msgstr "إغلاق القائمة"
+
+msgid "Close search"
+msgstr "إغلاق البحث"
+
+msgid "Primary Navigation"
+msgstr "التنقل الأساسي"
+
+msgid "Footer Sections Navigation"
+msgstr "التنقل في أقسام التذييل"
+
+msgid "Footer About Navigation"
+msgstr "التنقل في تذييل حول"
+
+msgid "Legal Navigation"
+msgstr "التنقل القانوني"
+
+msgid "Twitter"
+msgstr "تويتر"
+
+msgid "Facebook"
+msgstr "فيسبوك"
+
+msgid "LinkedIn"
+msgstr "لينكدإن"
+
+msgid "Email"
+msgstr "البريد الإلكتروني"

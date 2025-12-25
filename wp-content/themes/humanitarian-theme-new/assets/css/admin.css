@@ -1,0 +1,131 @@
+/**
+ * HumanitarianBlog Theme - Admin Styles
+ *
+ * @package HumanitarianBlog
+ * @since 1.0.0
+ */
+
+/* Post Options Meta Box */
+#humanitarian_post_options .inside {
+    padding: 12px;
+}
+
+#humanitarian_post_options label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+#humanitarian_post_options .description {
+    color: #646970;
+    font-size: 12px;
+    font-style: italic;
+    margin: 4px 0 0 24px;
+}
+
+/* Custom Post Columns */
+.column-featured_image {
+    width: 60px;
+}
+
+.column-featured_image img {
+    border-radius: 2px;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+.column-reading_time {
+    width: 100px;
+}
+
+/* Dashboard Widget Styling */
+.humanitarian-dashboard-widget {
+    padding: 12px;
+}
+
+.humanitarian-dashboard-widget h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+/* Quick Edit Styling */
+.inline-edit-row .humanitarian-fields {
+    padding: 10px 0;
+}
+
+.inline-edit-row .humanitarian-fields label {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 16px;
+}
+
+/* Featured Image Column Hover Effect */
+.wp-list-table .column-featured_image img {
+    transition: transform 0.2s ease;
+}
+
+.wp-list-table tr:hover .column-featured_image img {
+    transform: scale(1.1);
+}
+
+/* Post Status Indicators */
+.post-state-humanitarian-analysis {
+    color: #7f2828;
+    font-weight: 600;
+}
+
+.post-state-humanitarian-editors-pick {
+    color: #188038;
+    font-weight: 600;
+}
+
+/* Customizer Preview Styling */
+.customize-partial-edit-shortcut-humanitarian_top_tagline {
+    margin-top: -10px;
+}
+
+/* Welcome Panel Styling */
+.humanitarian-welcome {
+    background: linear-gradient(135deg, #FAF8F4 0%, #f4f1ea 100%);
+    border-left: 4px solid #7f2828;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.humanitarian-welcome h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    color: #1a1919;
+    margin: 0 0 10px;
+}
+
+.humanitarian-welcome p {
+    color: #646970;
+    margin: 0;
+}
+
+/* Category Color Indicators in Admin */
+.humanitarian-category-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+/* Theme Info in Appearance */
+.theme-browser .theme .theme-screenshot {
+    background-color: #FAF8F4;
+}
+
+/* Notices Styling */
+.notice.humanitarian-notice {
+    border-left-color: #7f2828;
+}
+
+.notice.humanitarian-notice .dashicons {
+    color: #7f2828;
+}

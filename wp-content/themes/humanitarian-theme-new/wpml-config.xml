@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    WPML Configuration File for HumanitarianBlog Theme
+
+    This file tells WPML which content should be translatable.
+    Place this file in the theme's root directory.
+
+    Documentation: https://wpml.org/documentation/support/language-configuration-files/
+-->
+<wpml-config>
+
+    <!-- ============================================
+         CUSTOM POST TYPES
+         ============================================ -->
+    <custom-types>
+        <custom-type translate="1">post</custom-type>
+        <custom-type translate="1">page</custom-type>
+    </custom-types>
+
+    <!-- ============================================
+         TAXONOMIES
+         All taxonomies that should be translatable
+         ============================================ -->
+    <taxonomies>
+        <!-- Default WordPress taxonomies -->
+        <taxonomy translate="1">category</taxonomy>
+        <taxonomy translate="1">post_tag</taxonomy>
+
+        <!-- Custom taxonomies -->
+        <taxonomy translate="1">article_type</taxonomy>
+        <taxonomy translate="1">region</taxonomy>
+    </taxonomies>
+
+    <!-- ============================================
+         THEME CUSTOMIZER STRINGS
+         Admin texts from Theme Customizer
+         ============================================ -->
+    <admin-texts>
+        <key name="theme_mods_humanitarian-theme">
+            <!-- Top Strip Settings -->
+            <key name="top_strip_tagline" />
+
+            <!-- Footer Settings -->
+            <key name="footer_tagline" />
+            <key name="footer_support_text" />
+            <key name="footer_copyright" />
+
+            <!-- Newsletter Section -->
+            <key name="newsletter_title" />
+            <key name="newsletter_description" />
+            <key name="newsletter_button_text" />
+            <key name="newsletter_url" />
+
+            <!-- Social Media -->
+            <key name="social_twitter" />
+            <key name="social_facebook" />
+            <key name="social_linkedin" />
+            <key name="contact_email" />
+        </key>
+
+        <!-- Widget Titles -->
+        <key name="widget_text">
+            <key name="*">
+                <key name="title" />
+                <key name="text" />
+            </key>
+        </key>
+    </admin-texts>
+
+    <!-- ============================================
+         CUSTOM FIELDS (POST META)
+         Post meta fields that should be translatable
+         ============================================ -->
+    <custom-fields>
+        <!-- These fields are boolean/selection, so copy them -->
+        <custom-field action="copy">_humanitarian_analysis</custom-field>
+        <custom-field action="copy">_humanitarian_editors_pick</custom-field>
+
+        <!-- If you add any text-based custom fields later, use translate -->
+        <!-- <custom-field action="translate">_humanitarian_subtitle</custom-field> -->
+    </custom-fields>
+
+    <!-- ============================================
+         LANGUAGE SWITCHER CONFIGURATION
+         Recommended settings for the language switcher
+         ============================================ -->
+    <language-switcher-settings>
+        <key name="icl_lso_link_empty">0</key>
+        <key name="icl_lso_flags">1</key>
+        <key name="icl_lso_native_lang">1</key>
+        <key name="icl_lso_display_lang">0</key>
+    </language-switcher-settings>
+
+</wpml-config>

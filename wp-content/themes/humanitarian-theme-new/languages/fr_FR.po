@@ -1,0 +1,290 @@
+# French (France) translation for Humanitarian Blog Theme
+msgid ""
+msgstr ""
+"Project-Id-Version: Humanitarian Blog Theme\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+# Top Strip
+msgid "No News. Just Knowledge—by People Like You."
+msgstr "Pas de nouvelles. Juste des connaissances—par des gens comme vous."
+
+msgid "Language"
+msgstr "Langue"
+
+msgid "About Us"
+msgstr "À propos"
+
+msgid "Publish With Us"
+msgstr "Publier avec nous"
+
+msgid "Contact Us"
+msgstr "Nous contacter"
+
+msgid "Login"
+msgstr "Connexion"
+
+# Navigation
+msgid "Technical Guides"
+msgstr "Guides techniques"
+
+msgid "Aid and Policy"
+msgstr "Aide et politique"
+
+msgid "Environment and Conflict"
+msgstr "Environnement et conflit"
+
+msgid "Stories from the Field"
+msgstr "Histoires du terrain"
+
+msgid "Menu"
+msgstr "Menu"
+
+msgid "Search"
+msgstr "Rechercher"
+
+msgid "Sections"
+msgstr "Sections"
+
+msgid "More"
+msgstr "Plus"
+
+# Homepage
+msgid "Current Coverage"
+msgstr "Actualités"
+
+msgid "Global Dispatches & Updates"
+msgstr "Dépêches mondiales et mises à jour"
+
+msgid "Browse Archives"
+msgstr "Parcourir les archives"
+
+msgid "View All Stories"
+msgstr "Voir toutes les histoires"
+
+msgid "Recent News"
+msgstr "Actualités récentes"
+
+msgid "Refresh"
+msgstr "Actualiser"
+
+msgid "Premium Reportage"
+msgstr "Reportage premium"
+
+msgid "In-Depth Analysis"
+msgstr "Analyses approfondies"
+
+msgid "View All Reports"
+msgstr "Voir tous les rapports"
+
+msgid "Editors' Picks"
+msgstr "Choix des éditeurs"
+
+# Newsletter
+msgid "Get the latest humanitarian news, direct to your inbox"
+msgstr "Recevez les dernières actualités humanitaires directement dans votre boîte mail"
+
+msgid "Sign up to receive our original, on-the-ground coverage that informs policymakers, practitioners, donors, and others who want to make the world more humane."
+msgstr "Inscrivez-vous pour recevoir notre couverture originale sur le terrain qui informe les décideurs, les praticiens, les donateurs et tous ceux qui veulent rendre le monde plus humain."
+
+msgid "Sign up"
+msgstr "S'inscrire"
+
+msgid "Subscribe to our newsletter"
+msgstr "Abonnez-vous à notre newsletter"
+
+msgid "Join humanitarians worldwide getting the latest knowledge delivered to their inbox."
+msgstr "Rejoignez les humanitaires du monde entier qui reçoivent les dernières connaissances dans leur boîte mail."
+
+msgid "Subscribe"
+msgstr "S'abonner"
+
+# Footer
+msgid "Enlightens the fields with real stories and practical knowledge."
+msgstr "Éclaire les terrains avec des histoires réelles et des connaissances pratiques."
+
+msgid "An independent, non-profit, open-source platform dedicated to individuals engaged in humanitarian and development work."
+msgstr "Une plateforme indépendante, à but non lucratif et open source dédiée aux personnes engagées dans le travail humanitaire et le développement."
+
+msgid "About"
+msgstr "À propos"
+
+msgid "Share Your Knowledge"
+msgstr "Partagez vos connaissances"
+
+msgid "The Humanitarian Blog opens a door for field practitioners, analysts, and storytellers to share their experiences and perspectives."
+msgstr "Le Blog Humanitaire ouvre une porte aux praticiens de terrain, analystes et conteurs pour partager leurs expériences et perspectives."
+
+msgid "Write For Us"
+msgstr "Écrivez pour nous"
+
+#: footer.php:148
+#, php-format
+msgid "© %1$s %2$s. All rights reserved."
+msgstr "© %1$s %2$s. Tous droits réservés."
+
+msgid "Cookies"
+msgstr "Cookies"
+
+msgid "Privacy Policy"
+msgstr "Politique de confidentialité"
+
+msgid "Child Safeguard Policy"
+msgstr "Politique de protection de l'enfance"
+
+msgid "Content Usage Policy and User Agreement"
+msgstr "Politique d'utilisation du contenu et accord d'utilisateur"
+
+# Cookie Banner
+msgid "We use strictly necessary cookies to ensure the best experience on our website."
+msgstr "Nous utilisons uniquement des cookies strictement nécessaires pour garantir la meilleure expérience sur notre site."
+
+msgid "Learn more"
+msgstr "En savoir plus"
+
+msgid "Accept"
+msgstr "Accepter"
+
+msgid "Decline"
+msgstr "Refuser"
+
+# Category Tags - Technical Guides
+msgid "Strategy Development"
+msgstr "Développement de stratégie"
+
+msgid "Project Management Techniques"
+msgstr "Techniques de gestion de projet"
+
+msgid "Humanitarian Aid Programming"
+msgstr "Programmation de l'aide humanitaire"
+
+msgid "Cross Cutting"
+msgstr "Transversal"
+
+# Category Tags - Aid and Policy
+msgid "Conflict"
+msgstr "Conflit"
+
+msgid "Culture"
+msgstr "Culture"
+
+msgid "Policy"
+msgstr "Politique"
+
+msgid "Aid"
+msgstr "Aide"
+
+# Category Tags - Environment and Conflict
+msgid "Climate"
+msgstr "Climat"
+
+msgid "Resources"
+msgstr "Ressources"
+
+msgid "Environment"
+msgstr "Environnement"
+
+# Category Tags - Stories from the Field
+msgid "Personal Stories"
+msgstr "Histoires personnelles"
+
+msgid "Community Voices"
+msgstr "Voix communautaires"
+
+msgid "Frontline Reports"
+msgstr "Rapports de première ligne"
+
+# Single Post
+msgid "Download as PDF"
+msgstr "Télécharger en PDF"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Listen to Article"
+msgstr "Écouter l'article"
+
+msgid "Voice Article"
+msgstr "Article vocal"
+
+msgid "Show QR Code"
+msgstr "Afficher le code QR"
+
+msgid "QR"
+msgstr "QR"
+
+msgid "Play/Pause"
+msgstr "Lecture/Pause"
+
+msgid "Stop"
+msgstr "Arrêter"
+
+msgid "Speed"
+msgstr "Vitesse"
+
+msgid "Tags:"
+msgstr "Tags :"
+
+msgid "Share"
+msgstr "Partager"
+
+msgid "View all posts"
+msgstr "Voir tous les articles"
+
+# Category Page
+msgid "All"
+msgstr "Tout"
+
+msgid "Previous"
+msgstr "Précédent"
+
+msgid "Next"
+msgstr "Suivant"
+
+msgid "No articles found in this category."
+msgstr "Aucun article trouvé dans cette catégorie."
+
+# Common
+msgid "Skip to content"
+msgstr "Aller au contenu"
+
+msgid "Open Menu"
+msgstr "Ouvrir le menu"
+
+msgid "Close Menu"
+msgstr "Fermer le menu"
+
+msgid "Close search"
+msgstr "Fermer la recherche"
+
+msgid "Primary Navigation"
+msgstr "Navigation principale"
+
+msgid "Footer Sections Navigation"
+msgstr "Navigation sections du pied de page"
+
+msgid "Footer About Navigation"
+msgstr "Navigation à propos du pied de page"
+
+msgid "Legal Navigation"
+msgstr "Navigation légale"
+
+msgid "Twitter"
+msgstr "Twitter"
+
+msgid "Facebook"
+msgstr "Facebook"
+
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+msgid "Email"
+msgstr "Email"

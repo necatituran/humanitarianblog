@@ -1,0 +1,230 @@
+/**
+ * HumanitarianBlog Theme - Block Editor Styles
+ *
+ * @package HumanitarianBlog
+ * @since 1.0.0
+ */
+
+/* Editor Typography */
+.editor-styles-wrapper {
+    font-family: 'Merriweather', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.8;
+    color: #44403c;
+    background-color: #FAF8F4;
+}
+
+/* Headings */
+.editor-styles-wrapper h1,
+.editor-styles-wrapper h2,
+.editor-styles-wrapper h3,
+.editor-styles-wrapper h4,
+.editor-styles-wrapper h5,
+.editor-styles-wrapper h6 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    color: #1a1919;
+    line-height: 1.2;
+}
+
+.editor-styles-wrapper h2 {
+    font-size: 1.875rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.editor-styles-wrapper h3 {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+.editor-styles-wrapper h4 {
+    font-size: 1.25rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Paragraphs */
+.editor-styles-wrapper p {
+    margin-bottom: 1.5rem;
+}
+
+/* Links */
+.editor-styles-wrapper a {
+    color: #7f2828;
+    text-decoration: underline;
+}
+
+.editor-styles-wrapper a:hover {
+    text-decoration: none;
+}
+
+/* Post Title */
+.editor-post-title__input,
+.editor-post-title__input:focus {
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-size: 2.5rem !important;
+    font-weight: 700 !important;
+    color: #1a1919 !important;
+    line-height: 1.15 !important;
+}
+
+/* Blockquotes */
+.editor-styles-wrapper blockquote,
+.editor-styles-wrapper .wp-block-quote {
+    border-left: 4px solid #7f2828;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    background-color: #f4f1ea;
+    font-style: italic;
+}
+
+.editor-styles-wrapper .wp-block-quote p {
+    margin-bottom: 0.5rem;
+}
+
+.editor-styles-wrapper .wp-block-quote cite {
+    font-style: normal;
+    font-size: 0.875rem;
+    color: #78716c;
+}
+
+/* Lists */
+.editor-styles-wrapper ul,
+.editor-styles-wrapper ol {
+    margin: 1.5rem 0;
+    padding-left: 1.5rem;
+}
+
+.editor-styles-wrapper ul {
+    list-style-type: disc;
+}
+
+.editor-styles-wrapper ol {
+    list-style-type: decimal;
+}
+
+.editor-styles-wrapper li {
+    margin-bottom: 0.5rem;
+}
+
+/* Images */
+.editor-styles-wrapper img {
+    border-radius: 2px;
+}
+
+.editor-styles-wrapper figure {
+    margin: 2rem 0;
+}
+
+.editor-styles-wrapper figcaption {
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    font-size: 0.875rem;
+    color: #78716c;
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+/* Separator */
+.editor-styles-wrapper hr,
+.editor-styles-wrapper .wp-block-separator {
+    border: none;
+    border-top: 1px solid #e7e5e4;
+    margin: 2rem 0;
+}
+
+.editor-styles-wrapper .wp-block-separator.is-style-wide {
+    border-top-width: 2px;
+}
+
+.editor-styles-wrapper .wp-block-separator.is-style-dots {
+    border: none;
+    text-align: center;
+}
+
+.editor-styles-wrapper .wp-block-separator.is-style-dots::before {
+    content: '...';
+    font-size: 1.5rem;
+    letter-spacing: 1rem;
+    color: #a8a29e;
+}
+
+/* Max width for content */
+.editor-styles-wrapper .wp-block {
+    max-width: 768px;
+}
+
+.editor-styles-wrapper .wp-block[data-align="wide"] {
+    max-width: 1100px;
+}
+
+.editor-styles-wrapper .wp-block[data-align="full"] {
+    max-width: none;
+}
+
+/* Gallery */
+.editor-styles-wrapper .wp-block-gallery {
+    margin: 2rem 0;
+}
+
+/* Video and Audio */
+.editor-styles-wrapper .wp-block-video,
+.editor-styles-wrapper .wp-block-audio {
+    margin: 2rem 0;
+}
+
+/* Embeds */
+.editor-styles-wrapper .wp-block-embed {
+    margin: 2rem 0;
+}
+
+/* Color Palette */
+.has-dark-color {
+    color: #1a1919;
+}
+
+.has-dark-background-color {
+    background-color: #1a1919;
+}
+
+.has-red-color {
+    color: #7f2828;
+}
+
+.has-red-background-color {
+    background-color: #7f2828;
+}
+
+.has-paper-color {
+    color: #FAF8F4;
+}
+
+.has-paper-background-color {
+    background-color: #FAF8F4;
+}
+
+.has-cream-color {
+    color: #f4f1ea;
+}
+
+.has-cream-background-color {
+    background-color: #f4f1ea;
+}
+
+/* Font Sizes */
+.has-small-font-size {
+    font-size: 14px;
+}
+
+.has-normal-font-size {
+    font-size: 18px;
+}
+
+.has-large-font-size {
+    font-size: 24px;
+}
+
+.has-huge-font-size {
+    font-size: 32px;
+}
