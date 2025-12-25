@@ -39,6 +39,32 @@ $exclude_ids = array_merge($exclude_ids, $secondary_query->posts);
     </div>
 </section>
 
+<!-- Featured Articles Section -->
+<?php
+$featured_query = humanitarian_get_featured_posts(4);
+if ($featured_query->have_posts()) :
+?>
+<section class="featured-articles">
+    <div class="container">
+        <div class="featured-articles__header">
+            <h2 class="featured-articles__title"><?php esc_html_e('Featured Articles', 'humanitarian'); ?></h2>
+            <div class="featured-articles__line"></div>
+        </div>
+
+        <div class="featured-articles__grid">
+            <?php
+            while ($featured_query->have_posts()) : $featured_query->the_post();
+                // Add to exclude list
+                $exclude_ids[] = get_the_ID();
+                get_template_part('template-parts/cards/card', 'grid');
+            endwhile;
+            wp_reset_postdata();
+            ?>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
 <!-- Current Coverage Section with Recent News Sidebar -->
 <section class="current-coverage">
     <div class="container">
@@ -158,9 +184,6 @@ $exclude_ids = array_merge($exclude_ids, $secondary_query->posts);
     </div>
 </section>
 
-<!-- Newsletter CTA -->
-<?php get_template_part('template-parts/sections/newsletter', 'cta'); ?>
-
 <!-- Editors' Picks Section -->
 <section class="editors-picks">
     <div class="container">
@@ -183,6 +206,9 @@ $exclude_ids = array_merge($exclude_ids, $secondary_query->posts);
         </div>
     </div>
 </section>
+
+<!-- Newsletter CTA -->
+<?php get_template_part('template-parts/sections/newsletter', 'cta'); ?>
 
 <?php
 get_footer();

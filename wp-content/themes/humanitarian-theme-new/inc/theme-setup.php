@@ -290,3 +290,83 @@ function humanitarian_get_author_info($user_id) {
         'linkedin_url' => get_user_meta($user_id, 'linkedin_url', true),
     );
 }
+
+/**
+ * Add custom columns to Users admin table
+ * GÖREV 11: profession, experience_years, experience_field
+ */
+function humanitarian_users_columns($columns) {
+    $new_columns = array();
+
+    foreach ($columns as $key => $value) {
+        $new_columns[$key] = $value;
+
+        // Add custom columns after 'email'
+        if ($key === 'email') {
+            $new_columns['profession'] = __('Profession', 'humanitarian');
+            $new_columns['experience'] = __('Experience', 'humanitarian');
+        }
+    }
+
+    return $new_columns;
+}
+add_filter('manage_users_columns', 'humanitarian_users_columns');
+
+/**
+ * Display custom column content in Users admin table
+ */
+function humanitarian_users_column_content($value, $column_name, $user_id) {
+    switch ($column_name) {
+        case 'profession':
+            $profession = get_user_meta($user_id, 'profession', true);
+            return $profession ? esc_html($profession) : '<span style="color:#999;">—</span>';
+
+        case 'experience':
+            $years = get_user_meta($user_id, 'experience_years', true);
+            $field = get_user_meta($user_id, 'experience_field', true);
+
+            if ($years && $field) {
+                return sprintf(
+                    '<span style="white-space:nowrap;">%d+ %s</span><br><small style="color:#666;">%s</small>',
+                    intval($years),
+                    esc_html__('years', 'humanitarian'),
+                    esc_html($field)
+                );
+            } elseif ($years) {
+                return sprintf('%d+ %s', intval($years), esc_html__('years', 'humanitarian'));
+            } elseif ($field) {
+                return esc_html($field);
+            }
+            return '<span style="color:#999;">—</span>';
+
+        default:
+            return $value;
+    }
+}
+add_filter('manage_users_custom_column', 'humanitarian_users_column_content', 10, 3);
+
+/**
+ * Make custom columns sortable
+ */
+function humanitarian_users_sortable_columns($columns) {
+    $columns['profession'] = 'profession';
+    return $columns;
+}
+add_filter('manage_users_sortable_columns', 'humanitarian_users_sortable_columns');
+
+/**
+ * Handle sorting by custom columns
+ */
+function humanitarian_users_orderby($query) {
+    if (!is_admin()) {
+        return;
+    }
+
+    $orderby = $query->get('orderby');
+
+    if ($orderby === 'profession') {
+        $query->set('meta_key', 'profession');
+        $query->set('orderby', 'meta_value');
+    }
+}
+add_action('pre_get_users', 'humanitarian_users_orderby');
