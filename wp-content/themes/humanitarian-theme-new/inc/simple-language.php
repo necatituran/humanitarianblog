@@ -277,11 +277,45 @@ function humanitarian_load_theme_textdomain() {
 add_action('after_setup_theme', 'humanitarian_load_theme_textdomain', 20);
 
 /**
+ * Fix front page query when lang parameter is present
+ * WordPress doesn't recognize static front page with custom query vars
+ */
+function humanitarian_fix_front_page_query($query) {
+    if (is_admin() || !$query->is_main_query()) {
+        return;
+    }
+
+    // Check if this is the site root with only lang parameter
+    $request_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+    $parsed = parse_url($request_uri);
+    $path = isset($parsed['path']) ? trim($parsed['path'], '/') : '';
+
+    // If path is empty (site root) and we have a static front page
+    if (empty($path) && get_option('show_on_front') === 'page') {
+        $front_page_id = get_option('page_on_front');
+        if ($front_page_id) {
+            // Force WordPress to load the static front page
+            $query->set('page_id', $front_page_id);
+            $query->set('post_type', 'page');
+            $query->is_home = false;
+            $query->is_page = true;
+            $query->is_singular = true;
+        }
+    }
+}
+add_action('pre_get_posts', 'humanitarian_fix_front_page_query', 1);
+
+/**
  * Filter posts by language on frontend
  */
 function humanitarian_filter_posts_by_language($query) {
     // Only on frontend, main query, and for posts
     if (is_admin() || !$query->is_main_query()) {
+        return;
+    }
+
+    // Skip if this is the static front page
+    if ($query->get('page_id') == get_option('page_on_front')) {
         return;
     }
 
