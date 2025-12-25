@@ -288,3 +288,62 @@ msgstr "LinkedIn"
 
 msgid "Email"
 msgstr "Email"
+
+# Homepage - Featured Articles
+msgid "Featured Articles"
+msgstr "Articles en vedette"
+
+# Search
+msgid "Search for:"
+msgstr "Rechercher :"
+
+#, php-format
+msgid "Search results for: %s"
+msgstr "Résultats de recherche pour : %s"
+
+msgid "Latest Articles"
+msgstr "Derniers articles"
+
+# Privacy
+msgid "Privacy"
+msgstr "Confidentialité"
+
+msgid "Content Usage Policy"
+msgstr "Politique d'utilisation du contenu"
+
+msgid "User Agreement"
+msgstr "Accord d'utilisateur"
+
+# Contact Form
+msgid "Your Name"
+msgstr "Votre nom"
+
+msgid "Email Address"
+msgstr "Adresse email"
+
+msgid "Subject"
+msgstr "Sujet"
+
+msgid "Message"
+msgstr "Message"
+
+msgid "Send Message"
+msgstr "Envoyer le message"
+
+# Author
+#, php-format
+msgid "Articles by %s"
+msgstr "Articles de %s"
+
+msgid "No articles found."
+msgstr "Aucun article trouvé."
+
+# 404 Page
+msgid "Page not found"
+msgstr "Page non trouvée"
+
+msgid "The page you're looking for doesn't exist or has been moved. Try searching or go back to the homepage."
+msgstr "La page que vous recherchez n'existe pas ou a été déplacée. Essayez de rechercher ou retournez à la page d'accueil."
+
+msgid "Go to Homepage"
+msgstr "Aller à l'accueil"

@@ -24,6 +24,7 @@ if ($hero_post) {
 
 // Get secondary posts to also exclude
 $secondary_args = array(
+    'post_type'      => 'post',
     'posts_per_page' => 2,
     'post__not_in'   => $exclude_ids,
     'fields'         => 'ids',
@@ -87,6 +88,7 @@ if ($featured_query->have_posts()) :
                 <div class="current-coverage__grid">
                     <?php
                     $coverage_args = array(
+                        'post_type'      => 'post',
                         'posts_per_page' => 6,
                         'post__not_in'   => $exclude_ids,
                     );
@@ -128,6 +130,7 @@ if ($featured_query->have_posts()) :
                 <div class="recent-news-sidebar__list" id="recentNewsList">
                     <?php
                     $recent_args = array(
+                        'post_type'      => 'post',
                         'posts_per_page' => 5,
                         'post__not_in'   => $exclude_ids,
                         'orderby'        => 'date',

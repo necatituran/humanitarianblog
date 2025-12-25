@@ -101,6 +101,11 @@ $active_tag = isset($_GET['tag']) ? sanitize_text_field($_GET['tag']) : '';
             $query_args['tag'] = $active_tag;
         }
 
+        // Add language filter
+        if (function_exists('humanitarian_add_language_filter')) {
+            $query_args = humanitarian_add_language_filter($query_args);
+        }
+
         $category_query = new WP_Query($query_args);
 
         if ($category_query->have_posts()) :

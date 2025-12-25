@@ -288,3 +288,62 @@ msgstr "لينكدإن"
 
 msgid "Email"
 msgstr "البريد الإلكتروني"
+
+# Homepage - Featured Articles
+msgid "Featured Articles"
+msgstr "مقالات مميزة"
+
+# Search
+msgid "Search for:"
+msgstr "البحث عن:"
+
+#, php-format
+msgid "Search results for: %s"
+msgstr "نتائج البحث عن: %s"
+
+msgid "Latest Articles"
+msgstr "أحدث المقالات"
+
+# Privacy
+msgid "Privacy"
+msgstr "الخصوصية"
+
+msgid "Content Usage Policy"
+msgstr "سياسة استخدام المحتوى"
+
+msgid "User Agreement"
+msgstr "اتفاقية المستخدم"
+
+# Contact Form
+msgid "Your Name"
+msgstr "اسمك"
+
+msgid "Email Address"
+msgstr "البريد الإلكتروني"
+
+msgid "Subject"
+msgstr "الموضوع"
+
+msgid "Message"
+msgstr "الرسالة"
+
+msgid "Send Message"
+msgstr "إرسال الرسالة"
+
+# Author
+#, php-format
+msgid "Articles by %s"
+msgstr "مقالات بقلم %s"
+
+msgid "No articles found."
+msgstr "لم يتم العثور على مقالات."
+
+# 404 Page
+msgid "Page not found"
+msgstr "الصفحة غير موجودة"
+
+msgid "The page you're looking for doesn't exist or has been moved. Try searching or go back to the homepage."
+msgstr "الصفحة التي تبحث عنها غير موجودة أو تم نقلها. حاول البحث أو العودة إلى الصفحة الرئيسية."
+
+msgid "Go to Homepage"
+msgstr "الذهاب إلى الصفحة الرئيسية"

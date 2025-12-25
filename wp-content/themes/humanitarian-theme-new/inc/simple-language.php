@@ -129,6 +129,58 @@ function humanitarian_get_current_language() {
 }
 
 /**
+ * Switch WordPress locale based on current language
+ * This enables theme translation files (.mo) to be loaded
+ */
+function humanitarian_switch_locale($locale) {
+    // Don't change admin locale
+    if (is_admin()) {
+        return $locale;
+    }
+
+    $current_lang = humanitarian_get_current_language();
+    $languages = humanitarian_get_languages();
+
+    if (isset($languages[$current_lang])) {
+        return $languages[$current_lang]['locale'];
+    }
+
+    return $locale;
+}
+add_filter('locale', 'humanitarian_switch_locale');
+
+/**
+ * Load theme text domain for translations
+ */
+function humanitarian_load_theme_textdomain() {
+    $current_lang = humanitarian_get_current_language();
+    $languages = humanitarian_get_languages();
+
+    // Get locale for current language
+    $locale = isset($languages[$current_lang]) ? $languages[$current_lang]['locale'] : 'en_US';
+
+    // Load theme translations
+    $theme_dir = get_template_directory();
+
+    // Unload first if already loaded
+    unload_textdomain('humanitarian');
+
+    // Try to load the translation file
+    $mofile = $theme_dir . '/languages/' . $locale . '.mo';
+    if (file_exists($mofile)) {
+        load_textdomain('humanitarian', $mofile);
+    } else {
+        // Try without country code (e.g., 'ar' instead of 'ar_AR')
+        $short_locale = substr($locale, 0, 2);
+        $mofile_short = $theme_dir . '/languages/' . $short_locale . '.mo';
+        if (file_exists($mofile_short)) {
+            load_textdomain('humanitarian', $mofile_short);
+        }
+    }
+}
+add_action('after_setup_theme', 'humanitarian_load_theme_textdomain', 20);
+
+/**
  * Filter posts by language on frontend
  */
 function humanitarian_filter_posts_by_language($query) {

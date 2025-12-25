@@ -276,6 +276,7 @@ function humanitarian_get_hero_post() {
     $sticky = get_option('sticky_posts');
     if (!empty($sticky)) {
         $args = humanitarian_add_language_filter(array(
+            'post_type'           => 'post',
             'post__in'            => $sticky,
             'posts_per_page'      => 1,
             'ignore_sticky_posts' => 1,
@@ -288,6 +289,7 @@ function humanitarian_get_hero_post() {
 
     // Fall back to latest post
     $args = humanitarian_add_language_filter(array(
+        'post_type'      => 'post',
         'posts_per_page' => 1,
     ));
     $latest = get_posts($args);
@@ -305,6 +307,7 @@ function humanitarian_get_hero_post() {
 function humanitarian_get_analysis_posts($count = 2) {
     // First try posts with 'in-depth-analysis' article type taxonomy
     $args = humanitarian_add_language_filter(array(
+        'post_type'      => 'post',
         'posts_per_page' => $count,
         'tax_query'      => array(
             array(
@@ -320,6 +323,7 @@ function humanitarian_get_analysis_posts($count = 2) {
     // If not enough, try posts marked with the meta field (backward compatibility)
     if ($query->post_count < $count) {
         $args = humanitarian_add_language_filter(array(
+            'post_type'      => 'post',
             'posts_per_page' => $count,
             'meta_key'       => '_humanitarian_analysis',
             'meta_value'     => '1',
@@ -330,6 +334,7 @@ function humanitarian_get_analysis_posts($count = 2) {
     // If still not enough, try 'investigation' article type
     if ($query->post_count < $count) {
         $args = humanitarian_add_language_filter(array(
+            'post_type'      => 'post',
             'posts_per_page' => $count,
             'tax_query'      => array(
                 array(
@@ -345,6 +350,7 @@ function humanitarian_get_analysis_posts($count = 2) {
     // Final fallback: just get latest posts
     if ($query->post_count < $count) {
         $args = humanitarian_add_language_filter(array(
+            'post_type'      => 'post',
             'posts_per_page' => $count,
         ));
         $query = new WP_Query($args);
@@ -362,6 +368,7 @@ function humanitarian_get_analysis_posts($count = 2) {
 function humanitarian_get_editors_picks($count = 4) {
     // First try posts marked as editor's pick
     $args = humanitarian_add_language_filter(array(
+        'post_type'      => 'post',
         'posts_per_page' => $count,
         'meta_key'       => '_humanitarian_editors_pick',
         'meta_value'     => '1',
@@ -374,6 +381,7 @@ function humanitarian_get_editors_picks($count = 4) {
         $sticky = get_option('sticky_posts');
         if (!empty($sticky)) {
             $args = humanitarian_add_language_filter(array(
+                'post_type'           => 'post',
                 'post__in'            => $sticky,
                 'posts_per_page'      => $count,
                 'ignore_sticky_posts' => 1,
@@ -385,6 +393,7 @@ function humanitarian_get_editors_picks($count = 4) {
     // If still not enough, just get latest posts
     if ($query->post_count < $count) {
         $args = humanitarian_add_language_filter(array(
+            'post_type'      => 'post',
             'posts_per_page' => $count,
         ));
         $query = new WP_Query($args);
@@ -432,6 +441,7 @@ function humanitarian_get_featured_posts($count = 4) {
 function humanitarian_get_opinion_posts($count = 4) {
     // First try posts with 'opinion' article type taxonomy
     $args = humanitarian_add_language_filter(array(
+        'post_type'      => 'post',
         'posts_per_page' => $count,
         'tax_query'      => array(
             array(
@@ -447,6 +457,7 @@ function humanitarian_get_opinion_posts($count = 4) {
     // If not enough, try 'opinions' category (backward compatibility)
     if ($query->post_count < $count) {
         $args = humanitarian_add_language_filter(array(
+            'post_type'      => 'post',
             'posts_per_page' => $count,
             'category_name'  => 'opinions',
         ));
@@ -465,6 +476,7 @@ function humanitarian_get_opinion_posts($count = 4) {
  */
 function humanitarian_get_region_posts($region, $count = 4) {
     $args = humanitarian_add_language_filter(array(
+        'post_type'      => 'post',
         'posts_per_page' => $count,
         'tax_query'      => array(
             array(

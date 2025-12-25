@@ -17,6 +17,7 @@ $exclude_ids = $hero_post ? array($hero_post->ID) : array();
 
 // Get 2 secondary posts
 $secondary_args = array(
+    'post_type'      => 'post',
     'posts_per_page' => 2,
     'post__not_in'   => $exclude_ids,
 );
